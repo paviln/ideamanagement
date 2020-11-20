@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+
+using Panel.Data;
 
 namespace Panel
 {
@@ -28,6 +31,8 @@ namespace Panel
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddDbContext<Context>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=Panel;Integrated Security=False;User Id=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=True"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
