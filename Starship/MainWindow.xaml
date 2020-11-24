@@ -5,8 +5,186 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Starship"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Window1" Height="450" Width="800"
+        ResizeMode="NoResize"
+        FontSize="15"
+        WindowStyle="None"
+        Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/asserts/testicons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="MenuButtonStyle" TargetType="{x:Type RadioButton}">
+                <Setter Property="Background" Value="Silver"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <!--Top Left, Top Right, Bottom Right, Bottom Left-->
+                            <Border
+                                CornerRadius="10,0,0,10"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <!--Icon-->
+                                        <ColumnDefinition/>
+                                        <!--Content-->
+                                    </Grid.ColumnDefinitions>
+                                    <!--<Path Data="{TemplateBinding Tag}"
+                                         Fill="{TemplateBinding Foreground}"
+                                          Style="{StaticResource{x:Type Path}}">
+                                        
+                                    </Path>-->
+                                    <ContentPresenter
+                                        Grid.Column="1"
+                                        TextBlock.TextAlignment="Left"
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Content="{TemplateBinding Content}"
+                                        />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="#E1E4E6"/>
+                                    <Setter Property="Foreground" Value="Teal"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
 
-    </Grid>
+
+    <Border
+        Background="WhiteSmoke"
+        CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+
+                <!--Left Panel-->
+                <ColumnDefinition Width="300"/>
+
+                <!--Main Content-->
+                <ColumnDefinition/>
+
+                <!--Right Panel-->
+                <ColumnDefinition Width="100"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+                <!--Logo-->
+                <TextBlock
+                    FontSize="25"
+                    FontWeight="SemiBold"
+                    Text="Administrator Module"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                <Separator
+                    Grid.Row="1"
+                    VerticalAlignment="Bottom"
+                    Width="200"
+                    Background="LightGray"/>
+                <!--Profile Button-->
+                <StackPanel
+                    Grid.Row="1">
+                    <Button
+                        Content="Administrator">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="Width" Value="200"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border
+                                                CornerRadius="20"
+                                                Background="{TemplateBinding Background}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                                <Grid>
+                                                    <Ellipse
+                                                        HorizontalAlignment="Left"
+                                                        Width="40" 
+                                                        Height="40"
+                                                        Stretch="UniformToFill"
+                                                        StrokeThickness="2"
+                                                        Margin="2,0">
+                                                        
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush
+                                                                ImageSource="\asserts\3.jpg"/>
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                    <ContentPresenter
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Content="{TemplateBinding Content}">
+                                                    </ContentPresenter>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+
+                <!--Menu-->
+
+                <StackPanel
+                    Width="200"
+                    Grid.Row="2"
+                    Margin="0,10,0,5" Grid.RowSpan="2">
+                    <RadioButton
+                        x:Name="Home"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource home}"
+                        Content="Home"/>
+                    <RadioButton
+                        x:Name="Overview"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource statistics}"
+                        Content="Overview"/>
+                    <RadioButton
+                        x:Name="addcompany"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource home}"
+                        Content="Add Company"/>
+                    <RadioButton
+                        x:Name="manage"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource home}"
+                        Content="Manage Companies"/>
+                    <RadioButton
+                        x:Name="settings"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource settings}"
+                        Content="Settings"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Column="1">
+                <Frame x:Name="MainWindowFrame" NavigationUIVisibility="Hidden"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+    
 </Window>
