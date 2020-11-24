@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
 
 import IdeaService from '../services/IdeaService'
 
@@ -99,7 +100,7 @@ export default class AddIdea extends Component {
   render() {
     return (
       <div>
-        <h3>Create new Idea</h3>
+        <h3 className="pt-4">Create new Idea</h3>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formTitle">
             <Form.Label>Title</Form.Label>
@@ -115,25 +116,36 @@ export default class AddIdea extends Component {
               Minimum 20 characters
             </Form.Text>
           </Form.Group>
-          <Form.Group controlId="formEffort">
-            <Form.Label>Estimated effort</Form.Label>
-            <Form.Control name="effort" as="select" value={this.state.input["effort"]} onChange={this.handleChange}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="formImpact">
-            <Form.Label>Estimated impact</Form.Label>
-            <Form.Control name="impact" as="select" value={this.state.input["impact"]} onChange={this.handleChange}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </Form.Control>
+          <Form.Row>
+            <Form.Group controlId="formEffort" as={Col}>
+              <Form.Label>Estimated effort</Form.Label>
+              <Form.Control name="effort" as="select" value={this.state.input["effort"]} onChange={this.handleChange}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formImpact" as={Col}>
+              <Form.Label>Estimated impact</Form.Label>
+              <Form.Control name="impact" as="select" value={this.state.input["impact"]} onChange={this.handleChange}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
+          <Form.Group>
+            <Form.Label>Attach files</Form.Label>
+            <Form.File 
+              id="custom-file"
+              label="File input"
+              custom
+              multiple
+            />
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
