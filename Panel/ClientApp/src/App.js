@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
 
-import './custom.css'
+import AddIdea from './components/AddIdea';
+import NoMatch from './components/NoMatch';
+import { Test } from './components/Test';
+
+import './App.scss';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,9 +14,13 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
+        <Switch>
+          <Route exact path='/' component={AddIdea} />
+          <Route path="/test" component={Test}></Route>
+          <Route path="*">
+            <NoMatch></NoMatch>
+          </Route>
+        </Switch>
       </Layout>
     );
   }
