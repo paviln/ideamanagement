@@ -12,5 +12,6 @@ namespace Panel.Data
         }
 
         public DbSet<Idea> Ideas { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }
