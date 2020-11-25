@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Panel.Migrations
+namespace reactauth.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateIdeaSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,9 +10,12 @@ namespace Panel.Migrations
                 name: "Ideas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Effort = table.Column<string>(nullable: false),
+                    Impact = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

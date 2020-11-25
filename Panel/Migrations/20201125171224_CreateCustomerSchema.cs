@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Panel.Migrations
+namespace reactauth.Migrations
 {
-    public partial class AddCustomer : Migration
+    public partial class CreateCustomerSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
