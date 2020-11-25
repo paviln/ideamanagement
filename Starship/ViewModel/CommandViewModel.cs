@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Starship.ViewModel
 {
-    class CommandViewModel : ICommand
+    public class CommandViewModel : ICommand
     {
         private readonly Action _action;
 
