@@ -5,17 +5,23 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-
+/// <summary>
+/// ViewModel for Handling SideMenu 
+/// And Switching between pages on the MainContent
+/// DOES NOT WORK YET
+/// </summary>
 namespace Starship.ViewModel
 {
-    class SideMenuViewModel : MvxViewModel
+    public class SideMenuViewModel : MvxViewModel
     {
-        ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
+        //For Menu Icons - to be implemented - maybe. 
+       //  ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
     }
     public class MenuItemsData
     {
         public PathGeometry PathData { get; set; }
         public string MenuText { get; set; }
+        //For Submenu item logos
         public List<SubMenuItemsData> SubMenuList { get; set; }
 
         public MenuItemsData()
@@ -28,9 +34,9 @@ namespace Starship.ViewModel
         {
             string MT = MenuText.Replace(" ", string.Empty);
             if (!string.IsNullOrEmpty(MT))
-                navigateToPage(MT);
+                NavigateToPage(MT);
         }
-        private void navigateToPage(string Menu)
+        private void NavigateToPage(string Menu)
         {
             foreach (Window window in Application.Current.Windows)
             {
@@ -57,9 +63,9 @@ namespace Starship.ViewModel
         {
             string SMT = SubMenuText.Replace(" ", string.Empty);
             if (!string.IsNullOrEmpty(SMT))
-                navigateToPage(SMT);
+                NavigateToPage(SMT);
         }
-        private void navigateToPage(string Menu)
+        private void NavigateToPage(string Menu)
         {
             foreach (Window window in Application.Current.Windows)
             {

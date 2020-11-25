@@ -4,9 +4,11 @@ using System.Text;
 
 namespace Starship.Model
 {
-    public class Company
+    public class Customer
     {
         public int ID { get; set; }
-        public string CompanyName { get; set; }
+        public string CustomerName { get; set; }
+
+
     }
 }

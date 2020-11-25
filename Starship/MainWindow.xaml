@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800"
         ResizeMode="NoResize"
-        FontSize="15"
+        FontSize="14"
         WindowStyle="None"
         Background="Transparent">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--Dictionary For SideMenu Logos-->
                 <ResourceDictionary Source="/asserts/testicons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="MenuButtonStyle" TargetType="{x:Type RadioButton}">
@@ -34,6 +35,7 @@
                                         <ColumnDefinition/>
                                         <!--Content-->
                                     </Grid.ColumnDefinitions>
+                                    <!--Path to SideMenu Logos-->
                                     <!--<Path Data="{TemplateBinding Tag}"
                                          Fill="{TemplateBinding Foreground}"
                                           Style="{StaticResource{x:Type Path}}">
@@ -100,7 +102,7 @@
                     VerticalAlignment="Bottom"
                     Width="200"
                     Background="LightGray"/>
-                <!--Profile Button-->
+                <!--Profile-->
                 <StackPanel
                     Grid.Row="1">
                     <Button
@@ -148,7 +150,7 @@
                     </Button>
                 </StackPanel>
 
-                <!--Menu-->
+                <!--SideMenu Buttons-->
 
                 <StackPanel
                     Width="200"
@@ -181,6 +183,7 @@
                         Content="Settings"/>
                 </StackPanel>
             </Grid>
+            <!--Main Content StackPanel -->
             <StackPanel Grid.Column="1">
                 <Frame x:Name="MainWindowFrame" NavigationUIVisibility="Hidden"/>
             </StackPanel>
