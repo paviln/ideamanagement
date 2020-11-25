@@ -26,8 +26,6 @@
     <Resource Include="asserts\4.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="asserts\dropbox.png" />
-    <Resource Include="asserts\googledrive.png" />
   </ItemGroup>
 
 </Project>
