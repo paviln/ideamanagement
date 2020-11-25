@@ -15,67 +15,49 @@ namespace Starship.ViewModel
     public class SideMenuViewModel : MvxViewModel
     {
         //For Menu Icons - to be implemented - maybe. 
-       //  ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
-    }
-    public class MenuItemsData
-    {
-        public PathGeometry PathData { get; set; }
-        public string MenuText { get; set; }
-        //For Submenu item logos
-        public List<SubMenuItemsData> SubMenuList { get; set; }
-
-        public MenuItemsData()
+        ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
+        public List<MenuItemsData> MenuList
         {
-            Command = new CommandViewModel(Execute);
-        }
-        public ICommand Command { get; }
-
-        private void Execute()
-        {
-            string MT = MenuText.Replace(" ", string.Empty);
-            if (!string.IsNullOrEmpty(MT))
-                NavigateToPage(MT);
-        }
-        private void NavigateToPage(string Menu)
-        {
-            foreach (Window window in Application.Current.Windows)
+            get
             {
-                if (window.GetType() == typeof(MainWindow))
+                return new List<MenuItemsData>
                 {
-                    (window as MainWindow).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "/View/Pages/", Menu, ".xaml"), UriKind.RelativeOrAbsolute));
+                    //MainMenu without SubMenu Button 
+                    new MenuItemsData(){MenuText="Home"},
+                    new MenuItemsData(){MenuText="Overview"},
+                    new MenuItemsData(){MenuText="Add Customer"},
+                    new MenuItemsData(){MenuText="Manage Customer"},
+                    new MenuItemsData(){MenuText="Settings"} };
+            }
+        }
+        public class MenuItemsData
+        {
+            //Icon data
+            public PathGeometry PathData { get; set; }
+            public string MenuText { get; set; }
+
+            public MenuItemsData()
+            {
+                Command = new CommandViewModel(Execute);
+            }
+            public ICommand Command { get; }
+
+            private void Execute()
+            {
+                string MT = MenuText.Replace(" ", string.Empty);
+                if (!string.IsNullOrEmpty(MT))
+                    NavigateToPage(MT);
+            }
+            private void NavigateToPage(string Menu)
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.GetType() == typeof(MainWindow))
+                    {
+                        (window as MainWindow).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "View/Pages/", Menu, ".xaml"), UriKind.RelativeOrAbsolute));
+                    }
                 }
             }
         }
     }
-  
-    public class SubMenuItemsData
-    {
-        public PathGeometry PathData { get; set; }
-        public string SubMenuText { get; set; }
-
-        public SubMenuItemsData()
-        {
-            SubMenuCommand = new CommandViewModel(Execute);
-        }
-        public ICommand SubMenuCommand { get; }
-
-        private void Execute()
-        {
-            string SMT = SubMenuText.Replace(" ", string.Empty);
-            if (!string.IsNullOrEmpty(SMT))
-                NavigateToPage(SMT);
-        }
-        private void NavigateToPage(string Menu)
-        {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(MainWindow))
-                {
-                    (window as MainWindow).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "View/Pages/", Menu, ".xaml"), UriKind.RelativeOrAbsolute));
-                }
-            }
-        }
-    }
-
 }
-
