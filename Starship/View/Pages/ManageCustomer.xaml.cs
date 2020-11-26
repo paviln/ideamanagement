@@ -1,9 +1,6 @@
-﻿using Starship.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,17 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Starship
+namespace Starship.View.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MangeCustomer.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ManageCustomer : Page
     {
-        public MainWindow()
+        public ManageCustomer()
         {
             InitializeComponent();
-            DataContext = new SideMenuViewModel();
         }
     }
 }
