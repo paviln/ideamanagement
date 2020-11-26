@@ -12,7 +12,9 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import './App.scss';
 
 export default class App extends Component {
-  static displayName = App.name;
+  constructor(props) {
+    super(props);
+  }
 
   render () {
     return (

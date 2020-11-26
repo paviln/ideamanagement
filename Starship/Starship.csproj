@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="asserts\1.png" />
-    <None Remove="asserts\2.png" />
     <None Remove="asserts\3.jpg" />
-    <None Remove="asserts\4.jpg" />
     <None Remove="asserts\dropbox.png" />
     <None Remove="asserts\googledrive.png" />
   </ItemGroup>
@@ -20,12 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="asserts\1.png" />
-    <Resource Include="asserts\2.png" />
     <Resource Include="asserts\3.jpg" />
-    <Resource Include="asserts\4.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>
