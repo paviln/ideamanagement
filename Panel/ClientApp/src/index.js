@@ -11,7 +11,7 @@ import NoAccess from './components/NoAccess';
 var baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
-var url = window.location.href;
+/* var url = window.location.href;
 url = url.split("/");
 url = url[3];
 
@@ -43,6 +43,12 @@ function noAccess() {
   ReactDOM.render(
     <NoAccess></NoAccess>,
     rootElement);
-}
+} */
+
+ReactDOM.render(
+  <BrowserRouter basename={baseUrl}>
+    <App />
+  </BrowserRouter>,
+  rootElement);
 
 registerServiceWorker();
