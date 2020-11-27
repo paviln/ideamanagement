@@ -56,11 +56,6 @@
             <DataTemplate>
                 <StackPanel>
                     <!--Main Menu Button-->
-                    <!--You might be thinking why we are using RadioButton instead of Normal Button here... Well, there are 2 reasons for that
-                    1) Radio Buttons have GroupName property which will help us achieve one selection of button at a time.. i will show you later what 
-                    i mean by that...
-                    2) Radio buttons have IsChecked property which we can use to benefit for collapsing / showing our SubMenus
-                    -->
                     <RadioButton x:Name="Menu"
                                  Content="{Binding MenuText}"
                                  GroupName="MainMenu"

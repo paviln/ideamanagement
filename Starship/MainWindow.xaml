@@ -32,7 +32,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    
+
                 </Grid.RowDefinitions>
 
 
@@ -101,5 +101,4 @@
             <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
         </Grid>
     </Border>
-    
 </Window>
