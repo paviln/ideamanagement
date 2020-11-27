@@ -6,20 +6,24 @@ import axios from 'axios';
 import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
 import { Test } from './components/Test';
-import Login from './components/Login';
+import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
+import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
+import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 
 import './App.scss';
 
 export default class App extends Component {
-  static displayName = App.name;
+  constructor(props) {
+    super(props);
+  }
 
   render () {
     return (
       <Layout>
         <Switch>
           <Route exact path='/' component={AddIdea} />
-          <Route path="/test" component={Test}></Route>
-          <Route path="/login" component={Login} />
+          <AuthorizeRoute path='/Test' component={Test} />
+          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           <Route path="*">
             <NoMatch></NoMatch>
           </Route>

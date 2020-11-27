@@ -7,25 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="asserts\1.png" />
-    <None Remove="asserts\2.png" />
     <None Remove="asserts\3.jpg" />
-    <None Remove="asserts\4.jpg" />
     <None Remove="asserts\dropbox.png" />
     <None Remove="asserts\googledrive.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MvvmCross" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="asserts\1.png" />
-    <Resource Include="asserts\2.png" />
+    <ProjectReference Include="..\DataLibrary\EFDataAccessLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="asserts\3.jpg" />
-    <Resource Include="asserts\4.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

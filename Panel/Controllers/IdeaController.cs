@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using Panel.Data;
 using Panel.Models;
 
@@ -14,9 +15,9 @@ namespace Panel.Controllers
     [ApiController]
     public class IdeaController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public IdeaController(Context context)
+        public IdeaController(ApplicationDbContext context)
         {
             _context = context;
         }

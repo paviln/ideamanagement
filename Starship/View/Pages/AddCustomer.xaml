@@ -9,6 +9,29 @@
       Title="AddCustomer">
 
     <Grid>
-        <TextBlock FontSize="30" Text="This is Add Customer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock FontSize="30" 
+                   Text="This is Add Customer" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
+        <TextBox 
+            x:Name="NameTxt" 
+            HorizontalAlignment="Left" 
+            Margin="90,100,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Width="120"/>
+        <TextBox 
+            HorizontalAlignment="Left" 
+            Margin="90,144,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Width="120"/>
+        <Button 
+            x:Name="addBtn" 
+            Content="Button" 
+            HorizontalAlignment="Left" 
+            Margin="90,190,0,0" 
+            VerticalAlignment="Top" 
+            Width="120"/>
     </Grid>
 </Page>

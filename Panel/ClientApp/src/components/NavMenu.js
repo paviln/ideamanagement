@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import { LoginMenu } from './api-authorization/LoginMenu';
+
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -20,7 +23,7 @@ export class NavMenu extends Component {
                 <Nav.Link as={Link} to="/">Idea</Nav.Link>
                 <Nav.Link as={Link} to="/">The overview</Nav.Link>
                 <Nav.Link as={Link} to="/">Browse ideas</Nav.Link>
-                <Nav.Link as={Link} to="/login">Manager login</Nav.Link>
+                <LoginMenu></LoginMenu>
               </Nav>
             </Navbar.Collapse>
           </Container>
