@@ -20,7 +20,7 @@ export class NavMenu extends Component {
                 <Nav.Link as={Link} to="/">Idea</Nav.Link>
                 <Nav.Link as={Link} to="/">The overview</Nav.Link>
                 <Nav.Link as={Link} to="/">Browse ideas</Nav.Link>
-                <Nav.Link as={Link} to="/">Manager login</Nav.Link>
+                <Nav.Link as={Link} to="/login">Manager login</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
