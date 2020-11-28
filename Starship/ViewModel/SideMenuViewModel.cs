@@ -8,14 +8,14 @@ using System.Windows.Media;
 /// <summary>
 /// ViewModel for Handling SideMenu 
 /// And Switching between pages on the MainContent
-/// DOES NOT WORK YET
 /// </summary>
 namespace Starship.ViewModel
 {
     public class SideMenuViewModel : MvxViewModel
     {
+
         //For Menu Icons - to be implemented - maybe. 
-        ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
+        //ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         public List<MenuItemsData> MenuList
         {
             get

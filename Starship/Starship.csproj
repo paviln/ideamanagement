@@ -4,12 +4,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AssemblyName>IdeaDesktopApp</AssemblyName>
+    <RootNamespace>Starship</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="asserts\3.jpg" />
-    <None Remove="asserts\dropbox.png" />
-    <None Remove="asserts\googledrive.png" />
+    <None Remove="Assets\3.jpg" />
+    <None Remove="Assets\dropbox.png" />
+    <None Remove="Assets\googledrive.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,14 +24,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MvvmCross" Version="7.1.2" />
+    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataLibrary\EFDataAccessLibrary.csproj" />
+    <ProjectReference Include="..\IdeaManagement.Domain\IdeaManagement.Domain.csproj" />
+    <ProjectReference Include="..\IdeaManagement.EF\IdeaManagement.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="asserts\3.jpg" />
+    <Resource Include="Assets\3.jpg" />
   </ItemGroup>
 
 </Project>
