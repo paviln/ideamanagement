@@ -3,6 +3,7 @@ import { Component } from 'react';
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
+import { Redirect } from 'react-router-dom';
 
 // The main responsibility of this component is to handle the user's logout process.
 // This is the starting point for the logout process, which is usually initiated when a
@@ -48,7 +49,7 @@ export class Logout extends Component {
             return <div></div>
         }
         if (!!message) {
-            return (<div>{message}</div>);
+            return (<Redirect to="/" />);
         } else {
             const action = this.props.action;
             switch (action) {
@@ -57,7 +58,7 @@ export class Logout extends Component {
                 case LogoutActions.LogoutCallback:
                     return (<div>Processing logout callback</div>);
                 case LogoutActions.LoggedOut:
-                    return (<div>{message}</div>);
+                    return (<Redirect to="/" />);
                 default:
                     throw new Error(`Invalid action '${action}'`);
             }

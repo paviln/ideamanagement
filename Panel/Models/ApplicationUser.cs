@@ -8,5 +8,7 @@ namespace Panel.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        [PersonalData]
+        public Site Site { get; set; }
     }
 }
