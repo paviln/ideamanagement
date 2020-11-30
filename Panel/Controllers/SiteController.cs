@@ -108,13 +108,8 @@ namespace Panel.Controllers
             var site = await _context
             .Sites
             .Where(s => s.Link == link)
-            .FirstAsync();
-
-            if (site == null)
-            {
-                return NotFound();
-            }
-            
+            .FirstOrDefaultAsync();
+                        
             return site;
         }
 

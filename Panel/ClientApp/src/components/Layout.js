@@ -3,12 +3,14 @@ import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
 
 export class Layout extends Component {
-  static displayName = Layout.name;
+  constructor (props) {
+    super(props);
+  }
 
   render () {
     return (
       <div>
-        <NavMenu />
+        <NavMenu prefix={this.props.prefix}/>
         <Container>
           {this.props.children}
         </Container>
