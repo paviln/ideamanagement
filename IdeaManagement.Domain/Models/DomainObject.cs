@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 /// <summary>
 /// Domain Model
 /// Representing 
@@ -8,6 +6,8 @@ using System.Text;
 /// For CRUD operations
 /// in IdeaManagement.EF
 /// Project
+/// Giving implicilty ID To other Models
+/// that implements this model.
 /// </summary>
 namespace IdeaManagement.Domain.Models
 {
