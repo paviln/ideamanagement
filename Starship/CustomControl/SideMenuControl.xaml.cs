@@ -10,7 +10,7 @@ namespace Starship.CustomControl
         public SideMenuControl()
         {
             InitializeComponent();
-            DataContext = new SideMenuViewModel();
+            
         }
     }
 }

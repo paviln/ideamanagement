@@ -2,6 +2,7 @@
 using IdeaManagement.Domain.Services;
 using IdeaManagement.EF.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +33,13 @@ namespace IdeaManagement.EF.Services
         /// <returns></returns>
         public async Task<T> Create(T entity)
         {
-            return await _writeDataService.Create(entity);
+            using(IdeaManagementDbContext context = _contextFactory.CreateDbContext())
+            {
+                EntityEntry<T> createdResult = await context.Set<T>().AddAsync(entity);
+                await context.SaveChangesAsync();
+                return createdResult.Entity;
+            }
+            //return await _writeDataService.Create(entity);
         }
         /// <summary>
         /// Method for deleting an entity by id
@@ -41,7 +48,15 @@ namespace IdeaManagement.EF.Services
         /// <returns></returns>
         public async Task<bool> Delete(int id)
         {
-            return await _writeDataService.Delete(id); ;
+            using (IdeaManagementDbContext context = _contextFactory.CreateDbContext())
+            {
+                T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
+                context.Set<T>().Remove(entity);
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+            //return await _writeDataService.Delete(id); ;
         }
         /// <summary>
         /// Method for fetching an entity by id
@@ -50,11 +65,18 @@ namespace IdeaManagement.EF.Services
         /// <returns></returns>
         public async Task<T> Get(int id)
         {
+
             using (IdeaManagementDbContext context = _contextFactory.CreateDbContext())
             {
                 T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
+
                 return entity;
             }
+            //using (IdeaManagementDbContext context = _contextFactory.CreateDbContext())
+            //{
+            //    T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
+            //    return entity;
+            //}
         }
         /// <summary>
         /// Method for fetching all entities
