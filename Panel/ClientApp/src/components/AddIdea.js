@@ -4,16 +4,18 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 
 import IdeaService from '../services/IdeaService'
+import axios from 'axios'
 
 export default class AddIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: {
+      idea: {
         title: '',
         description: '',
         effort: '1',
-        impact: '1'
+        impact: '1',
+        files: []
       },
       errors: {
         title: false,
@@ -27,41 +29,54 @@ export default class AddIdea extends Component {
   }
 
   handleChange(event) {
-    const input = this.state.input;
+    const idea = this.state.idea;
+
     const target = event.target;
-    const value = target.value;
     const name = target.name;
 
-    input[name] = value;
+    if (name === "files" ) {
+      for (let i = 0; i < target.files.length; i++) {
+        const element = target.files[i];
+        idea.files.push(element);
+      }
+    } else {
+      idea[name] = target.value;
+    }
 
-    this.setState({
-      input: input 
-    });
+    this.setState(idea);
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const input = this.state.input;
+    const idea = this.state.idea;
 
-    const idea = {
-      title: input["title"],
-      description: input["description"],
-      effort: input["effort"],
-      impact: input["impact"]
+    var fileData = new FormData();
+
+    var files = [];
+    for (let i = 0; i < idea.files.length; i++) {
+      files.push(idea.files[i]);
     }
+    fileData.append('files', files);
+
+
+    // fileData.append('title', idea['title']);
+    // fileData.append('description', idea['description']);
+    // fileData.append('effort', idea['effort']);
+    //fileData.append('impact', idea['impact']);
+    console.log(fileData);
 
     if (this.validate(idea)) {
-      IdeaService.create(idea)
+      IdeaService.create(fileData)
       .then(responce => {
-        const input = {};
+        const idea = {};
   
-        input["title"] = "";
-        input["description"] = "";
-        input["effort"] = "1";
-        input["impact"] = "1";
-  
-        this.setState({input: input});
+        idea["title"] = "";
+        idea["description"] = "";
+        idea["effort"] = "1";
+        idea["impact"] = "1";
+
+        //this.setState({idea: idea});
       })
       .catch(error => {
         console.log(error.response.status);
@@ -70,22 +85,22 @@ export default class AddIdea extends Component {
   }
 
   validate(idea) {
-    var isValid = false;
+    var isValid = true;
     let errors = this.state.errors;
 
-    if (idea["title"].length <= 5) {
-      this.state.errors["title"] = true;
+    if (idea["title"].length < 5) {
+      errors["title"] = true;
+      isValid = false;
     }
     else {
       errors["title"] = false;
-      isValid = true;
     }
     if (idea["description"].length <= 20) {
       errors["description"] = true;
+      isValid = false;
     }
     else {
       errors["description"] = false;
-      isValid = true;
     }
 
     this.setState({errors: errors})
@@ -104,14 +119,14 @@ export default class AddIdea extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formTitle">
             <Form.Label>Title</Form.Label>
-            <Form.Control className={this.state.errors["description"] ? 'is-invalid' : ''} name="title" type="text" value={this.state.input["title"]} onChange={this.handleChange} />
+            <Form.Control className={this.state.errors["title"] ? 'is-invalid' : ''} name="title" type="text" value={this.state.idea["title"]} onChange={this.handleChange} />
             <Form.Text className="text-muted">
               Minimum 5 characters
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formDesciption">
             <Form.Label>Description</Form.Label>
-            <Form.Control className={this.state.errors["description"] ? 'is-invalid' : ''} name="description" as="textarea" rows={3} value={this.state.input["description"]} onChange={this.handleChange} />
+            <Form.Control className={this.state.errors["description"] ? 'is-invalid' : ''} name="description" as="textarea" rows={3} value={this.state.idea["description"]} onChange={this.handleChange} />
             <Form.Text className="text-muted">
               Minimum 20 characters
             </Form.Text>
@@ -119,7 +134,7 @@ export default class AddIdea extends Component {
           <Form.Row>
             <Form.Group controlId="formEffort" as={Col}>
               <Form.Label>Estimated effort</Form.Label>
-              <Form.Control name="effort" as="select" value={this.state.input["effort"]} onChange={this.handleChange}>
+              <Form.Control name="effort" as="select" value={this.state.idea["effort"]} onChange={this.handleChange}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -129,7 +144,7 @@ export default class AddIdea extends Component {
             </Form.Group>
             <Form.Group controlId="formImpact" as={Col}>
               <Form.Label>Estimated impact</Form.Label>
-              <Form.Control name="impact" as="select" value={this.state.input["impact"]} onChange={this.handleChange}>
+              <Form.Control name="impact" as="select" value={this.state.idea["impact"]} onChange={this.handleChange}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -143,8 +158,10 @@ export default class AddIdea extends Component {
             <Form.File 
               id="custom-file"
               label="File input"
+              name="files"
               custom
               multiple
+              onChange={this.handleChange}
             />
           </Form.Group>
           <Button variant="primary" type="submit">

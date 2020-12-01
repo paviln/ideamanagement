@@ -9,7 +9,10 @@ const get = id => {
 };
 
 const create = data => {
-  return http.post("/idea", data);
+  const config = {
+    headers: { 'content-type': 'multipart/form-data' }
+  }
+  return http.post("/idea", data, config);
 };
 
 const update = (id, data) => {

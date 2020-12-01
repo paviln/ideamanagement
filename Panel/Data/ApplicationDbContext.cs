@@ -22,6 +22,6 @@ namespace Panel.Data
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Site> Sites { get; set; }
-
+        public DbSet<File> Files { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panel.Data;
 
 namespace reactauth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201130135118_CreateFileSchema")]
+    partial class CreateFileSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,30 +326,27 @@ namespace reactauth.Migrations
 
             modelBuilder.Entity("Panel.Models.File", b =>
                 {
-                    b.Property<int>("FileId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<byte[]>("Data")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("IdeaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("FileId");
-
-                    b.HasIndex("IdeaId");
+                    b.HasKey("Id");
 
                     b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Panel.Models.Idea", b =>
                 {
-                    b.Property<int>("IdeaId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -368,7 +367,7 @@ namespace reactauth.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdeaId");
+                    b.HasKey("Id");
 
                     b.ToTable("Ideas");
                 });
@@ -445,15 +444,6 @@ namespace reactauth.Migrations
                     b.HasOne("Panel.Models.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId");
-                });
-
-            modelBuilder.Entity("Panel.Models.File", b =>
-                {
-                    b.HasOne("Panel.Models.Idea", "Idea")
-                        .WithMany("Files")
-                        .HasForeignKey("IdeaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

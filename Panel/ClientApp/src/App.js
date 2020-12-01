@@ -74,7 +74,7 @@ export default class App extends Component {
       <Layout prefix={prefix}>
         <Switch>
           <Route exact path={prefix} component={AddIdea} />
-          <Route path='/test' component={Test} />
+          <Route path={prefix + '/test'} component={Test} />
           <AuthorizeRoute path='/manager' component={Manager} />
           <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           <Route path="*">

@@ -1,3 +1,5 @@
+using System.Net;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +51,7 @@ namespace Panel.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutIdea(int id, Idea idea)
         {
-            if (id != idea.Id)
+            if (id != idea.IdeaId)
             {
                 return BadRequest();
             }
@@ -79,12 +81,31 @@ namespace Panel.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Idea>> PostIdea(Idea idea)
+        public async Task<ActionResult<Idea>> PostIdea([FromForm]List<IFormFile> files)
         {
-            _context.Ideas.Add(idea);
+      /*       _context.Ideas.Add(idea);
+            await _context.SaveChangesAsync(); */
+
+            foreach (var element in files)
+            {
+                Models.File file = new Models.File();
+                file.Name = element.Name;
+
+                using (var ms = new MemoryStream())
+                {
+                    element.CopyTo(ms);
+                    file.Data = ms.ToArray();
+                }
+
+                //file.Idea = idea;
+
+                _context.Files.Add(file);
+            }
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetIdea", new { id = idea.Id }, idea);
+            //return CreatedAtAction("GetIdea", new { id = idea.IdeaId }, idea);
+            return null;
         }
 
         // DELETE: api/Idea/5
@@ -105,7 +126,7 @@ namespace Panel.Controllers
 
         private bool IdeaExists(int id)
         {
-            return _context.Ideas.Any(e => e.Id == id);
+            return _context.Ideas.Any(e => e.IdeaId == id);
         }
     }
 }
