@@ -22,9 +22,11 @@ namespace Panel.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromForm] FileModel file) 
         {
-            Idea idea = new Idea();
+            Idea idea = await _context.Ideas.FirstOrDefaultAsync();
             
             Models.File file1 = new Models.File();
+            file1.Idea = idea;
+            file1.IdeaId = idea.IdeaId;
             file1.Name = file.FileName;
             using (var ms = new MemoryStream())
                 {
