@@ -49,8 +49,10 @@ export default class AddIdea extends Component {
     const idea = this.state.idea;
 
     var fileData = new FormData();
-    for (let i = 0; i < idea.files.length; i++) {
-      fileData.append('files', idea.files[i]);
+    if (idea.files.length > 0) {
+      for (let i = 0; i < idea.files.length; i++) {
+        fileData.append('files', idea.files[i]);
+      }
     }
 
     fileData.append('title', idea['title']);
