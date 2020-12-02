@@ -35,10 +35,7 @@ export default class AddIdea extends Component {
     const name = target.name;
 
     if (name === "files" ) {
-      for (let i = 0; i < target.files.length; i++) {
-        const element = target.files[i];
-        idea.files.push(element);
-      }
+      idea[name] = target.files;
     } else {
       idea[name] = target.value;
     }
@@ -52,18 +49,14 @@ export default class AddIdea extends Component {
     const idea = this.state.idea;
 
     var fileData = new FormData();
-
-    var files = [];
     for (let i = 0; i < idea.files.length; i++) {
-      files.push(idea.files[i]);
+      fileData.append('files', idea.files[i]);
     }
-    fileData.append('files', files);
 
-
-    // fileData.append('title', idea['title']);
-    // fileData.append('description', idea['description']);
-    // fileData.append('effort', idea['effort']);
-    //fileData.append('impact', idea['impact']);
+    fileData.append('title', idea['title']);
+    fileData.append('description', idea['description']);
+    fileData.append('effort', idea['effort']);
+    fileData.append('impact', idea['impact']);
     console.log(fileData);
 
     if (this.validate(idea)) {
@@ -76,7 +69,7 @@ export default class AddIdea extends Component {
         idea["effort"] = "1";
         idea["impact"] = "1";
 
-        //this.setState({idea: idea});
+        this.setState({idea: idea});
       })
       .catch(error => {
         console.log(error.response.status);

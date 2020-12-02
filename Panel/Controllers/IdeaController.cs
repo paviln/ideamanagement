@@ -81,31 +81,27 @@ namespace Panel.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Idea>> PostIdea([FromForm]List<IFormFile> files)
+        public async Task<ActionResult<Idea>> PostIdea([FromForm] Idea idea, [FromForm]List<IFormFile> files)
         {
-      /*       _context.Ideas.Add(idea);
-            await _context.SaveChangesAsync(); */
-
-            foreach (var element in files)
+            idea.Files = new List<Models.File>();
+            foreach (var file in files)
             {
-                Models.File file = new Models.File();
-                file.Name = element.Name;
-
+                Models.File f = new Models.File();
+                f.IdeaId = idea.IdeaId;
+                f.Name = file.Name;
                 using (var ms = new MemoryStream())
-                {
-                    element.CopyTo(ms);
-                    file.Data = ms.ToArray();
-                }
-
-                //file.Idea = idea;
-
-                _context.Files.Add(file);
+                    {
+                        file.CopyTo(ms);
+                        f.Data = ms.ToArray();
+                    }
+                idea.Files.Add(f);
             }
+
+            _context.Ideas.Add(idea);
 
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetIdea", new { id = idea.IdeaId }, idea);
-            return null;
+            return CreatedAtAction("GetIdea", new { id = idea.IdeaId }, idea);
         }
 
         // DELETE: api/Idea/5
