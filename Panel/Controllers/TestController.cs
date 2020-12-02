@@ -20,17 +20,17 @@ namespace Panel.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult> Post([FromForm] FileModel file) 
+        public async Task<ActionResult> Post([FromForm] IFormFile files) 
         {
             Idea idea = await _context.Ideas.FirstOrDefaultAsync();
             
             Models.File file1 = new Models.File();
             file1.Idea = idea;
             file1.IdeaId = idea.IdeaId;
-            file1.Name = file.FileName;
+            file1.Name = files.Name;
             using (var ms = new MemoryStream())
                 {
-                    file.FormFile.CopyTo(ms);
+                    files.CopyTo(ms);
                     file1.Data = ms.ToArray();
                 }
             _context.Files.Add(file1);

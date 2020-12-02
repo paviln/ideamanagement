@@ -17,8 +17,7 @@ const Test = () => {
     e.preventDefault();
     const url = 'https://localhost:5001/api/test';
     const formData = new FormData();
-    formData.append("formFile", file);
-    formData.append("fileName", fillName);
+    formData.append('files', file);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
