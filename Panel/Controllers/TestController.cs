@@ -1,5 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
@@ -20,20 +21,23 @@ namespace Panel.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult> Post([FromForm] IFormFile files) 
+        public async Task<ActionResult> Post([FromForm] List<IFormFile> files) 
         {
             Idea idea = await _context.Ideas.FirstOrDefaultAsync();
             
-            Models.File file1 = new Models.File();
-            file1.Idea = idea;
-            file1.IdeaId = idea.IdeaId;
-            file1.Name = files.Name;
-            using (var ms = new MemoryStream())
-                {
-                    files.CopyTo(ms);
-                    file1.Data = ms.ToArray();
-                }
-            _context.Files.Add(file1);
+            foreach (var file in files)
+            {
+                Models.File f = new Models.File();
+                f.Idea = idea;
+                f.IdeaId = idea.IdeaId;
+                f.Name = file.Name;
+                using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        f.Data = ms.ToArray();
+                    }
+                _context.Files.Add(f);
+            }
 
             await _context.SaveChangesAsync();
 

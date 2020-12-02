@@ -4,20 +4,21 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 const Test = () => {
-  const [file, setFile] = useState();
-  const [fillName, setFileName] = useState();
+  const [files, setFiles] = useState();
 
   const handleChange = (e) => {
-    console.log(e.target.files[0]);
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
+    console.log(e.target.files);
+    setFiles(e.target.files);
   };
 
   const uploadFile = async (e) => {
     e.preventDefault();
     const url = 'https://localhost:5001/api/test';
     const formData = new FormData();
-    formData.append('files', file);
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+    console.log(formData);
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
@@ -38,6 +39,7 @@ const Test = () => {
             label="File input"
             name="files"
             custom
+            multiple
             onChange={handleChange}
           />
         </Form.Group>
