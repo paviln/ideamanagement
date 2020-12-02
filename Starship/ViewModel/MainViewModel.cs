@@ -1,4 +1,5 @@
 ﻿using MvvmCross.ViewModels;
+using Starship.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,10 @@ using System.Windows.Media;
 /// </summary>
 namespace Starship.ViewModel
 {
-    public class SideMenuViewModel : MvxViewModel
+    /// <summary>
+    /// TO DO REFACTOR TO USE STATE PATTERN
+    /// </summary>
+    public class MainViewModel
     {
 
         //For Menu Icons - to be implemented - maybe. 
@@ -27,17 +31,24 @@ namespace Starship.ViewModel
                     new MenuItemsData(){MenuText="Overview"},
                     new MenuItemsData(){MenuText="Add Customer"},
                     new MenuItemsData(){MenuText="Manage Customer"},
-                    new MenuItemsData(){MenuText="Settings"} };
+                    new MenuItemsData(){MenuText="Log Out"} };
             }
         }
-        public class MenuItemsData
+        public class MenuItemsData : MvxViewModel
         {
+            private string _menuText;
             //Icon data
             public PathGeometry PathData { get; set; }
-            public string MenuText { get; set; }
+           
+            public string MenuText
+            {
+              get { return _menuText; }
+              set { SetProperty(ref _menuText, value); }
+             }
 
             public MenuItemsData()
             {
+                
                 Command = new CommandViewModel(Execute);
             }
             public ICommand Command { get; }

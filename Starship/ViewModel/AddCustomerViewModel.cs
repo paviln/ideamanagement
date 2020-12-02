@@ -1,45 +1,35 @@
-﻿using MvvmCross.ViewModels;
-
+﻿using IdeaManagement.Domain.Services;
+using MvvmCross.ViewModels;
+using Starship.Commands;
+using Starship.State.Validator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-
+/// <summary>
+/// Class will be refactored
+/// </summary>
 namespace Starship.ViewModel
 {
     public class AddCustomerViewModel : MvxViewModel
     {
-        //private ObservableCollection<CustomerDTO> _customer = new ObservableCollection<CustomerDTO>();
-
-
-        //public ObservableCollection<CustomerDTO> Customer
-        //{
-        //    get { return _customer; }
-        //    set { SetProperty(ref _customer, value); }
-        //}
-
         private string _customerName;
+        public AddCustomerViewModel()
+        {
+
+        }
 
         public string CustomerName
         {
             get { return _customerName; }
             set { SetProperty(ref _customerName, value); }
         }
-        public ICommand Command { get; }
-        public AddCustomerViewModel()
+        public ICommand AddCustomerCommand { get; }
+        public AddCustomerViewModel(IValidator validator)
         {
-            Command = new CommandViewModel(Execute);
+            AddCustomerCommand = new AddCustomerCommand(this, validator);
         }
-
-        private void Execute()
-        {
-            string sql = "insert into Customer (CustomerName) values (@CustomerName);";
-            
-            //MessageBox.Show(CustomerName);
-        }
-     
-
     }
 }
