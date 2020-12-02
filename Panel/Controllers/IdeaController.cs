@@ -88,7 +88,7 @@ namespace Panel.Controllers
             {
                 Models.File f = new Models.File();
                 f.IdeaId = idea.IdeaId;
-                f.Name = file.Name;
+                f.Name = file.FileName;
                 using (var ms = new MemoryStream())
                     {
                         file.CopyTo(ms);
