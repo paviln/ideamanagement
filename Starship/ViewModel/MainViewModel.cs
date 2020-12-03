@@ -1,8 +1,11 @@
-﻿using MvvmCross.ViewModels;
-using Starship.Commands;
+﻿using MvvmCross.Commands;
+using MvvmCross.Platforms.Wpf.Views;
+using MvvmCross.ViewModels;
+using Starship.Command;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,11 +18,8 @@ namespace Starship.ViewModel
     /// <summary>
     /// TO DO REFACTOR TO USE STATE PATTERN
     /// </summary>
-    public class MainViewModel
+    public class MainViewModel : MvxViewModel
     {
-
-        //For Menu Icons - to be implemented - maybe. 
-        //ResourceDictionary dict = Application.LoadComponent(new Uri("/Starship;component/asserts/testicons.xaml", UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         public List<MenuItemsData> MenuList
         {
             get
@@ -27,8 +27,7 @@ namespace Starship.ViewModel
                 return new List<MenuItemsData>
                 {
                     //MainMenu without SubMenu Button 
-                    new MenuItemsData(){MenuText="Home"},
-                    new MenuItemsData(){MenuText="Overview"},
+                    new MenuItemsData(){MenuText="Home"},                    
                     new MenuItemsData(){MenuText="Add Customer"},
                     new MenuItemsData(){MenuText="Manage Customer"},
                     new MenuItemsData(){MenuText="Log Out"} };
@@ -36,10 +35,15 @@ namespace Starship.ViewModel
         }
         public class MenuItemsData : MvxViewModel
         {
+            private bool _isBusy;
+
+            public bool IsBusy
+            {
+                get { return _isBusy; }
+                set { SetProperty(ref _isBusy, value); }
+            }
             private string _menuText;
-            //Icon data
-            public PathGeometry PathData { get; set; }
-           
+          
             public string MenuText
             {
               get { return _menuText; }
@@ -48,10 +52,30 @@ namespace Starship.ViewModel
 
             public MenuItemsData()
             {
-                
-                Command = new CommandViewModel(Execute);
+                NavigatePageCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
             }
-            public ICommand Command { get; }
+            public IAsyncCommand NavigatePageCmd { get; private set; }
+
+            private async Task ExecuteSubmitAsync()
+            {
+                try
+                {
+                    IsBusy = true;
+                    Execute();
+                    //CustomerAddResult customerAddResult = await _validateService.AddCustomer(CustomerName);
+
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
+
+            private bool CanExecuteSubmit()
+            {
+                return !IsBusy;
+            }
+
 
             private void Execute()
             {

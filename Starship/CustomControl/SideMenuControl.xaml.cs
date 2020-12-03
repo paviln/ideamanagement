@@ -1,4 +1,5 @@
 ﻿using Starship.ViewModel;
+using System;
 using System.Windows.Controls;
 namespace Starship.CustomControl
 {
@@ -7,10 +8,12 @@ namespace Starship.CustomControl
     /// </summary>
     public partial class SideMenuControl : UserControl
     {
-        public SideMenuControl()
-        {
+        public SideMenuControl() 
+        { 
             InitializeComponent();
-            
+            DataContext = new MainViewModel();
         }
+      
+
     }
 }

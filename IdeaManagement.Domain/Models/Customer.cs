@@ -11,6 +11,7 @@ namespace IdeaManagement.Domain.Models
 {
     public class Customer : DomainObject
     {
+
         [Required]
         public string CustomerName { get; set; }
 
