@@ -108,11 +108,6 @@ export default class AddIdea extends Component {
   }
 
   render() {
-    const side = this.props.sideId;
-    if (side.sideId == undefined) {
-      console.log('omg');
-    }
-    console.log(side);
     return (
       <div>
         <h3 className="pt-4">Create new Idea</h3>

@@ -7,6 +7,7 @@ import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 //import authService from './components/api-authorization/AuthorizeService';
 import siteService from './services/SiteService';
+
 import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
 //import Test from './components/Test';
@@ -22,8 +23,8 @@ export default class App extends Component {
     this.state = {
       ready: false,
       authenticated: false,
-      side: {
-        sideId: null,
+      site: {
+        siteId: null,
         link: ''
       }
     }
@@ -34,40 +35,29 @@ export default class App extends Component {
     url = url.split("/");
     url = url[3];
 
-    siteService.get(2)
-    .then(response => {
-      const data = response.data;
-      console.log(data['sideId']);
-      this.setState({
-        side: data
+    if (url) {
+      siteService.findByLink(url)
+      .then(response => {
+        if (response.status != 204) {
+          this.setState({
+            site: {
+              siteId: response.data.siteId,
+              link: response.data.link
+            }
+          })
+        }
       })
-    });
-  }
-
-  async getSite() {
-    var url = window.location.href;
-    url = url.split("/");
-    url = url[3];
-
-    try {
-      const sitePromise = await siteService.get(2);
-      this.setState({ 
-        side: await sitePromise.data
+      .catch(error => {
+        console.log(error);
       });
-    } catch (error) {
-      
     }
-  }
-
-  async populateState() {
-    this.getSite();
   }
 
   render() {
-    if (this.state.side.sideId === null) {
+    if (this.state.site.siteId === null) {
       return null;
     }
-    console.log(this.state);
+
     var prefix = "/";
 
     if (this.state.ready) {
@@ -87,7 +77,7 @@ export default class App extends Component {
           <Route
             path={prefix}
             render={(props) => (
-              <AddIdea {...props} sideId={this.state.side} />
+              <AddIdea {...props} siteId={this.state.site} />
             )}
           />
           <AuthorizeRoute path='/manager' component={Manager} />
