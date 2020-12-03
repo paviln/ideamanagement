@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 
 import IdeaService from '../services/IdeaService'
-import axios from 'axios'
 
 export default class AddIdea extends Component {
   constructor(props) {
@@ -48,6 +47,7 @@ export default class AddIdea extends Component {
 
     const idea = this.state.idea;
 
+
     var fileData = new FormData();
     if (idea.files.length > 0) {
       for (let i = 0; i < idea.files.length; i++) {
@@ -59,7 +59,7 @@ export default class AddIdea extends Component {
     fileData.append('description', idea['description']);
     fileData.append('effort', idea['effort']);
     fileData.append('impact', idea['impact']);
-    console.log(fileData);
+    fileData.append('siteId', this.props.sideId);
 
     if (this.validate(idea)) {
       IdeaService.create(fileData)
@@ -108,6 +108,11 @@ export default class AddIdea extends Component {
   }
 
   render() {
+    const side = this.props.sideId;
+    if (side.sideId == undefined) {
+      console.log('omg');
+    }
+    console.log(side);
     return (
       <div>
         <h3 className="pt-4">Create new Idea</h3>

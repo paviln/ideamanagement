@@ -5,60 +5,71 @@ import { Layout } from './components/Layout';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-import authService from './components/api-authorization/AuthorizeService';
-import SiteService from './services/SiteService';
+//import authService from './components/api-authorization/AuthorizeService';
+import siteService from './services/SiteService';
 import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
-import Test from './components/Test';
+//import Test from './components/Test';
 import Manager from './components/Manager';
 
 import './App.scss';
 
 export default class App extends Component {
-  
+
   constructor(props) {
     super(props);
 
     this.state = {
       ready: false,
-      link: "",
       authenticated: false,
+      side: {
+        sideId: null,
+        link: ''
+      }
     }
   }
 
   componentDidMount() {
-    this.populateState();
-  }
-
-  async getLink() {
     var url = window.location.href;
     url = url.split("/");
     url = url[3];
 
-    var link = "";
-    if (url && url !== "authentication") {
-      link = await SiteService.findByLink(url).then(result => {
-        return result.data.link;
-      });
-    } else if (url === "authentication") {
-      return ("authentication");
-    }
-    return link;
-  }
-
-  async populateState() {
-    const [auth, link] = await Promise.all([authService.isAuthenticated(), this.getLink()]);
-    
-    this.setState({
-      authenticated: auth,
-      link: link,
-      ready: true
+    siteService.get(2)
+    .then(response => {
+      const data = response.data;
+      console.log(data['sideId']);
+      this.setState({
+        side: data
+      })
     });
   }
 
+  async getSite() {
+    var url = window.location.href;
+    url = url.split("/");
+    url = url[3];
+
+    try {
+      const sitePromise = await siteService.get(2);
+      this.setState({ 
+        side: await sitePromise.data
+      });
+    } catch (error) {
+      
+    }
+  }
+
+  async populateState() {
+    this.getSite();
+  }
+
   render() {
+    if (this.state.side.sideId === null) {
+      return null;
+    }
+    console.log(this.state);
     var prefix = "/";
-    
+
     if (this.state.ready) {
       if (this.state.authenticated) {
         prefix = "/linak";
@@ -69,12 +80,16 @@ export default class App extends Component {
         prefix = "/" + this.state.link;
       }
     }
-    
+
     return (
       <Layout prefix={prefix}>
         <Switch>
-          <Route exact path={prefix} component={AddIdea} />
-          <Route path={prefix + '/test'} component={Test} />
+          <Route
+            path={prefix}
+            render={(props) => (
+              <AddIdea {...props} sideId={this.state.side} />
+            )}
+          />
           <AuthorizeRoute path='/manager' component={Manager} />
           <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           <Route path="*">

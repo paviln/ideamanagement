@@ -49,7 +49,7 @@ namespace Panel.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSite(int id, Site site)
         {
-            if (id != site.Id)
+            if (id != site.SiteId)
             {
                 return BadRequest();
             }
@@ -84,7 +84,7 @@ namespace Panel.Controllers
             _context.Sites.Add(site);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSite", new { id = site.Id }, site);
+            return CreatedAtAction("GetSite", new { id = site.SiteId }, site);
         }
 
         // DELETE: api/Site/5
@@ -105,7 +105,7 @@ namespace Panel.Controllers
 
         [HttpGet("getbylink/{link}")]
         public async Task<ActionResult<Site>> GetSiteByLink(string link) {
-            var site = await _context
+            Site site = await _context
             .Sites
             .Where(s => s.Link == link)
             .FirstOrDefaultAsync();
@@ -115,7 +115,7 @@ namespace Panel.Controllers
 
         private bool SiteExists(int id)
         {
-            return _context.Sites.Any(e => e.Id == id);
+            return _context.Sites.Any(e => e.SiteId == id);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Panel.Models
         public string Effort { get; set; }
         [Required]
         public string Impact { get; set; }
+        public int SiteId { get; set; }
+        public Site Site { get; set; }
         public ICollection<File> Files { get; set; }
     }
 }
