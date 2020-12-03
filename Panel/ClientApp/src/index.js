@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
+import App from './App';
+import SiteService from './services/SiteService';
+import NoAccess from './components/NoAccess';
 
 axios.defaults.baseURL = 'https://localhost:8000/';
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
-import App from './App';
-import SiteService from './services/SiteService';
-import NoAccess from './components/NoAccess';
+
 
 var baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');

@@ -23,6 +23,12 @@ export class NavMenu extends Component {
                 <Nav.Link as={Link} to="/">Idea</Nav.Link>
                 <Nav.Link as={Link} to="/">The overview</Nav.Link>
                 <Nav.Link as={Link} to="/">Browse ideas</Nav.Link>
+                <Nav.Link as={Link} to="/manager">ManagerView</Nav.Link>
+                <Nav.Link as={Link} to="/idea table">NewIdeaTable</Nav.Link>
+                <Nav.Link as={Link} to="/idea page">IdeaPage</Nav.Link>
+                <Nav.Link as={Link} to="/under view">UnderView</Nav.Link>
+                <Nav.Link as={Link} to="/under implementation">UnderImplementation</Nav.Link>
+                <Nav.Link as={Link} to="/implemented">Implemented</Nav.Link>
                 <LoginMenu></LoginMenu>
               </Nav>
             </Navbar.Collapse>

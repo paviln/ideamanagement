@@ -1,53 +1,40 @@
 import React,{Component, useState} from 'react';
-import Select from 'react-select';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Redirect } from 'react-router-dom';
 
-export class NewIdea extends Component {
-
-    render () {
-        const data = [
-            {
-                value: 1,
-                name: "New ideas"
-            },
-            {
-                value: 2,
-                name: "Under View"
-            },
-            {
-                value: 3,
-                name: "Under implementation"
-            },
-            {
-                value: 4,
-                name: "Implemented"
-            }
-        ];
-        //get selected value
-        const [selectedValue, setSelectedValue] = useState(3);
-        const handleChange = obj => {
-            setSelectedValue(obj.value);
-        }
-         return (
-          
-        <div className="App">
-            Manager option Tab<br/>
-
-            <Select
-            value={data.find(x => x.value === selectedValue)}
-            options={data}
-            onChange={handleChange}
-            getOptionLabel={option => option.name}
-            />
-            <br/>
-            <b>Selected Value:</b>
-            <pre>{JSON.stringify(selectedValue, null, 2)}</pre>
-            
-        </div>
-      
-     
-         )
-    
+export default class ManagerView extends Component {
+  constructor(props){
+    super(props)
+    let ManagerTab = false
+    this.state = {
+      newideas: '',
+      underview: '',
+      underimplementation: '',
+      implemented: '',
+      ManagerTab
     }
+  }
+    render () {
+      if(this.state.ManagerTab){
+        return<Redirect to="/action-1"/>
+      }
+         return (
+          <div>
+          <h1>Manager View</h1>
+          <br/>
+          <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Manager Tab
+          </Dropdown.Toggle>
         
-
+          <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">New Ideas</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Under View</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Under Implementation</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Implemented</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        </div>
+         )
+    }
 }
