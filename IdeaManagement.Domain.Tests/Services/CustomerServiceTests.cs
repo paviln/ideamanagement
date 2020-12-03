@@ -20,6 +20,10 @@ namespace IdeaManagement.Domain.Tests.Services
         {
             _mockCustomerService = new Mock<ICustomerService>();
         }
+        public CustomerServiceTests(ValidateService validateService)
+        {
+            _validateService = validateService;
+        }
         [Test]
         public async Task CheckCustomerByName()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 /// <summary>
 /// Domain Model
@@ -8,9 +9,9 @@ using System.Text;
 /// </summary>
 namespace IdeaManagement.Domain.Models
 {
-    public class Account
+    public class Account : DomainObject
     {
-        public int Id { get; set; }
+        [Required]
         public Manager Manager { get; set; }
 
     }

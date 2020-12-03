@@ -9,5 +9,6 @@ namespace IdeaManagement.Domain.Services
     public interface ICustomerService : IDataService<Customer>
     {
         Task<Customer> GetByCustomerName(string customername);
+        Task<IEnumerable<Customer>> GetAllCustomersl(int id, string customername);
     }
 }

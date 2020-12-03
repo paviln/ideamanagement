@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Starship.HostBuilders
 {
@@ -19,9 +17,10 @@ namespace Starship.HostBuilders
                 Action<DbContextOptionsBuilder> configureDbContext = o => o.UseSqlite(connectionString);
                 s.AddDbContext<IdeaManagementDbContext>(configureDbContext);
                 s.AddSingleton<IdeaManagementContextFactory>(new IdeaManagementContextFactory(configureDbContext));
+                
 
             });
-                return host;
+         return host;
         }
     }
 }

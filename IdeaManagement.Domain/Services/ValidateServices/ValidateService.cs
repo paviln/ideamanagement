@@ -12,7 +12,8 @@ namespace IdeaManagement.Domain.Services.ValidateServices
     public class ValidateService : IValidateService
     {
         private readonly ICustomerService _customerService;
-        public ValidateService(ICustomerService customerService)
+        
+        public ValidateService( ICustomerService customerService)
         {
             _customerService = customerService;
         }
@@ -35,5 +36,7 @@ namespace IdeaManagement.Domain.Services.ValidateServices
             }
             return result;
         }
+       
+
     }
 }

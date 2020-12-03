@@ -20,7 +20,7 @@ namespace IdeaManagement.EF.Services
             _contextFactory = contextFactory;
             _writeDataService = new WriteDataService<Customer>(contextFactory);
         }
-        public async Task<Customer> AddCustomer(Customer entity)
+        public async Task<Customer> Create(Customer entity)
         {
             return await _writeDataService.Create(entity);
         }
@@ -36,24 +36,25 @@ namespace IdeaManagement.EF.Services
             }
         }
 
-        public Task<Customer> Update(int id, Customer entity)
+        public async Task<Customer> Update(int id, Customer entity)
         {
-            throw new NotImplementedException();
-        }
-       
-        public Task<Customer> Create(Customer entity)
-        {
-            throw new NotImplementedException();
+            return await _writeDataService.Update(id, entity);
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            return await _writeDataService.Delete(id);
         }
 
-        public Task<Customer> Get(int id)
+        public async Task<Customer> Get(int id)
         {
-            throw new NotImplementedException();
+            using (IdeaManagementDbContext context = _contextFactory.CreateDbContext())
+            {
+                Customer entity = await context.Customers
+                    .Include(c => c.CustomerName)                    
+                    .FirstOrDefaultAsync((c) => c.Id == id);
+                return entity;
+            }
         }
 
         public async Task<Customer> GetByCustomerName(string customername)
@@ -66,5 +67,9 @@ namespace IdeaManagement.EF.Services
             }
         }
 
+        public Task<IEnumerable<Customer>> GetAllCustomersl(int id, string customername)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
