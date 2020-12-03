@@ -12,7 +12,7 @@ namespace IdeaManagement.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(nullable: false)
+                    CustomerName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,9 +41,9 @@ namespace IdeaManagement.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -63,10 +63,37 @@ namespace IdeaManagement.EF.Migrations
                 {
                     table.PrimaryKey("PK_Sites", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ManagerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Accounts_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accounts_ManagerId",
+                table: "Accounts",
+                column: "ManagerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "Customers");
 
@@ -74,10 +101,10 @@ namespace IdeaManagement.EF.Migrations
                 name: "Ideas");
 
             migrationBuilder.DropTable(
-                name: "Managers");
+                name: "Sites");
 
             migrationBuilder.DropTable(
-                name: "Sites");
+                name: "Managers");
         }
     }
 }

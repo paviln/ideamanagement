@@ -15,7 +15,7 @@ namespace Starship.HostBuilders
             {
               
                 s.AddSingleton<AddCustomerViewModel>();
-                
+                s.AddSingleton<ManageCustomerViewModel>();
 
             });
             return host;

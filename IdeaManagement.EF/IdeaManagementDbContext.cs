@@ -10,8 +10,10 @@ namespace IdeaManagement.EF
         public DbSet<Idea> Ideas { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Site> Sites { get; set; }
-        public IdeaManagementDbContext(DbContextOptions options) : base(options) { }
-            
+        public DbSet<Account> Accounts { get; set; }
+        public IdeaManagementDbContext(DbContextOptions<IdeaManagementDbContext> options) : base(options) { }
+        
+      
     }
 }
 
