@@ -59,7 +59,7 @@ export default class AddIdea extends Component {
     fileData.append('description', idea['description']);
     fileData.append('effort', idea['effort']);
     fileData.append('impact', idea['impact']);
-    fileData.append('siteId', this.props.sideId);
+    fileData.append('siteId', this.props.siteId);
 
     if (this.validate(idea)) {
       IdeaService.create(fileData)

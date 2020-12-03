@@ -14,6 +14,7 @@ import NoMatch from './components/NoMatch';
 import Manager from './components/Manager';
 
 import './App.scss';
+import authService from './components/api-authorization/AuthorizeService';
 
 export default class App extends Component {
 
@@ -30,20 +31,25 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
+  async getSite() {
     var url = window.location.href;
     url = url.split("/");
     url = url[3];
 
-    if (url) {
+    if (url == 'authentication') {
+      this.setState({
+        ready: true
+      });
+    } else if (url) {
       siteService.findByLink(url)
       .then(response => {
-        if (response.status != 204) {
+        if (response.status == 200) {
           this.setState({
             site: {
               siteId: response.data.siteId,
               link: response.data.link
-            }
+            },
+            ready: true
           })
         }
       })
@@ -53,21 +59,31 @@ export default class App extends Component {
     }
   }
 
+  async authSite() {
+    if (await authService.isAuthenticated == true) {
+      const user = await authService.getUser();
+    } 
+  }
+
+  async populateState() {
+    this.getSite();
+    //this.authSite();
+  }
+
+  componentDidMount() {
+    this.populateState();
+  }
+
   render() {
-    if (this.state.site.siteId === null) {
+    if (!this.state.ready) {
       return null;
     }
 
-    var prefix = "/";
+    const prefix = '/' + this.state.site.link;
 
-    if (this.state.ready) {
-      if (this.state.authenticated) {
-        prefix = "/linak";
-        if (this.state.link !== "linak") {
-          window.location.replace("https://localhost:5001/linak");
-        }
-      } else if (this.state.link && this.state.link !== "authentication") {
-        prefix = "/" + this.state.link;
+    if (this.state.authenticated) {
+      if (this.state.link !== "linak") {
+        window.location.replace("https://localhost:5001/linak");
       }
     }
 
@@ -77,7 +93,7 @@ export default class App extends Component {
           <Route
             path={prefix}
             render={(props) => (
-              <AddIdea {...props} siteId={this.state.site} />
+              <AddIdea {...props} siteId={this.state.site.siteId} />
             )}
           />
           <AuthorizeRoute path='/manager' component={Manager} />
