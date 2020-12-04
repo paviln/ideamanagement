@@ -1,6 +1,4 @@
-﻿using MvvmCross.Platforms.Wpf.Presenters.Attributes;
-using MvvmCross.Platforms.Wpf.Views;
-using Starship.ViewModel;
+﻿using Starship.ViewModel;
 using System.Windows.Controls;
 
 namespace Starship.View.Pages

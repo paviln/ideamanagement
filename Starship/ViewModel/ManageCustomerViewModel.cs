@@ -1,11 +1,7 @@
-﻿using IdeaManagement.Domain.Models;
-using MvvmCross.Commands;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
+using Panel.Models;
 using Starship.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -33,15 +29,7 @@ namespace Starship.ViewModel
             get { return _customers; }
             set { SetProperty(ref _customers, value); }
         }
-        public void AddCustomers()
-        {
-            Customer c = new Customer
-            {
-                CustomerName = CustomerName
-             };
-            CustomerName = string.Empty;
-         }
-
+    
         public ManageCustomerViewModel()
         {
             Command = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
@@ -53,8 +41,8 @@ namespace Starship.ViewModel
             try
             {
                 IsBusy = true;
-                Execute();
-                //CustomerAddResult customerAddResult = await _validateService.AddCustomer(CustomerName);
+             
+           
 
             }
             finally
@@ -69,10 +57,6 @@ namespace Starship.ViewModel
         }
         public ICommand test { get; }
 
-        private void Execute()
-        {
-            MessageBox.Show("Test");
-        }
 
     }
 }
