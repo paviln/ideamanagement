@@ -1,6 +1,4 @@
-﻿using IdeaManagement.EF;
-using MvvmCross.Platforms.Wpf.Views;
-using Starship.ViewModel;
+﻿using Starship.ViewModel;
 using System;
 using System.Windows.Controls;
 

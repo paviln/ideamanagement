@@ -1,14 +1,9 @@
-﻿using MvvmCross.Commands;
-using MvvmCross.Platforms.Wpf.Views;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 using Starship.Command;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 /// <summary>
 /// ViewModel for Handling SideMenu 
 /// And Switching between pages on the MainContent
