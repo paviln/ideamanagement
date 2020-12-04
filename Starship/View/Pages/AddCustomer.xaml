@@ -22,7 +22,7 @@
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             Width="120"
-            Text="{Binding CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding CompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button 
             x:Name="addCustomerBtn" 
             Content="Add" 

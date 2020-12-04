@@ -11,7 +11,7 @@
         Title="Window1" Height="500" Width="800"
         ResizeMode="NoResize"
         FontSize="14"
-        WindowStyle="None"
+        
         Background="Transparent">
     <Border
         Background="WhiteSmoke"

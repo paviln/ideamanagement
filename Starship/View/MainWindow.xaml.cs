@@ -1,5 +1,4 @@
-﻿
-using Starship.ViewModel;
+﻿using Starship.ViewModel;
 using System.Windows;
 namespace Starship
 {
