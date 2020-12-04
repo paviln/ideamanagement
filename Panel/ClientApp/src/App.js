@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
 
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
@@ -31,16 +31,18 @@ export default class App extends Component {
     }
   }
 
-  async getSite() {
+  getLink() {
     var url = window.location.href;
     url = url.split("/");
     url = url[3];
 
-    if (url == 'authentication') {
-      this.setState({
-        ready: true
-      });
-    } else if (url) {
+    return url;
+  }
+
+  async getSite() {
+    var url = this.getLink();
+
+    if (url) {
       siteService.findByLink(url)
       .then(response => {
         if (response.status == 200) {
@@ -60,49 +62,59 @@ export default class App extends Component {
   }
 
   async authSite() {
-    if (await authService.isAuthenticated == true) {
-      const user = await authService.getUser();
+    const isAuthenticated = await authService.isAuthenticated();
+
+    if (isAuthenticated) {
+      authService.getUser()
+      .then(response => {
+        this.setState({
+          site: {
+            siteId: 1,
+            link: 'linak'
+          },
+          authenticated: true,
+          ready: true
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
     } 
   }
 
   async populateState() {
     this.getSite();
-    //this.authSite();
+    this.authSite();
   }
 
   componentDidMount() {
     this.populateState();
   }
 
-  render() {
-    if (!this.state.ready) {
-      return null;
-    }
-
-    const prefix = '/' + this.state.site.link;
-
-    if (this.state.authenticated) {
-      if (this.state.link !== "linak") {
-        window.location.replace("https://localhost:5001/linak");
+  render () {
+    if (this.state.ready) {
+      if (this.getLink() != this.state.site.link) {
+        window.location.replace('https://localhost:5001/' + this.state.site.link);
+        return null;
       }
-    }
 
+      const prefix = '/' + this.state.site.link;
+      return (
+        <Layout>
+          <Switch>
+            <Route exact path={prefix} component={AddIdea} />
+            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+            <Route path="*">
+              <NoMatch></NoMatch>
+            </Route>
+          </Switch>
+        </Layout>
+      );
+    }
     return (
-      <Layout prefix={prefix}>
-        <Switch>
-          <Route
-            path={prefix}
-            render={(props) => (
-              <AddIdea {...props} siteId={this.state.site.siteId} />
-            )}
-          />
-          <AuthorizeRoute path='/manager' component={Manager} />
-          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-          <Route path="*">
-            <NoMatch></NoMatch>
-          </Route>
-        </Switch>
-      </Layout>
+      <Switch>
+        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+      </Switch>
     );
   }
 }
