@@ -15,6 +15,7 @@ import Manager from './components/Manager';
 
 import './App.scss';
 import authService from './components/api-authorization/AuthorizeService';
+import userService from './services/UserService';
 
 export default class App extends Component {
 
@@ -62,24 +63,24 @@ export default class App extends Component {
   }
 
   async authSite() {
-    const isAuthenticated = await authService.isAuthenticated();
-
-    if (isAuthenticated) {
-      authService.getUser()
-      .then(response => {
-        this.setState({
-          site: {
-            siteId: 1,
-            link: 'linak'
-          },
-          authenticated: true,
-          ready: true
+    if (this.state.authenticated == false) {
+      const isAuthenticated = await authService.isAuthenticated();
+      if (isAuthenticated) {
+        userService.getSite()
+        .then(response => {
+          this.setState({
+            site: {
+              link: 'linak'
+            },
+            authenticated: true,
+            ready: true
+          });
+        })
+        .catch(error => {
+          console.log(error);
         });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    } 
+      } 
+    }
   }
 
   async populateState() {
