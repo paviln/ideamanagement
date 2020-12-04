@@ -100,7 +100,7 @@ export default class App extends Component {
 
       const prefix = '/' + this.state.site.link;
       return (
-        <Layout>
+        <Layout prefix={prefix}>
           <Switch>
             <Route exact path={prefix} component={AddIdea} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />

@@ -12,24 +12,25 @@ export class NavMenu extends Component {
   }
 
   render () {
+    const prefix = this.props.prefix;
 
     return (
       <header>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
-            <LinkContainer to="/">
+            <LinkContainer to={prefix}>
               <Navbar.Brand>Panel</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="ml-auto">
-                <LinkContainer to="/">
+                <LinkContainer to={prefix}>
                  <Nav.Link>Idea</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/">
+                <LinkContainer to={prefix}>
                   <Nav.Link>The overview</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/">
+                <LinkContainer to={prefix}>
                   <Nav.Link>Browse ideas</Nav.Link>
                 </LinkContainer>
                 <LoginMenu></LoginMenu>
