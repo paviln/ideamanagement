@@ -226,14 +226,16 @@ export default class AddIdea extends Component {
                   type="text" 
                   onChange={this.handleChange} />
                 <button className="btn btn-secondary ml-2" type="button" onClick={this.addHashtag}>Add</button>
+
               </div>
+              <Form.Text className="text-muted">
+                <List data = {this.state.idea.hashtags} />
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="formHashtagsButton" as={Col}>
             </Form.Group>
+
           </Form.Row>
-          <Form.Group>
-            <List data = {this.state.idea.hashtags} />
-          </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>

@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import Button from 'react-bootstrap/Button'
+import React from 'react'
 
 const List = (props) => {
 
@@ -11,12 +10,9 @@ const List = (props) => {
       list.push(<li>{data[i]}</li>)
     }
 
-    return (
-      list
-    );
+    return (list);
   }
-  
-  
+
   return (
     <ul>
       {populateList()}
