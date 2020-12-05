@@ -70,6 +70,7 @@ export default class App extends Component {
         .then(response => {
           this.setState({
             site: {
+              siteId: response.data.site.siteId,
               link: response.data.site.link
             },
             authenticated: true,
@@ -98,12 +99,11 @@ export default class App extends Component {
         window.location.replace('https://localhost:5001/' + this.state.site.link);
         return null;
       }
-
       const prefix = '/' + this.state.site.link;
       return (
         <Layout prefix={prefix}>
           <Switch>
-            <Route exact path={prefix} component={AddIdea} />
+            <Route exact path={prefix} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route path="*">
               <NoMatch></NoMatch>

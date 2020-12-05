@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panel.Data;
 
 namespace reactauth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205121649_CreateHashtagSchema")]
+    partial class CreateHashtagSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,27 +347,6 @@ namespace reactauth.Migrations
                     b.ToTable("Files");
                 });
 
-            modelBuilder.Entity("Panel.Models.Hashtag", b =>
-                {
-                    b.Property<int>("HashtagId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("IdeaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HashtagId");
-
-                    b.HasIndex("IdeaId");
-
-                    b.ToTable("Hashtags");
-                });
-
             modelBuilder.Entity("Panel.Models.Idea", b =>
                 {
                     b.Property<int>("IdeaId")
@@ -378,10 +359,6 @@ namespace reactauth.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Effort")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -484,13 +461,6 @@ namespace reactauth.Migrations
                         .HasForeignKey("IdeaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Panel.Models.Hashtag", b =>
-                {
-                    b.HasOne("Panel.Models.Idea", null)
-                        .WithMany("Hashtags")
-                        .HasForeignKey("IdeaId");
                 });
 
             modelBuilder.Entity("Panel.Models.Idea", b =>
