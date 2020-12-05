@@ -9,6 +9,7 @@ using Panel.Models;
 
 namespace Panel.Controllers
 {
+  [Authorize(AuthenticationSchemes = "Identity.Application")]
   [ApiController]
   [Route("api/[controller]")]
   public class ApplicationUserController : ControllerBase
@@ -23,10 +24,12 @@ namespace Panel.Controllers
     }
 
     [HttpGet("getsite")]
-    public async Task<ActionResult<ApplicationUser>> GetSite() {
-      var user = await _userManager.FindByNameAsync("admin@panel.com");
+    public async Task<ActionResult<ApplicationUser>> GetSite() 
+    {
+      var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+      await _context.Entry(currentUser).Reference(u => u.Site).LoadAsync();
 
-      return user;
+      return currentUser;
     }
   }
 }

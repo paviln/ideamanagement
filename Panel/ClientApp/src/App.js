@@ -70,7 +70,7 @@ export default class App extends Component {
         .then(response => {
           this.setState({
             site: {
-              link: 'linak'
+              link: response.data.site.link
             },
             authenticated: true,
             ready: true

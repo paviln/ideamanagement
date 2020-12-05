@@ -40,6 +40,8 @@ namespace Panel
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
+            services.AddHttpContextAccessor();
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
