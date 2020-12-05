@@ -4,8 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup';
-import validator from 'validator';
-
+import List from './List'
 import IdeaService from '../services/IdeaService'
 
 export default class AddIdea extends Component {
@@ -91,31 +90,38 @@ export default class AddIdea extends Component {
   handleChangeHashtag(event) {
     this.setState({
       input: {
-        file: event.target.value
+        hashtag: event.target.value
       }
     });
   }
 
-  addHashtag(event) {
+  addHashtag() {
     const idea = this.state.idea;
-    idea.hashtags.push(this.state.hashtag);
-    this.setState({
-      idea: idea
-    });
-    console.log(this.state.idea);
+
+    if (this.state.hashtag) {
+      idea.hashtags.push(this.state.hashtag);
+      this.setState({
+        idea: idea
+      });
+    }
+  }
+
+  removeHashtag = (event) => {
+    event.target.remove();
+  }
+
+  getFileNames() {
+    const files = this.state.idea.files;
+
+    var fileNames = [];
+    for (let i = 0; i < files.length; i++) {
+      fileNames.push(files[i].name);
+    }
+
+    return fileNames;
   }
 
   render() {
-    var filesList = [];
-    for (let i = 0; i < this.state.idea.files.length; i++) {
-      filesList.push(<li>{this.state.idea.files[i].name}</li>);
-    }
-
-    var hashtagsList = [];
-    for (let i = 0; i < this.state.idea.hashtags.length; i++) {
-      hashtagsList.push(<Button variant="secondary">{this.state.idea.hashtags[i]}</Button>);
-    }
-
     return (
       <div>
         <h3 className="pt-4">Create new Idea</h3>
@@ -206,9 +212,7 @@ export default class AddIdea extends Component {
               onChange={this.handleChange}
             />
             <Form.Text className="text-muted">
-            <ul className="pt-1">
-              {filesList}
-            </ul>
+              <List data = {this.getFileNames()} />
             </Form.Text>
           </Form.Group>
           <ListGroup>
@@ -221,14 +225,14 @@ export default class AddIdea extends Component {
                   name="hashtag" 
                   type="text" 
                   onChange={this.handleChange} />
-                <button className="btn btn-secondary ml-2" onClick={this.addHashtag}>Add</button>
+                <button className="btn btn-secondary ml-2" type="button" onClick={this.addHashtag}>Add</button>
               </div>
             </Form.Group>
             <Form.Group controlId="formHashtagsButton" as={Col}>
             </Form.Group>
           </Form.Row>
           <Form.Group>
-            {hashtagsList}
+            <List data = {this.state.idea.hashtags} />
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
