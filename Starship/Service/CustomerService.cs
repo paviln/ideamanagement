@@ -9,10 +9,15 @@ using Starship.Helpers;
 
 namespace Starship.Service
 {
-    public class CustomerService {
+    public class CustomerService : ICustomerService
+    {
         private static HttpCommon client = new HttpCommon();
-        public static async Task<List<Customer>> GetCustomerAsync(string path)
+
+        public CustomerService(){ }
+
+        public async Task<List<Customer>> GetCustomerAsync()
         {
+            string path = "/api/customer";
             List<Customer> customer = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
@@ -21,7 +26,7 @@ namespace Starship.Service
             }
          return customer;
         }
-        public static async Task<Uri> CreateCustomerAsync(string companyname)
+        public async Task<Uri> CreateCustomerAsync(string companyname)
         {
             Customer customer = new Customer();
             customer.CompanyName = companyname;
@@ -29,5 +34,22 @@ namespace Starship.Service
             return response.Headers.Location;
 
         }
+        public async Task<Customer> UpdateCustomerAsync(Customer customer)
+        {
+            HttpResponseMessage response = await client.PutAsJsonAsync(
+                $"api/customer/{customer.Id}", customer);
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the updated product from the response body.
+            customer = await response.Content.ReadAsAsync<Customer>();
+            return customer;
+        }
+        public  async Task<HttpStatusCode> DeleteCustomerAsync(string id)
+        {
+            HttpResponseMessage response = await client.DeleteAsync(
+                $"api/customer/{id}");
+            return response.StatusCode;
+        }
+
     }
 }
