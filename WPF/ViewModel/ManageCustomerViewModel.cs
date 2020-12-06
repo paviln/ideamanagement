@@ -2,10 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.Command;
+using System;
 
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
@@ -59,7 +59,8 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         {
             try
             {
-                await _customerService.DeleteCustomerAsync("15");
+                await _customerService.DeleteCustomerAsync("1");
+                
                 MessageBox.Show("Test");
             }
             finally
@@ -75,16 +76,27 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 
         private async void FillDataGrid()
         {
-            var cust = await _customerService.GetCustomerAsync();
-            foreach (var item in cust)
+            
+            try
             {
-                Customer customer = new Customer()
+                
+                var cust = await _customerService.GetCustomerAsync();
+                
+                foreach (var item in cust)
                 {
-                    CompanyName = item.CompanyName,
-                    Id = item.Id
+                    Customer customer = new Customer()
+                    {
+                        CompanyName = item.CompanyName,
+                        Id = item.Id
 
-                };
-                Customers.Add(customer);
+                    };
+                    Customers.Add(customer);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                
             }
         }
 
