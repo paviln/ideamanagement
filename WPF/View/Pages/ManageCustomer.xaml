@@ -15,7 +15,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="350" />
+                <ColumnDefinition Width="500" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -24,29 +24,53 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Label
+                Content="List of Customers"
                 Grid.Column="1"
                 Grid.Row="0"                
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                FontSize="30">
-                <Button Content="Button" Command="{Binding Command}"></Button>
-
-            </Label>
+                FontSize="30"/>
             <DataGrid
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="5"
+                Margin="5,0,5,10"
                 Name="CustomersDG"
                 IsReadOnly="True"
                 ItemsSource="{Binding Customers}"
-                AutoGenerateColumns="False">
+                TargetUpdated="CustomersDG_TargetUpdated"
+                SourceUpdated="CustomersDG_SourceUpdated"
+                AutoGenerateColumns="False" 
+                Grid.Column="1" 
+                Grid.Row="1"
+                Width="auto"
+                Height="auto"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                CanUserReorderColumns="False"
+                >
                 <DataGrid.Columns>
                     <DataGridTextColumn 
                         Header="Customer Id" 
-                        Binding="{Binding Id}"/>
+                        Binding="{Binding Id}"
+                        Width="auto"
+                        />
                     <DataGridTextColumn 
                         Header="Customer Name" 
-                        Binding="{Binding CustomerName}"/>
+                        Binding="{Binding CompanyName}"
+                        Width="auto"/>
+                    <DataGridTemplateColumn
+                        Header="Delete"
+                        Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="">
+                                <Button 
+                                Name="btnDelete"
+                                Content="Delete"
+                                
+                                Command="{Binding Path=DataContext.DeleteCustomerCmd, 
+                                    RelativeSource={RelativeSource FindAncestor, 
+                                    AncestorType={x:Type DataGrid}}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
 
             </DataGrid>
