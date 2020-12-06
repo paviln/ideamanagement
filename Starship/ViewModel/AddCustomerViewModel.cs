@@ -9,6 +9,7 @@ namespace Starship.ViewModel
 {
     public class AddCustomerViewModel : MvxViewModel
     {
+        private readonly ICustomerService _customerService;
         #region Properties
         private bool _isBusy;
 
@@ -26,8 +27,14 @@ namespace Starship.ViewModel
             set { SetProperty(ref _companyName, value); }
         }
         #endregion
+        //Constructor Injection - dependency injection - (IoC)
+        public AddCustomerViewModel(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
         public AddCustomerViewModel()
         {
+            _customerService = new CustomerService();
             AddCustomerCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
         }
         public IAsyncCommand AddCustomerCmd { get; private set; }
@@ -36,7 +43,8 @@ namespace Starship.ViewModel
         {
             try
             {
-                var cust = await CustomerService.CreateCustomerAsync(CompanyName);
+               // CustomerService service = new CustomerService();
+                var cust = await _customerService.CreateCustomerAsync(CompanyName);
             }
             finally
             {

@@ -7,9 +7,9 @@ namespace Starship.View.Pages
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class LogOut : UserControl
+    public partial class CreateAccount : UserControl
     {
-        public LogOut()
+        public CreateAccount()
         {
             InitializeComponent();
         }

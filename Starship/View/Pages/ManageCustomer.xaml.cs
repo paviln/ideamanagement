@@ -16,6 +16,15 @@ namespace Starship.View.Pages
             InitializeComponent();
             DataContext = new ManageCustomerViewModel();
          }
-    
+
+        private void CustomersDG_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+
+        }
+
+        private void CustomersDG_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+
+        }
     }
 }

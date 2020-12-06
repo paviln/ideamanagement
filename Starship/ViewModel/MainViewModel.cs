@@ -25,7 +25,7 @@ namespace Starship.ViewModel
                     new MenuItemsData(){MenuText="Home"},                    
                     new MenuItemsData(){MenuText="Add Customer"},
                     new MenuItemsData(){MenuText="Manage Customer"},
-                    new MenuItemsData(){MenuText="Log Out"} };
+                    new MenuItemsData(){MenuText="Create Account"} };
             }
         }
         public class MenuItemsData : MvxViewModel
@@ -44,7 +44,6 @@ namespace Starship.ViewModel
               get { return _menuText; }
               set { SetProperty(ref _menuText, value); }
              }
-
             public MenuItemsData()
             {
                 NavigatePageCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
