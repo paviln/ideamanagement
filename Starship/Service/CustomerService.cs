@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Panel.Models;
+using EskobInnovation.IdeaManagement.API.Models;
 using Starship.Helpers;
 
 namespace Starship.Service

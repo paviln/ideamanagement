@@ -1,10 +1,10 @@
 ﻿using MvvmCross.ViewModels;
-using Panel.Models;
 using Starship.Command;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using EskobInnovation.IdeaManagement.API.Models;
 
 namespace Starship.ViewModel
 {
