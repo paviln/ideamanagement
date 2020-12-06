@@ -1,6 +1,6 @@
 ﻿using EskobInnovation.IdeaManagement.WPF.ViewModel;
 using System.Windows;
-namespace EskobInnovation.IdeaManagement.WPF
+namespace EskobInnovation.IdeaManagement.WPF.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

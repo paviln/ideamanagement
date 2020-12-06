@@ -1,8 +1,6 @@
-﻿using IdeaManagement.Domain.Exceptions;
-using IdeaManagement.Domain.Utilities;
+﻿using EskobInnovation.IdeaManagement.Domain.Exceptions;
+using EskobInnovation.IdeaManagement.Domain.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 

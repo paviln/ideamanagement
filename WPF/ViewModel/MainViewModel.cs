@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using EskobInnovation.IdeaManagement.WPF.View;
 /// <summary>
 /// ViewModel for Handling SideMenu 
 /// And Switching between pages on the MainContent

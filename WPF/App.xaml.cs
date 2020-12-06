@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using EskobInnovation.IdeaManagement.WPF.View;
 using System.Windows;
 
 namespace EskobInnovation.IdeaManagement.WPF
