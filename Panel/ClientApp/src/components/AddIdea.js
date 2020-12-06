@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup';
 import List from './List'
@@ -29,6 +28,7 @@ export default class AddIdea extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addHashtag = this.addHashtag.bind(this);
+    this.handleChangeHashtag = this.handleChangeHashtag.bind(this);
   }
 
   handleChange(event) {
@@ -226,7 +226,6 @@ export default class AddIdea extends Component {
                   type="text" 
                   onChange={this.handleChange} />
                 <button className="btn btn-secondary ml-2" type="button" onClick={this.addHashtag}>Add</button>
-
               </div>
               <Form.Text className="text-muted">
                 <List data = {this.state.idea.hashtags} />
@@ -234,7 +233,6 @@ export default class AddIdea extends Component {
             </Form.Group>
             <Form.Group controlId="formHashtagsButton" as={Col}>
             </Form.Group>
-
           </Form.Row>
           <Button variant="primary" type="submit">
             Submit
