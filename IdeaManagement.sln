@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{9EAC2845-6310-4FBD-809A-496E550A520C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starship", "Starship\Starship.csproj", "{F638DE0C-50F3-40FF-BADC-EE774E509F22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{F638DE0C-50F3-40FF-BADC-EE774E509F22}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdeaManagement.Domain", "IdeaManagement.Domain\IdeaManagement.Domain.csproj", "{C40874EA-48AF-4662-8965-7BCCEFEAE247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C40874EA-48AF-4662-8965-7BCCEFEAE247}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
