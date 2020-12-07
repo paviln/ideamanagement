@@ -11,11 +11,8 @@
         Title="Window1" Height="500" Width="800"
         ResizeMode="NoResize"
         FontSize="14"
-        
         Background="Transparent">
-    <Border
-        Background="WhiteSmoke"
-        CornerRadius="10">
+    <Border Background="WhiteSmoke">
         <Grid>
             <Grid.ColumnDefinitions>
 
@@ -24,27 +21,14 @@
 
                 <!--Main Content-->
                 <ColumnDefinition/>
-
-                <!--Right Panel-->
-                <ColumnDefinition Width="25"/>
-            
             </Grid.ColumnDefinitions>
-            <StackPanel 
-                Grid.Column="2" 
-                Background="Silver"
-                >
-
-            </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-
                 </Grid.RowDefinitions>
-                
-
                 <!--Logo-->
                 <TextBlock
                     FontSize="25"
