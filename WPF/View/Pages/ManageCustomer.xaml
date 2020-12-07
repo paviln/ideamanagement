@@ -132,7 +132,7 @@
                         </StackPanel>
                     </Border>
                     <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}" />
 
                     <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Delete Customer"
                             Command="{Binding DeleteCustomerCmd}" Margin="2">

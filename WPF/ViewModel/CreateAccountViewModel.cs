@@ -7,7 +7,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
     public class CreateAccountViewModel : MvxViewModel
     {
-
+        
 
 
 

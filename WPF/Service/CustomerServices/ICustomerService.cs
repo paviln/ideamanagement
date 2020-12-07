@@ -7,9 +7,9 @@ using EskobInnovation.IdeaManagement.API.Models;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
-    public interface  ICustomerService
+    public interface  ICustomerService : IApiService<Customer>
     {
-        Task<List<Customer>> GetCustomerAsync();
+        Task<IEnumerable<Customer>> GetCustomerAsync();
 
         Task<Uri> CreateCustomerAsync(string companyname);
 
