@@ -11,11 +11,11 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
 {
     public class CustomerService : ICustomerService
     {
-        private static HttpCommon client = new HttpCommon();
+        private static ApiHelper client = new ApiHelper();
 
         public CustomerService(){ }
 
-        public async Task<List<Customer>> GetCustomerAsync()
+        public async Task<IEnumerable<Customer>> GetCustomerAsync()
         {
             string path = "/api/customer";
             List<Customer> customer = null;
@@ -26,6 +26,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
             }
          return customer;
         }
+        //POST Request 
         public async Task<Uri> CreateCustomerAsync(string companyname)
         {
             Customer customer = new Customer();
@@ -34,6 +35,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
             return response.Headers.Location;
 
         }
+        //PUT Request
         public async Task<Customer> UpdateCustomerAsync(Customer customer)
         {
             HttpResponseMessage response = await client.PutAsJsonAsync(
@@ -44,6 +46,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
             customer = await response.Content.ReadAsAsync<Customer>();
             return customer;
         }
+        //DELETE Request
         public  async Task<HttpStatusCode> DeleteCustomerAsync(string id)
         {
             HttpResponseMessage response = await client.DeleteAsync(
@@ -51,5 +54,29 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
             return response.StatusCode;
         }
 
+        public Task<IEnumerable<Customer>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Customer> Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Customer> Create(Customer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Customer> Update(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

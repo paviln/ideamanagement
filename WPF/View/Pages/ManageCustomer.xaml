@@ -6,21 +6,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EskobInnovation.IdeaManagement.WPF.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="500"
       >
-
+ 
     <StackPanel
             Background="Silver">
         <Grid Height="450">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="500" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="300"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="250"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Label
@@ -31,20 +27,16 @@
                 HorizontalContentAlignment="Center"
                 FontSize="30"/>
             <DataGrid
-                Margin="5,0,5,10"
                 Name="CustomersDG"
                 IsReadOnly="True"
                 ItemsSource="{Binding Customers}"
                 TargetUpdated="CustomersDG_TargetUpdated"
                 SourceUpdated="CustomersDG_SourceUpdated"
-                AutoGenerateColumns="False" 
-                Grid.Column="1" 
-                Grid.Row="1"
+                AutoGenerateColumns="False"
                 Width="auto"
                 Height="auto"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                CanUserReorderColumns="False"
+                CanUserReorderColumns="False" 
+                Grid.Row="1"
                 >
                 <DataGrid.Columns>
                     <DataGridTextColumn 
@@ -74,6 +66,82 @@
                 </DataGrid.Columns>
 
             </DataGrid>
+            <!--Bottom Grid-->
+            <Grid
+                Grid.Column="1"
+                Grid.Row="2" 
+                Margin="0,0,0,-130"
+                Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--Update Customer Grid-->
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" BorderBrush="Black"
+                                BorderThickness="1" Grid.ColumnSpan="2">
+                        <StackPanel Margin="-1,-1,-1,-1" Background="DimGray">
+                            <Label Content="Update Customer"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Customer Name"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CompanyName}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Customer ID"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Id}"/>
+                    <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Update Customer"
+                            Margin="2"
+                            Command="{Binding UpdateCustomerCmd}"/>
+                </Grid>
+                <!--Update Customer Grid-->
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" BorderBrush="Black"
+                                BorderThickness="1" Grid.ColumnSpan="2"
+                            >
+                        <StackPanel Margin="-1,-1,-1,-1" Background="DimGray">
+                            <Label Content="Delete Customer"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}" />
+
+                    <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Delete Customer"
+                            Command="{Binding DeleteCustomerCmd}" Margin="2">
+                        
+                    </Button>
+                </Grid>
+
+            </Grid>
+
         </Grid>
     </StackPanel>
 </UserControl>
