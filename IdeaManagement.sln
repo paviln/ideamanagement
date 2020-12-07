@@ -10,6 +10,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C40874EA-48AF-4662-8965-7BCCEFEAE247}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Tests", "WPF.Tests\WPF.Tests.csproj", "{637D7229-0F92-4251-A5B1-E57B8DB00F26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Tests", "API.Tests\API.Tests.csproj", "{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +58,7 @@ Global
 		{C40874EA-48AF-4662-8965-7BCCEFEAE247}.Release|x64.Build.0 = Release|Any CPU
 		{C40874EA-48AF-4662-8965-7BCCEFEAE247}.Release|x86.ActiveCfg = Release|Any CPU
 		{C40874EA-48AF-4662-8965-7BCCEFEAE247}.Release|x86.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -69,6 +71,20 @@ Global
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Release|x64.Build.0 = Release|Any CPU
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Release|x86.ActiveCfg = Release|Any CPU
 		{637D7229-0F92-4251-A5B1-E57B8DB00F26}.Release|x86.Build.0 = Release|Any CPU
+=======
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|x64.Build.0 = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Debug|x86.Build.0 = Debug|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|x64.ActiveCfg = Release|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|x64.Build.0 = Release|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A45DCDAA-063F-4ADB-8132-6879C28BBC9A}.Release|x86.Build.0 = Release|Any CPU
+>>>>>>> master
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
