@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,7 +79,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Idea>> PostIdea([FromForm] Idea idea, [FromForm]List<IFormFile> files)
+        public async Task<ActionResult<Idea>> PostIdea([FromForm] Idea idea, [FromForm] List<IFormFile> files, [FromForm] List<String> hashtags)
         {
             idea.Files = new List<Models.File>();
             foreach (var file in files)
@@ -92,6 +93,14 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
                         f.Data = ms.ToArray();
                     }
                 idea.Files.Add(f);
+            }
+
+            idea.Hashtags = new List<Hashtag>();
+            foreach (var hashtag in hashtags)
+            {
+                Hashtag h = new Hashtag();
+                h.Name = hashtag;
+                idea.Hashtags.Add(h);
             }
 
             _context.Ideas.Add(idea);

@@ -63,6 +63,7 @@ export default class AddIdea extends Component {
     fileData.append('effort', idea['effort']);
     fileData.append('impact', idea['impact']);
     fileData.append('employeeNumber', idea['employeeNumber']);
+    fileData.append('hashtags', idea['hashtags']);
     fileData.append('siteId', this.props.siteId);
 
     IdeaService.create(fileData)
