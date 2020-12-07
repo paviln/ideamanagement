@@ -2,6 +2,7 @@
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.WPF.Service;
+using EskobInnovation.IdeaManagement.WPF.Service;
 /// <summary>
 /// 
 /// </summary>

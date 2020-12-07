@@ -4,10 +4,10 @@ using System.Net.Http.Headers;
 
 namespace EskobInnovation.IdeaManagement.WPF.Helpers
 {
-    public class HttpCommon : HttpClient
+    public class ApiHelper : HttpClient
     {
         
-        public  HttpCommon()
+        public  ApiHelper()
         {
             this.BaseAddress = new Uri("https://localhost:5001/");
             this.DefaultRequestHeaders.Accept.Clear();

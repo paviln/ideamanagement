@@ -6,10 +6,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EskobInnovation.IdeaManagement.WPF.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="500"
       >
 
-    <Grid>
-        <TextBlock FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="This is "/><Run Language="da-dk" Text="LogOut"/></TextBlock>
-    </Grid>
+    
+    <StackPanel Background="Silver" Height="450" VerticalAlignment="Bottom">
+        <Grid Height="450">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="Account Creation" VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   FontSize="20"
+                   FontWeight="Bold"/>
+        </Grid>
+    </StackPanel>
+      
+    
 </UserControl>
