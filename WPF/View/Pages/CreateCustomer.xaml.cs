@@ -7,9 +7,9 @@ namespace EskobInnovation.IdeaManagement.WPF.View.Pages
     /// Interaction logic for AddCustomer.xaml
     /// </summary>
 
-    public partial class AddCustomer : UserControl
+    public partial class CreateCustomer : UserControl
     {
-        public AddCustomer()
+        public CreateCustomer()
         {
             InitializeComponent();
             DataContext = new AddCustomerViewModel();
