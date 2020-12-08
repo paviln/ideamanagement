@@ -61,7 +61,7 @@
                                  Content="{Binding MenuText}"
                                  GroupName="MainMenu"
                                  Style="{StaticResource MenuButtonStyle}"
-                                 Command="{Binding NavigatePageCmd}"
+                                 Command="{Binding ChangePageCommand}"
                                  />
                 </StackPanel>
             </DataTemplate>

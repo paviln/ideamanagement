@@ -1,6 +1,8 @@
 ﻿using EskobInnovation.IdeaManagement.API.Models;
+using EskobInnovation.IdeaManagement.WPF.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,29 +10,19 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
 {
     public class AccountService : IAccountService
     {
-        public Task<Account> Create(Account entity)
-        {
-            throw new NotImplementedException();
-        }
+        private static ApiHelper client = new ApiHelper();
 
-        public Task<bool> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public AccountService() { }
 
-        public Task<Account> Get(int id)
+        public async Task<Uri> CreateApplicationUserAccount(string email, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Account>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Account> Update(int id)
-        {
-            throw new NotImplementedException();
+            ApplicationUser user = new ApplicationUser()
+            {
+                Email = email,
+                PasswordHash = password
+            };
+            HttpResponseMessage response = await client.PostAsJsonAsync("/api/applicationuser", user);
+            return response.Headers.Location;
         }
     }
 }
