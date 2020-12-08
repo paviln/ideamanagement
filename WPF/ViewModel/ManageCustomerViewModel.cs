@@ -33,6 +33,20 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _id; }
             set {SetProperty(ref _id, value); }
         }
+        private string  _streetAddresse;
+
+        public  string StreetAddresse
+        {
+            get { return _streetAddresse; }
+            set { SetProperty(ref _streetAddresse, value); }
+        }
+        private string _zipCode;
+
+        public string ZipCode
+        {
+            get { return _zipCode; }
+            set { SetProperty(ref _zipCode ,value); }
+        }
 
         public ObservableCollection<Customer> Customers
         {
@@ -111,8 +125,9 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                     Customer customer = new Customer()
                     {
                         CompanyName = item.CompanyName,
-                        Id = item.Id
-
+                        Id = item.Id,
+                        StreetAdresse = item.StreetAdresse,
+                        ZipCode = item.ZipCode
                     };
                     Customers.Add(customer);
                 }

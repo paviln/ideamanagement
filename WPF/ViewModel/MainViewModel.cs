@@ -2,7 +2,6 @@
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using EskobInnovation.IdeaManagement.WPF.View;
 using System.Windows.Input;
@@ -12,10 +11,7 @@ using System.Windows.Input;
 /// </summary>
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
-    /// <summary>
-    /// TO DO REFACTOR TO USE STATE PATTERN
-    /// </summary>
-    public class MainViewModel : MvxViewModel
+    public class MainViewModel
     {
         public List<MenuItemsData> MenuList
         {
