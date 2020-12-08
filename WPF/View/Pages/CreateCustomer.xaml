@@ -32,14 +32,12 @@
                 Width="auto"
                 Height="auto"
                 CanUserReorderColumns="False" 
-                Grid.Row="1"
-                >
+                Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn 
                         Header="Customer Id" 
                         Binding="{Binding Id}"
-                        Width="auto"
-                        />
+                        Width="auto"/>
                     <DataGridTextColumn 
                         Header="Customer Name" 
                         Binding="{Binding CompanyName}"
@@ -115,8 +113,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Border Grid.Column="0" BorderBrush="Black"
-                                BorderThickness="1" Grid.ColumnSpan="2"
-                            >
+                                BorderThickness="1" Grid.ColumnSpan="2">
                         <StackPanel Margin="-1,-1,-1,-1" Background="DimGray">
                             <Label Content="Create Account"
                                    HorizontalAlignment="Center"
@@ -130,16 +127,12 @@
                     <Label Grid.Row="2" Grid.Column="0" Content="Insert Email"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Grid.Row="3" Grid.Column="0" Content="Insert Password"/>
-                    <TextBox  Grid.Row="3" Grid.Column="1"  />
-
+                    <TextBox  Grid.Row="3" Grid.Column="1" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged }" />
                     <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Create Account"
-                            Command="{Binding DeleteCustomerCmd}" Margin="2">
-
+                            Command="{Binding CreateAccountCmd}" Margin="2">
                     </Button>
                 </Grid>
-
             </Grid>
-
         </Grid>
     </StackPanel>
 </UserControl>
