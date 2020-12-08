@@ -4,9 +4,11 @@ using EskobInnovation.IdeaManagement.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using EskobInnovation.IdeaManagement.API.Attributes;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
+  [ApiKey]
   [ApiController]
   [Route("api/[controller]")]
   public class ApplicationUserController : ControllerBase
