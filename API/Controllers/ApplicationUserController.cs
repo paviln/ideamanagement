@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
-  [Authorize(AuthenticationSchemes = "Identity.Application")]
   [ApiController]
   [Route("api/[controller]")]
   public class ApplicationUserController : ControllerBase
@@ -28,6 +27,12 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       await _context.Entry(currentUser).Reference(u => u.Site).LoadAsync();
 
       return currentUser;
+    }
+
+    [HttpPost("createuser")]
+    public async Task CreateUser(ApplicationUser user)
+    {
+      await _userManager.CreateAsync(user);
     }
   }
 }
