@@ -53,30 +53,5 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
                 $"api/customer/{id}");
             return response.StatusCode;
         }
-
-        public Task<IEnumerable<Customer>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Customer> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Customer> Create(Customer entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Customer> Update(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

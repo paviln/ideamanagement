@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
-    public interface IAccountService : IApiService<Account>
+    public interface IAccountService
     {
+        Task<Uri> CreateApplicationUserAccount(string email, string password);
     }
 }
