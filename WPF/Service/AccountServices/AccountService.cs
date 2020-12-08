@@ -9,9 +9,9 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
 {
     public class AccountService : IAccountService
     {
-        private static ApiHelper client = new ApiHelper();
         private readonly IPasswordHasher _passwordHasher;
-        
+
+        private static ApiHelper client = new ApiHelper();
 
         public AccountService(IPasswordHasher passwordHasher)
         {
