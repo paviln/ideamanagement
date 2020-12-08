@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
@@ -45,8 +45,19 @@ export class LoginMenu extends Component {
     }
 
     authenticatedView(userName, profilePath, logoutPath) {
+        const prefix = this.props.prefix;
+
         return (<Fragment>
-            <Nav.Link as={Link} to={profilePath}>Hello {userName}</Nav.Link>
+            <NavDropdown title="Manager" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={prefix+"/newideas"}>NewIdeas</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={prefix + "/implemented"}>Implemented</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={prefix + "/implemented2"}>Implemented2</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={prefix + "/ideapage"}>Ideapage</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={prefix + "/underimplementation"}>Underimplementation</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={prefix + "/underview"}>Underview</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item as={Link} to={profilePath}>Account</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link as={Link} to={logoutPath}>Logout</Nav.Link>
         </Fragment>);
 
