@@ -1,6 +1,6 @@
 ﻿using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Helpers;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,29 +9,32 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
 {
     public class AccountService : IAccountService
     {
-        private static ApiHelper client = new ApiHelper();
-        private readonly IPasswordHasher _passwordHasher;
-        
+        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
-        public AccountService(IPasswordHasher passwordHasher)
+        private static ApiHelper client = new ApiHelper();
+
+        public AccountService(IPasswordHasher<ApplicationUser> passwordHasher)
         {
             _passwordHasher = passwordHasher;
         }
         public AccountService() 
         {
-            _passwordHasher = new PasswordHasher();
+            _passwordHasher = new PasswordHasher<ApplicationUser>();
         }
         public async Task<Uri> CreateApplicationUserAccount(string email, string password)
         {
-            var hashedPassword =_passwordHasher.HashPassword(password);
+            ApplicationUser user = new ApplicationUser();
 
-            ApplicationUser user = new ApplicationUser()
+            var hashedPassword = _passwordHasher.HashPassword(user, password);
+
+            user = new ApplicationUser()
             {
                 UserName = email,
                 Email = email,
-                PasswordHash = hashedPassword  
+                PasswordHash = hashedPassword,
+                EmailConfirmed = true              
             };
-            HttpResponseMessage response = await client.PostAsJsonAsync("/api/applicationuser", user);
+            HttpResponseMessage response = await client.PostAsJsonAsync("/api/applicationuser/createuser", user);
             return response.Headers.Location;
         }
     }
