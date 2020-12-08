@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using EskobInnovation.IdeaManagement.WPF.View;
+using System.Windows.Input;
 /// <summary>
 /// ViewModel for Handling SideMenu 
 /// And Switching between pages on the MainContent
@@ -22,11 +23,8 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             {
                 return new List<MenuItemsData>
                 {
-                    //MainMenu without SubMenu Button 
-                    new MenuItemsData(){MenuText="Home"},                    
-                    new MenuItemsData(){MenuText="Add Customer"},
-                    new MenuItemsData(){MenuText="Manage Customer"},
-                    new MenuItemsData(){MenuText="Create Account"} };
+                    new MenuItemsData(){MenuText="Create Customer"},
+                    new MenuItemsData(){MenuText="Manage Customer"} };
             }
         }
         public class MenuItemsData : MvxViewModel
@@ -39,39 +37,18 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                 set { SetProperty(ref _isBusy, value); }
             }
             private string _menuText;
-          
+
             public string MenuText
             {
-              get { return _menuText; }
-              set { SetProperty(ref _menuText, value); }
-             }
+                get { return _menuText; }
+                set { SetProperty(ref _menuText, value); }
+            }
+
             public MenuItemsData()
             {
-                NavigatePageCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
-            }
-            public IAsyncCommand NavigatePageCmd { get; private set; }
-
-            private async Task ExecuteSubmitAsync()
-            {
-                try
-                {
-                    IsBusy = true;
-                    Execute();
-                    //CustomerAddResult customerAddResult = await _validateService.AddCustomer(CustomerName);
-
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
-            }
-
-            private bool CanExecuteSubmit()
-            {
-                return !IsBusy;
-            }
-
-
+                ChangePageCommand = new SyncCommandBase(Execute);
+            }   
+            public ICommand ChangePageCommand { get; set; }
             private void Execute()
             {
                 string MT = MenuText.Replace(" ", string.Empty);

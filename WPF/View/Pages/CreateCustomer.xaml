@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="EskobInnovation.IdeaManagement.WPF.View.Pages.ManageCustomer"
+      x:Class="EskobInnovation.IdeaManagement.WPF.View.Pages.CreateCustomer"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="500"
       >
-
     <StackPanel
             Background="WhiteSmoke">
         <Grid Height="450">
@@ -18,7 +17,7 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Label
-                Content="List of Customers"
+                Content="Create Customer"
                 Grid.Column="1"
                 Grid.Row="0"                
                 VerticalContentAlignment="Center"
@@ -33,12 +32,14 @@
                 Width="auto"
                 Height="auto"
                 CanUserReorderColumns="False" 
-                Grid.Row="1">
+                Grid.Row="1"
+                >
                 <DataGrid.Columns>
                     <DataGridTextColumn 
                         Header="Customer Id" 
                         Binding="{Binding Id}"
-                        Width="auto"/>
+                        Width="auto"
+                        />
                     <DataGridTextColumn 
                         Header="Customer Name" 
                         Binding="{Binding CompanyName}"
@@ -58,8 +59,8 @@
                 <!--Update Customer Grid-->
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="137*" />
-                        <ColumnDefinition Width="113*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -68,33 +69,47 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Column="0" BorderBrush="Black"
-                                BorderThickness="1" Grid.ColumnSpan="2">
-                        <StackPanel Margin="-1,-1,-1,-1" Background="DimGray">
-                            <Label Content="Update Customer"
+                    <Border 
+                            Grid.Column="0" 
+                            BorderBrush="Black"
+                            BorderThickness="1" 
+                            Grid.ColumnSpan="2">
+                        <!--Grid Row 2 Create and Create Account section-->
+                        <StackPanel 
+                                    Margin="-1,-1,-1,-1" 
+                                    Background="DimGray">
+                            <Label 
+                                    Content="Create Customer"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="15"
                                    FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
-                    <Label Grid.Row="2" Grid.Column="0" Content="Insert Customer Name" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
-                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Update Customer"
-                            Margin="2,2,2,2"
-                            Command="{Binding UpdateCustomerCmd}"/>
+                    <Label 
+                            Grid.Row="1" 
+                           Grid.Column="0" 
+                           Content="Customer Name"/>
+                    <TextBox 
+                            Grid.Row="1" 
+                             Grid.Column="1" 
+                             Text="{Binding CompanyName}"/>
+                    <Button 
+                        Grid.Row="4" 
+                            Grid.ColumnSpan="2" 
+                            Content="Create Customer"
+                            Margin="2"
+                            Command="{Binding AddCustomerCmd}"/>
                 </Grid>
-                <!--Update Customer Grid-->
+                <!--Create Account Grid-->
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="139*" />
-                        <ColumnDefinition Width="111*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -103,21 +118,28 @@
                                 BorderThickness="1" Grid.ColumnSpan="2"
                             >
                         <StackPanel Margin="-1,-1,-1,-1" Background="DimGray">
-                            <Label Content="Delete Customer"
+                            <Label Content="Create Account"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="15"
                                    FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Insert Email"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="Insert Password"/>
+                    <TextBox  Grid.Row="3" Grid.Column="1"  />
 
-                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Delete Customer"
-                            Command="{Binding DeleteCustomerCmd}" Margin="2,2,2,2">
+                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Create Account"
+                            Command="{Binding DeleteCustomerCmd}" Margin="2">
+
                     </Button>
                 </Grid>
+
             </Grid>
+
         </Grid>
     </StackPanel>
 </UserControl>

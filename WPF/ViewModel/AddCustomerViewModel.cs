@@ -2,7 +2,6 @@
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.WPF.Service;
-using EskobInnovation.IdeaManagement.WPF.Service;
 /// <summary>
 /// 
 /// </summary>
@@ -44,7 +43,6 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         {
             try
             {
-               // CustomerService service = new CustomerService();
                 var cust = await _customerService.CreateCustomerAsync(CompanyName);
             }
             finally
