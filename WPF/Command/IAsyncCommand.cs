@@ -6,9 +6,9 @@ using System.Windows.Input;
 
 namespace EskobInnovation.IdeaManagement.WPF.Command
 {
-    public interface IAsyncCommand : ICommand
-    {
-        Task ExecuteAsync();
-        bool CanExecute();
-    }
+  public interface IAsyncCommand : ICommand
+  {
+    Task ExecuteAsync();
+    bool CanExecute();
+  }
 }

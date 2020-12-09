@@ -1,7 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.Command;
@@ -114,9 +113,9 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         {
             try
             {
-                var cust = await _customerService.GetCustomerAsync();
+                var customers = await _customerService.GetCustomersAsync();
                 
-                foreach (var item in cust)
+                foreach (var item in customers)
                 {
                     Customer customer = new Customer()
                     {
