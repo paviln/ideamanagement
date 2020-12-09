@@ -15,7 +15,7 @@ import NoMatch from './components/NoMatch';
 import './App.scss';
 import authService from './components/api-authorization/AuthorizeService';
 import userService from './services/UserService';
-import NewIdeaTable from './components/NewIdeaTable';
+import NewIdeas from './components/NewIdeas';
 import Implemented from './components/Implemented';
 import Implemented2 from './components/Implemented2';
 import IdeaPage from './components/IdeaPage';
@@ -111,7 +111,7 @@ export default class App extends Component {
         <Layout prefix={prefix}>
           <Switch>
             <Route exact path={prefix} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
-            <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeaTable} />
+            <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/implemented"}  component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"}  component={Implemented2} />
             <AuthorizeRoute exact path={prefix + "/ideapage"}  component={IdeaPage} />

@@ -2,34 +2,35 @@ import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ideaService from '../services/IdeaService';
 
-const NewIdeas = (props) => {
-  const [ideas, setIdeas] = useState('');
-  useEffect(async() => {
-    const result = await ideaService.getAll();
-    setIdeas(result.data);
+const NewIdeas = () => {
+
+  const [ideas, setIdeas] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await ideaService.getAll();
+      setIdeas(response.data);
+    }
+    fetchData();
   }, []);
- 
+
   const populateIdeas = () => {
-    if (ideas != '')
-    {
+    if (ideas.length > 0) {
       const list = [];
+      for (let i = 0; i < ideas.length; i++) {
+        list.push(
+          <tr key={i}>
+            <td>{ideas[i].ideaId}</td>
+            <td>{ideas[i].title}</td>
+            <td>{ideas[i].effort}</td>
+            <td>{ideas[i].impact}</td>
+          </tr>
+        );
+      }
 
-    const data = ideas.data;
-    console.log(data);
-    for (let i = 0; i < data.length; i++) {
-      list.push(
-        <tr>
-          <td>{data.ideaId}</td>
-          <td>{data.title}</td>
-          <td>{data.effort}</td>
-          <td>{data.impact}</td>
-        </tr>
-      );
+      return list;
     }
 
-    return list;
-    }
-    
     return null;
   }
   return (
@@ -46,7 +47,7 @@ const NewIdeas = (props) => {
           </tr>
         </thead>
         <tbody>
-         {populateIdeas()}
+          {populateIdeas()}
         </tbody>
       </Table>
     </div>
