@@ -10,7 +10,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
     public class AccountService : IAccountService
     {
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
-
+        
         private static ApiHelper client = new ApiHelper();
 
         public AccountService(IPasswordHasher<ApplicationUser> passwordHasher)
@@ -26,6 +26,8 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
             ApplicationUser user = new ApplicationUser();
 
             var hashedPassword = _passwordHasher.HashPassword(user, password);
+
+            
 
             user = new ApplicationUser()
             {

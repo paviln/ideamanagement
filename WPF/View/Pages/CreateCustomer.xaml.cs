@@ -15,5 +15,6 @@ namespace EskobInnovation.IdeaManagement.WPF.View.Pages
             DataContext = new AddCustomerViewModel();
         }
 
+
     }
 }

@@ -104,11 +104,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                 IsBusy = false;
             }
         }
-
-
         #endregion
-
-
         #region implicit methods
         private bool CanExecuteSubmit()
         {

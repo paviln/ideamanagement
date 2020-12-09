@@ -29,6 +29,5 @@ namespace EskobInnovation.IdeaManagement.WPF.Command
             add { }
             remove { }
         }
-
     }
 }

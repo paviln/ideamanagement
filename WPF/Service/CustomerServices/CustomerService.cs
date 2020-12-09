@@ -6,32 +6,47 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Helpers;
+using System.Configuration;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
     public class CustomerService : ICustomerService
     {
+        private string apiKey = ConfigurationManager.AppSettings.Get("ApiKey");
+
+
         private static ApiHelper client = new ApiHelper();
 
-        public CustomerService(){ }
+
+        public CustomerService() 
+        {     
+        }
 
         public async Task<IEnumerable<Customer>> GetCustomerAsync()
         {
-            string path = "/api/customer";
+            string uri = "/api/customer/";
+            string path = $"{uri}?ApiKey={apiKey}";
             List<Customer> customer = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
                 customer = await response.Content.ReadAsAsync<List<Customer>>();
             }
-         return customer;
+            return customer;
         }
-        //POST Request 
-        public async Task<Uri> CreateCustomerAsync(string companyname)
+        //POST Request
+        public async Task<Uri> CreateCustomerAsync(string companyname, string streetaddresse, string zipcode, string contactperson)
         {
-            Customer customer = new Customer();
-            customer.CompanyName = companyname;
-            HttpResponseMessage response = await client.PostAsJsonAsync("/api/customer", customer);
+            string uri = "/api/customer";
+
+            Customer customer = new Customer()
+            {
+                CompanyName = companyname,
+                StreetAdresse = streetaddresse,
+                ZipCode = zipcode,
+                ContactPerson = contactperson
+            };
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, customer);
             return response.Headers.Location;
 
         }
@@ -53,5 +68,5 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
                 $"api/customer/{id}");
             return response.StatusCode;
         }
-    }
+     }
 }

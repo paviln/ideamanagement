@@ -63,11 +63,6 @@ namespace EskobInnovation.IdeaManagement.WPF.Command
         {
             ExecuteAsync().FireAndForgetSafeAsync(_errorHandler);
         }
-
-        //void ICommand.Execute(object parameter)
-        //{
-        //    ExecuteAsync().FireAndForgetSafeAsync(_errorHandler);
-        //}
         #endregion
     }
 }
