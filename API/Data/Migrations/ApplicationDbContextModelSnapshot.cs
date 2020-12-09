@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EskobInnovation.IdeaManagement.API.Migrations
+namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -147,16 +147,11 @@ namespace EskobInnovation.IdeaManagement.API.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("IdeaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HashtagId");
-
-                    b.HasIndex("IdeaId");
 
                     b.ToTable("Hashtags");
                 });
@@ -212,6 +207,21 @@ namespace EskobInnovation.IdeaManagement.API.Migrations
                     b.HasKey("SiteId");
 
                     b.ToTable("Sites");
+                });
+
+            modelBuilder.Entity("HashtagIdea", b =>
+                {
+                    b.Property<int>("HashtagsHashtagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdeasIdeaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HashtagsHashtagId", "IdeasIdeaId");
+
+                    b.HasIndex("IdeasIdeaId");
+
+                    b.ToTable("HashtagIdea");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -472,13 +482,6 @@ namespace EskobInnovation.IdeaManagement.API.Migrations
                     b.Navigation("Idea");
                 });
 
-            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Hashtag", b =>
-                {
-                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", null)
-                        .WithMany("Hashtags")
-                        .HasForeignKey("IdeaId");
-                });
-
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Idea", b =>
                 {
                     b.HasOne("EskobInnovation.IdeaManagement.API.Models.Site", "Site")
@@ -488,6 +491,21 @@ namespace EskobInnovation.IdeaManagement.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Site");
+                });
+
+            modelBuilder.Entity("HashtagIdea", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Hashtag", null)
+                        .WithMany()
+                        .HasForeignKey("HashtagsHashtagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeasIdeaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -544,8 +562,6 @@ namespace EskobInnovation.IdeaManagement.API.Migrations
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Idea", b =>
                 {
                     b.Navigation("Files");
-
-                    b.Navigation("Hashtags");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>

@@ -15,15 +15,15 @@ import NoMatch from './components/NoMatch';
 import './App.scss';
 import authService from './components/api-authorization/AuthorizeService';
 import userService from './services/UserService';
-import NewIdeaTable from './components/NewIdeaTable';
+import NewIdeas from './components/NewIdeas';
 import Implemented from './components/Implemented';
 import Implemented2 from './components/Implemented2';
 import IdeaPage from './components/IdeaPage';
 import UnderView from './components/UnderView';
 import UnderView2 from './components/UnderView2';
-import ManagerView from './components/ManagerView';
 import UnderImplementation from './components/UnderImplementation';
-
+import Overview from './components/Overview';
+import Browse from './components/Browse';
 
 export default class App extends Component {
 
@@ -111,11 +111,15 @@ export default class App extends Component {
       return (
         <Layout prefix={prefix}>
           <Switch>
-            <Route exact path={prefix} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
-            <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeaTable} />
+            <Route exact path={prefix}>
+              <Redirect to={prefix + "/idea"} />
+            </Route>
+            <Route exact path={prefix + "/idea"} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
+            <Route exact path={prefix + "/overview"} render={() => <Overview siteId={this.state.site.siteId}/>} />
+            <Route exact path={prefix + "/browse"} render={() => <Browse siteId={this.state.site.siteId}/>} />
+            <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/implemented"}  component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"}  component={Implemented2} />
-            <AuthorizeRoute exact path={prefix + "/managerview"}  component={ManagerView} />
             <AuthorizeRoute exact path={prefix + "/ideapage"}  component={IdeaPage} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"}  component={UnderImplementation } />
             <AuthorizeRoute exact path={prefix + "/underview"}  component={UnderView} />
