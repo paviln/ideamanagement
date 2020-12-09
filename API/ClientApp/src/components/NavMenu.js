@@ -27,6 +27,30 @@ export class NavMenu extends Component {
                 <LinkContainer to={prefix}>
                  <Nav.Link>Idea</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to={prefix + "/newideas"}>
+                 <Nav.Link>NewIdeas</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/implemented"}>
+                 <Nav.Link>implemented</Nav.Link>
+                 </LinkContainer>
+                <LinkContainer to={prefix + "/implemented2"}>
+                 <Nav.Link>implemented2</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/managerview"}>
+                 <Nav.Link>managerview</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/ideapage"}>
+                 <Nav.Link>ideapage</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/underimplementation"}>
+                 <Nav.Link>underimplementation</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/underview"}>
+                 <Nav.Link>underview</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={prefix + "/underview2"}>
+                 <Nav.Link>underview2</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to={prefix}>
                   <Nav.Link>The overview</Nav.Link>
                 </LinkContainer>

@@ -8,12 +8,10 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="500"
       >
- 
+
     <StackPanel
-            Background="Silver">
+            Background="WhiteSmoke">
         <Grid Height="450">
-
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="250"/>
@@ -26,45 +24,26 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
                 FontSize="30"/>
+            <!--DataGrid-->
             <DataGrid
                 Name="CustomersDG"
                 IsReadOnly="True"
                 ItemsSource="{Binding Customers}"
-                TargetUpdated="CustomersDG_TargetUpdated"
-                SourceUpdated="CustomersDG_SourceUpdated"
                 AutoGenerateColumns="False"
                 Width="auto"
                 Height="auto"
                 CanUserReorderColumns="False" 
-                Grid.Row="1"
-                >
+                Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn 
                         Header="Customer Id" 
                         Binding="{Binding Id}"
-                        Width="auto"
-                        />
+                        Width="auto"/>
                     <DataGridTextColumn 
                         Header="Customer Name" 
                         Binding="{Binding CompanyName}"
                         Width="auto"/>
-                    <DataGridTemplateColumn
-                        Header="Delete"
-                        Width="auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate DataType="">
-                                <Button 
-                                Name="btnDelete"
-                                Content="Delete"
-                                
-                                Command="{Binding Path=DataContext.DeleteCustomerCmd, 
-                                    RelativeSource={RelativeSource FindAncestor, 
-                                    AncestorType={x:Type DataGrid}}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
-
             </DataGrid>
             <!--Bottom Grid-->
             <Grid
@@ -79,8 +58,8 @@
                 <!--Update Customer Grid-->
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="137*" />
+                        <ColumnDefinition Width="113*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -99,23 +78,23 @@
                                    FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Customer Name"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CompanyName}"/>
-                    <Label Grid.Row="2" Grid.Column="0" Content="Customer ID"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Id}"/>
-                    <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Update Customer"
-                            Margin="2"
+                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Insert Customer Name" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Update Customer"
+                            Margin="2,2,2,2"
                             Command="{Binding UpdateCustomerCmd}"/>
                 </Grid>
                 <!--Update Customer Grid-->
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="139*" />
+                        <ColumnDefinition Width="111*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -131,17 +110,14 @@
                                    FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Insert Customer ID" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Id, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Delete Customer"
-                            Command="{Binding DeleteCustomerCmd}" Margin="2">
-                        
+                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Delete Customer"
+                            Command="{Binding DeleteCustomerCmd}" Margin="2,2,2,2">
                     </Button>
                 </Grid>
-
             </Grid>
-
         </Grid>
     </StackPanel>
 </UserControl>
