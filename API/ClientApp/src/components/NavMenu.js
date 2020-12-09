@@ -27,7 +27,7 @@ export class NavMenu extends Component {
                 <LinkContainer to={prefix}>
                  <Nav.Link>Idea</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to={prefix}>
+                <LinkContainer to={prefix + "/overview"}>
                   <Nav.Link>The overview</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to={prefix}>

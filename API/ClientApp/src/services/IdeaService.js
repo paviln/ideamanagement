@@ -8,6 +8,10 @@ const get = id => {
   return http.get(`/idea/${id}`);
 };
 
+const getSiteIdeas = id => {
+  return http.get(`/idea/getsiteideas`, { params: { siteId: id } });
+};
+
 const create = data => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
@@ -34,6 +38,7 @@ const findByTitle = title => {
 export default {
   getAll,
   get,
+  getSiteIdeas,
   create,
   update,
   remove,

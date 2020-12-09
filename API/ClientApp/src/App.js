@@ -22,7 +22,7 @@ import IdeaPage from './components/IdeaPage';
 import UnderView from './components/UnderView';
 import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
-
+import Overview from './components/Overview';
 
 export default class App extends Component {
 
@@ -111,6 +111,7 @@ export default class App extends Component {
         <Layout prefix={prefix}>
           <Switch>
             <Route exact path={prefix} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
+            <Route exact path={prefix + "/overview"} render={() => <Overview siteId={this.state.site.siteId}/>} />
             <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/implemented"}  component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"}  component={Implemented2} />
