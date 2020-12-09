@@ -23,6 +23,7 @@ import UnderView from './components/UnderView';
 import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
 import Overview from './components/Overview';
+import Browse from './components/Browse';
 
 export default class App extends Component {
 
@@ -110,8 +111,12 @@ export default class App extends Component {
       return (
         <Layout prefix={prefix}>
           <Switch>
-            <Route exact path={prefix} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
+            <Route exact path={prefix}>
+              <Redirect to={prefix + "/idea"} />
+            </Route>
+            <Route exact path={prefix + "/idea"} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
             <Route exact path={prefix + "/overview"} render={() => <Overview siteId={this.state.site.siteId}/>} />
+            <Route exact path={prefix + "/browse"} render={() => <Browse siteId={this.state.site.siteId}/>} />
             <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/implemented"}  component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"}  component={Implemented2} />
