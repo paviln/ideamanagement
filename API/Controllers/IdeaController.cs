@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Data;
+using EskobInnovation.IdeaManagement.API.Data.Migrations;
 using EskobInnovation.IdeaManagement.API.Models;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +52,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       var ideas = await _context.Ideas
         .Where(i => i.SiteId == siteId)
         .ToListAsync();
-        
+
       return ideas;
     }
 
@@ -107,11 +109,25 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       }
 
       idea.Hashtags = new List<Hashtag>();
-      foreach (var hashtag in hashtags)
+      foreach (var element in hashtags)
       {
-        Hashtag h = new Hashtag();
-        h.Name = hashtag;
-        idea.Hashtags.Add(h);
+        if (!element.IsNullOrEmpty())
+        {
+          var hashtag = await _context.Hashtags
+          .Where(h => h.Name == element)
+          .FirstOrDefaultAsync();
+
+          if (hashtag != null)
+          {
+            idea.Hashtags.Add(hashtag);
+          }
+          else
+          {
+            Hashtag h = new Hashtag();
+            h.Name = element;
+            idea.Hashtags.Add(h);
+          }
+        }
       }
 
       _context.Ideas.Add(idea);
