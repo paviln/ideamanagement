@@ -95,17 +95,27 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     public async Task<ActionResult<Idea>> PostIdea([FromForm] Idea idea, [FromForm] List<IFormFile> files, [FromForm] List<String> hashtags)
     {
       idea.Files = new List<Models.File>();
-      foreach (var file in files)
+      foreach (var element in files)
       {
-        Models.File f = new Models.File();
-        f.IdeaId = idea.IdeaId;
-        f.Name = file.FileName;
-        using (var ms = new MemoryStream())
+        if (element != null)
         {
-          file.CopyTo(ms);
-          f.Data = ms.ToArray();
+          try
+          {
+            Models.File file = new Models.File();
+            file.IdeaId = idea.IdeaId;
+            file.Name = element.FileName;
+            using (var ms = new MemoryStream())
+            {
+              element.CopyTo(ms);
+              file.Data = ms.ToArray();
+            }
+            idea.Files.Add(file);
+          }
+          catch (System.Exception error)
+          {
+            System.Console.WriteLine(error);
+          }
         }
-        idea.Files.Add(f);
       }
 
       idea.Hashtags = new List<Hashtag>();
