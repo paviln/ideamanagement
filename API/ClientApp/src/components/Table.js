@@ -9,7 +9,7 @@ function Table(props) {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr key={i}>
+          <tr key={i} className={props.bg}>
             <td>{ideas[i].title}</td>
           </tr>
         );

@@ -38,7 +38,7 @@ const Overview = () => {
       <h3 className="pt-4">Ideas</h3>
       <div className="pt-2 clearfix">
         <div className="pr-2 pb-2 float-left">
-          <p>Start date</p>
+          <p>From</p>
           <DatePicker
             selected={startDate}
             onChange={date => setStartDate(date)}
@@ -49,7 +49,7 @@ const Overview = () => {
           />
         </div>
         <div className="pb-2 float-left">
-          <p>End date</p>
+          <p>To</p>
           <DatePicker
             selected={endDate}
             onChange={date => setEndDate(date)}
@@ -63,16 +63,15 @@ const Overview = () => {
       </div>
       <Row>
         <Col sm={12} md={4}>
-          <Table title="New" ideas={ideas} loading={loading} />
+          <Table title="New" ideas={ideas.filter(f => f.status == 0)} loading={loading} bg="table-success"/>
         </Col>
         <Col sm={12} md={4}>
-          <Table title="In Progress" ideas={ideas} loading={loading} />
+          <Table title="In Progress" ideas={ideas.filter(f => f.status == 1 || f.status == 2)} loading={loading} bg="table-warning" />
         </Col>
         <Col sm={12} md={4}>
-          <Table title="Implemented" ideas={ideas} loading={loading} />
+          <Table title="Implemented" ideas={ideas.filter(f => f.status == 3)} loading={loading} bg="table-danger" />
         </Col>
       </Row>
-
     </div>
   );
 }
