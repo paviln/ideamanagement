@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +17,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
         public string Impact { get; set; }
         [Required]
         public string EmployeeNumber { get; set; }
+        public DateTime Date { get; set; }
         public ICollection<Hashtag> Hashtags { get; set; }
         public int SiteId { get; set; }
         public Site Site { get; set; }
