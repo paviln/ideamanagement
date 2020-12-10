@@ -31,6 +31,17 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return await _context.Ideas.ToListAsync();
     }
 
+    // GET: api/Idea
+    [HttpPost("getideasperiod")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod(List<DateTime> period)
+    {
+      var ideas = await _context.Ideas
+        .Where(i => (i.Date >= period[0] && i.Date <= period[1]))
+        .ToListAsync();
+
+      return ideas;
+    }
+
     // GET: api/Idea/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Idea>> GetIdea(int id)

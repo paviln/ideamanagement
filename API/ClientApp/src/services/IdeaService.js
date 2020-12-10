@@ -12,6 +12,10 @@ const getSiteIdeas = id => {
   return http.get(`/idea/getsiteideas`, { params: { siteId: id } });
 };
 
+const getIdeasPeriod = period => {
+  return http.post(`/idea/getideasperiod`, period);
+};
+
 const create = data => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
@@ -39,6 +43,7 @@ export default {
   getAll,
   get,
   getSiteIdeas,
+  getIdeasPeriod,
   create,
   update,
   remove,
