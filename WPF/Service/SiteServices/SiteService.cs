@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 namespace EskobInnovation.IdeaManagement.WPF.Service.SiteServices
 {
   public class SiteService : ISiteService
-  {
-    private string apiKey = ConfigurationManager.AppSettings.Get("ApiKey");
-    private static ApiHelper client = new ApiHelper();
-
+  { 
+    private static PrepHttpClient client = new PrepHttpClient();
 
     public async Task<Uri> CreateLinkAsync(string link)
     {
-      string uri = "/api/site";
+      string uri = "/api/Site";
 
-      Site site = new Site();
-      site.Link = link;
+      Site site = new Site()
+      {
+        Link = link
+      };
       HttpResponseMessage response = await client.PostAsJsonAsync(uri, site);
       return response.Headers.Location;
     }

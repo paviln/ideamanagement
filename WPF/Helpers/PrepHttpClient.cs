@@ -5,10 +5,10 @@ using System.Net.Http.Headers;
 
 namespace EskobInnovation.IdeaManagement.WPF.Helpers
 {
-  public class ApiHelper : HttpClient
+  public class PrepHttpClient : HttpClient
   {
     private string apiKey = ConfigurationManager.AppSettings.Get("ApiKey");
-    public ApiHelper()
+    public PrepHttpClient()
     {
       this.BaseAddress = new Uri("https://localhost:5001/");
       this.DefaultRequestHeaders.Accept.Clear();

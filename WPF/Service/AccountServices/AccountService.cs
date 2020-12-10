@@ -11,7 +11,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
   {
     private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
-    private static ApiHelper client = new ApiHelper();
+    private static PrepHttpClient client = new PrepHttpClient();
 
     public AccountService(IPasswordHasher<ApplicationUser> passwordHasher)
     {

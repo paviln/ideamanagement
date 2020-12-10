@@ -32,12 +32,12 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _id; }
             set {SetProperty(ref _id, value); }
         }
-        private string  _streetAddresse;
+        private string  _streetAdresse;
 
-        public  string StreetAddresse
+        public  string StreetAdresse
         {
-            get { return _streetAddresse; }
-            set { SetProperty(ref _streetAddresse, value); }
+            get { return _streetAdresse; }
+            set { SetProperty(ref _streetAdresse, value); }
         }
         private string _zipCode;
 
@@ -47,7 +47,16 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             set { SetProperty(ref _zipCode ,value); }
         }
 
-        public ObservableCollection<Customer> Customers
+        private string _contactPerson;
+
+        public string ContactPerson
+        {
+          get { return _contactPerson; }
+          set { SetProperty(ref _contactPerson, value); }
+
+        }
+
+    public ObservableCollection<Customer> Customers
         {
             get { return _customers; }
             set { SetProperty(ref _customers, value); }
@@ -92,7 +101,11 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                 Customer customer = new Customer()
                 {
                     Id = Id,
-                    CompanyName = CompanyName
+                    CompanyName = CompanyName,
+                    StreetAdresse = StreetAdresse,
+                    ZipCode = ZipCode,
+                    ContactPerson = ContactPerson
+                    
                 };
 
                 await _customerService.UpdateCustomerAsync(customer);
@@ -122,7 +135,8 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                         CompanyName = item.CompanyName,
                         Id = item.Id,
                         StreetAdresse = item.StreetAdresse,
-                        ZipCode = item.ZipCode
+                        ZipCode = item.ZipCode,
+                        ContactPerson = item.ContactPerson
                     };
                     Customers.Add(customer);
                 }

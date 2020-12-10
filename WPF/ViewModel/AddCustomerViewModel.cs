@@ -90,6 +90,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       _siteService = new SiteService();
       AddCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncCustomer, CanExecuteSubmit);
       CreateAccountCmd = new AsyncCommand(ExecuteSubmitAsyncAccount, CanExecuteSubmit);
+      CreateURLCmd = new AsyncCommand(ExecuteSubmitAsyncSite, CanExecuteSubmit);
     }
     public IAsyncCommand AddCustomerCmd { get; private set; }
 
