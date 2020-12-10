@@ -8,7 +8,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
         [Required]
         public string CompanyName { get; set; }
         [Required]
-        public string StreetAdresse { get; set; }
+        public string StreetAddress { get; set; }
         [Required]
         public string ZipCode { get; set; }
         [Required]
