@@ -14,7 +14,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Helpers
       this.DefaultRequestHeaders.Accept.Clear();
       this.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
-      this.DefaultRequestHeaders.Add("Api-Key", apiKey);
+      this.DefaultRequestHeaders.Add("ApiKey", apiKey);
     }
   }
 }

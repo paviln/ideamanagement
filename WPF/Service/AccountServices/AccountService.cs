@@ -2,6 +2,7 @@
 using EskobInnovation.IdeaManagement.WPF.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
   public class AccountService : IAccountService
   {
     private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
-
+    
     private static PrepHttpClient client = new PrepHttpClient();
 
     public AccountService(IPasswordHasher<ApplicationUser> passwordHasher)

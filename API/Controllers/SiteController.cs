@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class SiteController : ControllerBase
