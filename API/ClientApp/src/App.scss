@@ -5,3 +5,13 @@ $theme-colors: (
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
+@import "~react-datepicker/dist/react-datepicker.css";
+
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.react-datepicker-wrapper {
+  display: block;
+}
