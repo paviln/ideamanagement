@@ -12,14 +12,11 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
 {
   public class CustomerService : ICustomerService
   {
-    private static ApiHelper client = new ApiHelper();
+    private static PrepHttpClient client = new PrepHttpClient();
     public CustomerService()
     {
     }
-    public async Task<IEnumerable<Customer>> GetCustomerAsync(int id)
-    {
-      return null;
-    }
+   
     public async Task<IEnumerable<Customer>> GetCustomersAsync()
     {
       string uri = "api/customer/";
