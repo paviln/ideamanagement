@@ -17,7 +17,6 @@ namespace EskobInnovation.IdeaManagement.API.Models
         public string Impact { get; set; }
         [Required]
         public string EmployeeNumber { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
         public ICollection<Hashtag> Hashtags { get; set; }
         public int SiteId { get; set; }
