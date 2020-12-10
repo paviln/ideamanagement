@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EskobInnovation.IdeaManagement.API.Attributes;
 using EskobInnovation.IdeaManagement.API.Data;
 using EskobInnovation.IdeaManagement.API.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
+    [ApiKey]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
