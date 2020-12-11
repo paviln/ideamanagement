@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EskobInnovation.IdeaManagement.API.Attributes;
+using System;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
@@ -32,9 +33,11 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     }
 
     [HttpPost("createuser")]
-    public async Task CreateUser(ApplicationUser user)
+    public async Task<ActionResult<IdentityResult>> CreateUser(ApplicationUser user)
     {
-      await _userManager.CreateAsync(user);
+      var result = await _userManager.CreateAsync(user);
+      
+      return result;
     }
   }
 }
