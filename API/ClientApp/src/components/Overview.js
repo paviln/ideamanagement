@@ -10,9 +10,26 @@ const Overview = () => {
 
   const [loading, setLoading] = useState(true);
   const [ideas, setIdeas] = useState([]);
-  const [startDate, setStartDate] = useState(new Date("2020/11/01"));
-  const [endDate, setEndDate] = useState(new Date("2020/12/31"));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [minDate, setMinDate] = useState(new Date());
+  const [maxDate, setMaxDate] = useState(new Date());
+  
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        var response = await ideaService.getPeriod();
+        setMinDate(new Date(response.data[0]));
+        setMaxDate(new Date(response.data[1]));
+        setStartDate(new Date(response.data[0]));
+        setEndDate(new Date(response.data[1]));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -45,6 +62,8 @@ const Overview = () => {
             selectsStart
             startDate={startDate}
             endDate={endDate}
+            minDate={minDate}
+            maxDate={endDate}
             dateFormat="dd/MM/yyyy"
           />
         </div>
@@ -57,6 +76,7 @@ const Overview = () => {
             startDate={startDate}
             endDate={endDate}
             minDate={startDate}
+            maxDate={maxDate}
             dateFormat="dd/MM/yyyy"
           />
         </div>
