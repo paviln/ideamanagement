@@ -1,8 +1,11 @@
 ﻿using MvvmCross.ViewModels;
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System.Threading.Tasks;
-using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.Service.SiteServices;
+using EskobInnovation.IdeaManagement.WPF.Services.RegistrationServices;
+using EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices;
+using EskobInnovation.IdeaManagement.WPF.Services.SiteServices;
+using System.Windows;
 /// <summary>
 /// 
 /// </summary>
@@ -10,9 +13,10 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
   public class AddCustomerViewModel : MvxViewModel
   {
-    private readonly ICustomerService _customerService;
-    private readonly IAccountService _accountService;
-    private readonly ISiteService _siteService;
+    private readonly IRegistrationService _registrationService;
+    private readonly IManageCustomerServices _manageCustomerService;
+    private readonly ISiteServices _siteService;
+
     #region Properties
     private bool _isBusy;
 
@@ -75,36 +79,57 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 
 
     #endregion
+    #region Constructors
     //Constructor Injection - dependency injection - (IoC)
-    public AddCustomerViewModel(ICustomerService customerService, IAccountService accountService, ISiteService siteService)
+    public AddCustomerViewModel(ISiteServices siteServices, IRegistrationService registrationService, IManageCustomerServices manageCustomerServices)
     {
-      _customerService = customerService;
-      _accountService = accountService;
-      _siteService = siteService;
-
+      _siteService = siteServices;
+      _registrationService = registrationService;
+      _manageCustomerService = manageCustomerServices;
     }
     public AddCustomerViewModel()
     {
-      _accountService = new AccountService();
-      _customerService = new CustomerService();
-      _siteService = new SiteService();
+      _siteService = new SiteServices();
+      _registrationService = new RegistrationService();
+      _manageCustomerService = new ManageCustomerServices();
       AddCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncCustomer, CanExecuteSubmit);
       CreateAccountCmd = new AsyncCommand(ExecuteSubmitAsyncAccount, CanExecuteSubmit);
       CreateURLCmd = new AsyncCommand(ExecuteSubmitAsyncSite, CanExecuteSubmit);
     }
+    #endregion
+    #region IAsyncCommands
     public IAsyncCommand AddCustomerCmd { get; private set; }
 
     public IAsyncCommand CreateAccountCmd { get; private set; }
 
-    public IAsyncCommand CreateURLCmd { get; private set; }
+    public IAsyncCommand CreateURLCmd { get; private set; } 
+    #endregion
 
+    public MessageViewModel ErrorMessageViewModel { get; }
+
+    public string ErrorMessage
+    {
+      set => ErrorMessageViewModel.Message = value;
+    }
+
+    public MessageViewModel StatusMessageViewModel { get; }
+
+    public string StatusMessage
+    {
+      set => StatusMessageViewModel.Message = value;
+    }
     #region Async Executes
     public async Task ExecuteSubmitAsyncCustomer()
     {
       try
       {
+        RegistrationResultCustomer registrationResult = await _manageCustomerService.CreateCustomer(CompanyName, StreetAddresse, ZipCode, ContactPerson);
+        this.CompanyName = string.Empty;
+        this.StreetAddresse = string.Empty;
+        this.ZipCode = string.Empty;
+        this.ContactPerson = string.Empty;
 
-        var cust = await _customerService.CreateCustomerAsync(CompanyName, StreetAddresse, ZipCode, ContactPerson);
+        MessageBox.Show("The Customer registration was a: " + registrationResult);
       }
       finally
       {
@@ -115,7 +140,10 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       try
       {
-        var acc = await _accountService.CreateApplicationUserAccount(Email, Password);
+        RegistrationResult registrationResult = await _registrationService.Register(Email, Password);
+        this.Email = string.Empty;
+        this.Password = string.Empty;
+        MessageBox.Show("The account registration was a: " + registrationResult);
       }
       finally
       {
@@ -126,7 +154,9 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       try
       {
-        var _site = await _siteService.CreateLinkAsync(Link);
+        SiteRegistration siteRegistrationResult = await _siteService.CreateSite(Link);
+        this.Link = string.Empty;
+        MessageBox.Show("The Site registration was a: " + siteRegistrationResult);
       }
       finally
       {

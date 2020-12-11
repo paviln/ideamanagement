@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using EskobInnovation.IdeaManagement.API.Models;
-using EskobInnovation.IdeaManagement.WPF.Helpers;
-using System.Configuration;
+using EskobInnovation.IdeaManagement.WPF.ApiServices;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
-  public class CustomerService : ICustomerService
+  public class ApiCustomerService : IApiCustomerService
   {
     private static PrepHttpClient client = new PrepHttpClient();
-    public CustomerService()
-    {
-    }
+    public ApiCustomerService() { }
    
     public async Task<IEnumerable<Customer>> GetCustomersAsync()
     {
@@ -29,17 +25,9 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
       return customers;
     }
     //POST Request
-    public async Task<Uri> CreateCustomerAsync(string companyname, string streetaddresse, string zipcode, string contactperson)
+    public async Task<Uri> CreateCustomerAsync(Customer customer)
     {
       string uri = "api/customer";
-
-      Customer customer = new Customer()
-      {
-        CompanyName = companyname,
-        StreetAdresse = streetaddresse,
-        ZipCode = zipcode,
-        ContactPerson = contactperson
-      };
       HttpResponseMessage response = await client.PostAsJsonAsync(uri, customer);
       return response.Headers.Location;
     }
@@ -60,6 +48,30 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
       HttpResponseMessage response = await client.DeleteAsync(
           $"api/customer/{id}");
       return response.StatusCode;
+    }
+
+    public async Task<int> GetByIDAsync(string id)
+    {
+      string url = "api/Customer/"+id;
+      Customer customer = null;
+      HttpResponseMessage response = await client.GetAsync(url);
+      if (response.IsSuccessStatusCode)
+      {
+        customer = await response.Content.ReadAsAsync<Customer>();
+      }
+      return customer.Id;
+    }
+
+    public async Task<string> GetByName(string customername)
+    {
+      string uri = "api/customer/" + customername;
+      Customer customer = null;
+      HttpResponseMessage response = await client.GetAsync(uri);
+      if (response.IsSuccessStatusCode)
+      {
+        customer = await response.Content.ReadAsAsync<Customer>();
+      }
+      return customer.CompanyName;
     }
   }
 }
