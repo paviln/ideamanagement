@@ -16,5 +16,5 @@ namespace EskobInnovation.IdeaManagement.WPF.View.Pages
         }
 
 
-    }
+  }
 }

@@ -5,11 +5,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EskobInnovation.IdeaManagement.WPF.View.Pages"
+      xmlns:viewmodel="clr-namespace:EskobInnovation.IdeaManagement.WPF.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="500"
       >
+   
     <StackPanel
             Background="WhiteSmoke">
+        
         <Grid Height="450">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
@@ -68,6 +71,7 @@
                            Grid.Column="0" 
                            Content="Insert Customer Name" Margin="0,33,0,33" Grid.RowSpan="3"/>
                     <TextBox 
+                            x:Name="nameTextbox" 
                              Grid.Column="1" 
                              Height="25"
                             Width="110"
@@ -77,6 +81,7 @@
                            Grid.Column="0" 
                            Content="Insert Addresse"/>
                     <TextBox 
+                            x:Name="saTextBox" 
                             Grid.Row="2" 
                             Grid.Column="1" 
                             Height="25"
@@ -86,7 +91,8 @@
                            Grid.Row="3" 
                            Grid.Column="0" 
                            Content="Insert ZipCode"/>
-                    <TextBox 
+                    <TextBox
+                            x:Name="zpTextBox"
                             Grid.Row="3" 
                             Grid.Column="1" 
                             Height="25" 
@@ -96,18 +102,19 @@
                            Grid.Row="3" 
                            Grid.Column="0" 
                            Content="Insert Contact Person" Margin="0,33,0,33" Grid.RowSpan="3"/>
-                    <TextBox 
+                    <TextBox
+                            x:Name="cpTextBox"
                             Grid.Row="3" 
                             Grid.Column="1"
                             Height="25"
                             Width="110"
                             Text="{Binding ContactPerson}" Margin="0,33,0,33" Grid.RowSpan="3"/>
                     <Button 
-                        Grid.Row="5" 
+                            Grid.Row="5" 
                             Grid.ColumnSpan="2" 
                             Content="Create Customer"
                             Margin="2,2,2,2"
-                            Command="{Binding AddCustomerCmd}"/>
+                            Command="{Binding AddCustomerCmd}" />
                 </Grid>
                 <!--Create Account Grid-->
                 <Grid Grid.Column="1">
@@ -163,6 +170,7 @@
                         Content="Create Account"
                         Command="{Binding CreateAccountCmd}" 
                         Margin="2">
+               
                     </Button>
                 </Grid>
             </Grid>
