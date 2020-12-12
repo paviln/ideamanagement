@@ -62,15 +62,15 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             set { SetProperty(ref _customers, value); }
         }
         #endregion
-        private readonly ICustomerService _customerService;
+        private readonly IApiCustomerService _customerService;
         //Constructor injection (IoC)
-        public ManageCustomerViewModel(ICustomerService customerService)
+        public ManageCustomerViewModel(IApiCustomerService customerService)
         {
             _customerService = customerService;
         }
         public ManageCustomerViewModel()
         {
-            _customerService = new CustomerService();
+            _customerService = new ApiCustomerService();
             FillDataGrid();
             DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
             UpdateCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncUpdate, CanExecuteSubmit);
@@ -102,14 +102,10 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                 {
                     Id = Id,
                     CompanyName = CompanyName,
-                    StreetAdresse = StreetAdresse,
-                    ZipCode = ZipCode,
-                    ContactPerson = ContactPerson
-                    
                 };
 
-                await _customerService.UpdateCustomerAsync(customer);
-
+             await _customerService.UpdateCustomerAsync(customer);
+            this.CompanyName = string.Empty;
             }
             finally
             {
@@ -148,5 +144,4 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         }
         #endregion
     }
-
 }

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Data;
-using EskobInnovation.IdeaManagement.API.Data.Migrations;
 using EskobInnovation.IdeaManagement.API.Models;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +30,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return await _context.Ideas.ToListAsync();
     }
 
-    // GET: api/Idea
+    // POST: api/Idea/getideasperiod
     [HttpPost("getideasperiod")]
     public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod(List<DateTime> period)
     {
@@ -41,6 +40,24 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
       return ideas;
     }
+
+    // GET: api/Idea/getperiod
+    [HttpGet("getperiod")]
+    public async Task<ActionResult<List<DateTime>>> GetPeriod()
+    {
+      DateTime firstDate = await _context.Ideas
+        .MinAsync(i => i.Date);
+        
+      DateTime lastDate = await _context.Ideas
+        .MaxAsync(i => i.Date);
+
+      List<DateTime> dateTimes = new List<DateTime>();
+      dateTimes.Add(firstDate);
+      dateTimes.Add(lastDate);
+
+      return (dateTimes);
+    }
+
 
     // GET: api/Idea/5
     [HttpGet("{id}")]

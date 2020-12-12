@@ -16,6 +16,10 @@ const getIdeasPeriod = period => {
   return http.post(`/idea/getideasperiod`, period);
 };
 
+const getPeriod = () => {
+  return http.get(`/idea/getperiod`);
+};
+
 const create = data => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
@@ -44,6 +48,7 @@ export default {
   get,
   getSiteIdeas,
   getIdeasPeriod,
+  getPeriod,
   create,
   update,
   remove,

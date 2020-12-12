@@ -7,17 +7,13 @@ using EskobInnovation.IdeaManagement.API.Models;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
-  public enum CreationResult
+  public interface IApiCustomerService
   {
-    Success,
-    CustomerNameAlreadyExists,
-  }
-  public interface ICustomerService
-  {
-    
     Task<IEnumerable<Customer>> GetCustomersAsync();
-    Task<Uri> CreateCustomerAsync(string companyname, string streetaddresse, string zipcode, string contactperson);
+    Task<Uri> CreateCustomerAsync(Customer customer);
     Task<Customer> UpdateCustomerAsync(Customer customer);
     Task<HttpStatusCode> DeleteCustomerAsync(string id);
+    Task<int> GetByIDAsync(string id);
+    Task<string> GetByName(string customername);
   }
 }
