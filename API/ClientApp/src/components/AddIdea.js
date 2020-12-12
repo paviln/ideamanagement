@@ -68,7 +68,6 @@ export default class AddIdea extends Component {
     fileData.append('date', moment(new Date()).format("MM/DD/YYYY, H:mm:ss"));
     fileData.append('hashtags', idea['hashtags']);
     fileData.append('siteId', this.props.siteId);
-    console.log(idea['hashtags']);
 
     IdeaService.create(fileData)
     .then(responce => {

@@ -44,6 +44,7 @@ const Overview = (props) => {
         const response = await ideaService.getIdeasPeriod(period);
         setIdeas(response.data);
         setLoading(false);
+
       } catch (error) {
         console.log(error);
       }
