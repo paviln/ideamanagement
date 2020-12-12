@@ -19,6 +19,7 @@ namespace EskobInnovation.IdeaManagement.API.Data
         public DbSet<Site> Sites { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
+        public DbSet<IdeaComment> IdeaComments { get; set; }
 
     }
 }
