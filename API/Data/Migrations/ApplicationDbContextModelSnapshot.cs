@@ -221,7 +221,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 
                     b.HasIndex("IdeaId");
 
-                    b.ToTable("IdeaComment");
+                    b.ToTable("IdeaComments");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>
