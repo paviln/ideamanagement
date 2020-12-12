@@ -3,18 +3,17 @@ import React from 'react'
 function Hashtags(props) {
 
   const populateHashtags = (hashtags) => {
-    if (hashtags !== undefined) {
-      console.log(hashtags)
+    var list = [];
 
-      var list = [];
+    if (hashtags !== null) {
       for (let i = 0; i < hashtags.length; i++) {
         list.push(
           <p className="pt-2">#{hashtags[i].name}</p>
         );
       }
-
-      return list;
     }
+
+    return list;
   }
 
   var list = populateHashtags(props.hashtags);

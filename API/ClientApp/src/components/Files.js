@@ -5,8 +5,9 @@ import { HiOutlineDocumentDownload } from "react-icons/hi";
 function Files(props) {
 
   const populateFiles = (files) => {
-    if (files !== undefined) {
-      const list = [];
+    const list = [];
+
+    if (files !== null) {
       for (let i = 0; i < files.length; i++) {
         list.push(
           <li className="pt-2">
@@ -20,9 +21,9 @@ function Files(props) {
           </li>
         );
       }
-
-      return list;
     }
+
+    return list;
   }
 
   var list = populateFiles(props.files);
