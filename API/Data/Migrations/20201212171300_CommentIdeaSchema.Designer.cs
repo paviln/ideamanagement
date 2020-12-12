@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201212162810_CommentIdeaSchema")]
+    [Migration("20201212171300_CommentIdeaSchema")]
     partial class CommentIdeaSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,7 +223,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 
                     b.HasIndex("IdeaId");
 
-                    b.ToTable("IdeaComment");
+                    b.ToTable("IdeaComments");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>

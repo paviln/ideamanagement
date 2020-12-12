@@ -7,7 +7,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "IdeaComment",
+                name: "IdeaComments",
                 columns: table => new
                 {
                     IdeaCommentId = table.Column<int>(type: "int", nullable: false)
@@ -17,9 +17,9 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IdeaComment", x => x.IdeaCommentId);
+                    table.PrimaryKey("PK_IdeaComments", x => x.IdeaCommentId);
                     table.ForeignKey(
-                        name: "FK_IdeaComment_Ideas_IdeaId",
+                        name: "FK_IdeaComments_Ideas_IdeaId",
                         column: x => x.IdeaId,
                         principalTable: "Ideas",
                         principalColumn: "IdeaId",
@@ -27,15 +27,15 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_IdeaComment_IdeaId",
-                table: "IdeaComment",
+                name: "IX_IdeaComments_IdeaId",
+                table: "IdeaComments",
                 column: "IdeaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "IdeaComment");
+                name: "IdeaComments");
         }
     }
 }
