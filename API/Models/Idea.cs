@@ -21,8 +21,9 @@ namespace EskobInnovation.IdeaManagement.API.Models
     public DateTime Date { get; set; }
     public Status Status { get; set; }
     public ICollection<Hashtag> Hashtags { get; set; }
+    public ICollection<IdeaComment> IdeaComments { get; set; }
+    public ICollection<File> Files { get; set; }
     public int SiteId { get; set; }
     public Site Site { get; set; }
-    public ICollection<File> Files { get; set; }
   }
 }

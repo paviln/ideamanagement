@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace EskobInnovation.IdeaManagement.WPF.Service
 {
-  public enum RegistrationResult
+  public interface IApiAccountService
   {
-    Success,
-    EmailAlreadyExists,
-    UsernameAlreadyExists
-  }
-  public interface IAccountService
-  {
-    Task<Uri> CreateApplicationUserAccount(string email, string password);
+    Task<Uri> CreateApplicationUserAccount(ApplicationUser user);
+    Task<ApplicationUser> GetByEmail(string email);
   }
 }
