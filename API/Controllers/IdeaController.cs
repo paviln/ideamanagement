@@ -41,13 +41,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return ideas;
     }
 
-    // GET: api/Idea/getperiod
+    // GET: api/Idea/GetPeriod
     [HttpGet("getperiod")]
     public async Task<ActionResult<List<DateTime>>> GetPeriod()
     {
       DateTime firstDate = await _context.Ideas
         .MinAsync(i => i.Date);
-        
+
       DateTime lastDate = await _context.Ideas
         .MaxAsync(i => i.Date);
 
@@ -70,6 +70,39 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
+      var tasks = await _context.Tasks
+        .Where(t => t.Idea.IdeaId == idea.IdeaId)
+        .ToListAsync();
+
+      foreach (var item in tasks)
+      {
+        await _context.Entry(item)
+        .Collection(t => t.TaskComments)
+        .LoadAsync();
+      }
+
+      idea.Tasks = tasks;
+
+      await _context.Entry(idea)
+        .Collection(i => i.Tasks)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Employees)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+       .Collection(i => i.Files)
+       .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Hashtags)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+      .Collection(i => i.IdeaComments)
+      .LoadAsync();
+
       return idea;
     }
 
@@ -82,6 +115,30 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .ToListAsync();
 
       return ideas;
+    }
+
+    // GET: api/Idea/GetIdeaFileData
+    [HttpGet("Getideafiledata")]
+    public async Task<ActionResult> GetIdeaFileData(int fileId)
+    {
+      var file = await _context.Files
+        .Where(f => f.FileId == fileId)
+        .FirstOrDefaultAsync();
+
+      if (file != null)
+      {
+        var fileData = await _context.FileDatas
+          .Where(fd => fd.FileId == fileId)
+          .FirstOrDefaultAsync();
+
+        if (fileData != null)
+        {
+
+          return File(fileData.Data, file.Type);
+        }
+      }
+
+      return NotFound();
     }
 
     // PUT: api/Idea/5
@@ -132,11 +189,14 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
             Models.File file = new Models.File();
             file.IdeaId = idea.IdeaId;
             file.Name = element.FileName;
+            file.Type = element.ContentType;
+            FileData fileData = new FileData();
             using (var ms = new MemoryStream())
             {
               element.CopyTo(ms);
-              file.Data = ms.ToArray();
+              fileData.Data = ms.ToArray();
             }
+            file.FileData = fileData;
             idea.Files.Add(file);
           }
           catch (System.Exception error)

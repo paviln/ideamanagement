@@ -4,14 +4,16 @@ using EskobInnovation.IdeaManagement.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201213151509_IdeaTasksSchema")]
+    partial class IdeaTasksSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,22 +268,25 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("IdeaId")
                         .HasColumnType("int");
 
-                    b.HasKey("IdeaCommentId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("EmployeeId");
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdeaCommentId");
 
                     b.HasIndex("IdeaId");
 
@@ -693,15 +698,9 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.IdeaComment", b =>
                 {
-                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
                     b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", "Idea")
                         .WithMany("IdeaComments")
                         .HasForeignKey("IdeaId");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Idea");
                 });

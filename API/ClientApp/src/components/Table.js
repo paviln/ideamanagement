@@ -9,7 +9,7 @@ function Table(props) {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr key={i} className={props.bg}>
+          <tr key={i} className={props.bg} onClick={() => props.handleClick(ideas[i].ideaId)}>
             <td>{ideas[i].title}</td>
           </tr>
         );
@@ -29,7 +29,7 @@ function Table(props) {
         </tr>
       </thead>
       <tbody>
-        { props.loading
+        {props.loading
           ? <p>loading</p>
           : populateIdeas()
         }

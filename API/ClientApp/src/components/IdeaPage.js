@@ -1,89 +1,112 @@
-import React,{Component, useState} from 'react';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { ButtonToolbar } from 'react-bootstrap';
-import { Container, Row, Col} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+import moment from 'moment';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import './My.css';
+import ideaService from '../services/IdeaService';
+import Files from './Files';
+import Hashtags from './Hashtags';
+import Comments from './Comments';
+import Employees from './Employees';
+import Tasks from './task/Tasks';
 
-export default class IdeaPage extends Component {
+function IdeaPage() {
+  const [loading, setloading] = useState(true);
+  const { id } = useParams();
+  const [idea, setIdea] = useState();
 
-    render () {  
-         return (
-             <div>
-            <Container>
-                  <p/> 
-                  <div>
-                    <h1>IDEAS</h1>
-                  </div>
-                  <br/>
-                  <div>
+  useEffect(() => {
+    async function fetchData() {
+      setloading(true);
 
-               <Row className="rows">
-                  <Col className="columns">Title:</Col>
-                  <Col className="columns" md={2}></Col>
-                  <Col  className="columns">Description:</Col>
-                  <Col className="columns" md={4}></Col>
-                  <Col className="columns">Date of submission:</Col>
-                  <Col className="columns"></Col>
-                  
-              </Row>
-                </div>
-                <br/>
-                <div>
-               <Row className="rows">
-                <Col className="columns">Date of Edited:</Col>
-                <Col className="columns" sm={2}></Col>
-                <Col className="columns">Priority:</Col>
-                <Col className="columns"></Col>
-                <Col className="columns">Cost of saving:</Col>
-                <Col className="columns"></Col>
-                </Row>
-                </div>
-                <br/>
-                <div >
-                <Row className="rows">
-                <Col className="columns">Status:</Col>
-                <Col className="columns"></Col>
-                <Col className="columns">Comments:</Col>
-                <Col className="columns"></Col>
-                </Row>
-                </div>
-                <br/>
-                <div >
-                <p>TASK IMPLEMENTATION</p>
-                <Row className="rows">
-                <Col className="columns">Task related to Implementation:</Col>
-                <Col className="columns"></Col>
-                <Col className="columns">Status:</Col>
-                <Col className="columns"></Col>
-                 <Col className="columns">Challenges:</Col>
-                <Col className="columns"></Col>
-                <Col className="columns">Results:</Col>
-                <Col className="columns"></Col>   
-                <Col className="columns">Comments:</Col>
-                <Col className="columns"></Col>
-                </Row>
-                </div>
-                
-             </Container>
-                <br/>
-                <h1>Add User</h1>
-                <Form>
-                <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                </Form.Text>
-                </Form.Group>
+      await ideaService.get(id)
+        .then(responce => {
+          if (responce.status == '200') {
+            setIdea(responce.data);
+            console.log(responce.data);
 
-                <Button variant="primary" type="adduser">
-                Add
-                </Button>
-                </Form>
-          </div>
-          
-         );
-         
+            setloading(false);
+            console.log(responce.data);
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        });
     }
+    fetchData();
+  }, [])
+
+  const now = 3;
+  if (loading === true) {
+    return null;
+  }
+
+  var ideaStatus = {
+    0: 'New',
+    1: 'Under Review',
+    2: 'Under Implementation',
+    3: 'Implemented'
+  }
+  
+  const getIdeaStatus = (key) => {
+
+    return ideaStatus[key];
+  }
+
+  return (
+    <div className="mb-4">
+      <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
+        <h3>Idea Page</h3>
+        <div>
+          <p>Employee number: {idea.employeeNumber}</p>
+          <p>Submission: {moment(idea.date).format("DD/MM/YYYY, HH:mm:ss")}</p>
+          <p>Last edited: </p>
+          <p>Status: {getIdeaStatus(idea.status)}</p>
+        </div>
+      </div>
+      <h4>{idea.title}</h4>
+      <p className="text-break">{idea.description}</p>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated effort</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Priority</h5>
+            <ProgressBar now={0} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated impact</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-4">
+            <h5>Estimated cost</h5>
+            <p>100$</p>
+          </div>
+        </Col>
+      </Row>
+      <Files files={idea.files} />
+      <Hashtags hashtags={idea.hashtags} />
+      <Comments ideaComments={idea.ideaComments} />
+      <Employees employees={idea.employees} />
+      <Tasks tasks={idea.tasks} />
+    </div>
+  );
 }
+
+export default IdeaPage;
