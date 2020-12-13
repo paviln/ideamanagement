@@ -96,6 +96,21 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return ideas;
     }
 
+    // GET: api/Idea/GetIdeaFileData
+    [HttpGet("Getideafiledata")]
+    public async Task<ActionResult> GetIdeaFileData(int fileId)
+    {
+      var file = await _context.Files
+        .Where(f => f.FileId == fileId)
+        .FirstOrDefaultAsync();
+
+      var fileData = await _context.fileDatas
+        .Where(fd => fd.FileId == fileId)
+        .FirstOrDefaultAsync();
+
+      return File(fileData.Data, file.Type);
+    }
+
     // PUT: api/Idea/5
     // To protect from overposting attacks, enable the specific properties you want to bind to, for
     // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -144,6 +159,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
             Models.File file = new Models.File();
             file.IdeaId = idea.IdeaId;
             file.Name = element.FileName;
+            file.Type = element.ContentType;
             FileData fileData = new FileData();
             using (var ms = new MemoryStream())
             {
