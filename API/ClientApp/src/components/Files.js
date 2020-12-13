@@ -12,7 +12,7 @@ function Files(props) {
     if (files !== null) {
       for (let i = 0; i < files.length; i++) {
         list.push(
-          <li className="pt-2">
+          <li>
             <a className="btn" onClick={() => downloadFile(files[i])}>
               <i className="pr-2">
                 <IconContext.Provider value={{ color: "black", size: "1.2em" }}>
@@ -45,7 +45,7 @@ function Files(props) {
   if (list.length > 0) {
     return (
       <div>
-        <p className="pt-4">Files</p>
+        <h5 className="pt-2">Files</h5>
         <ul className="list-unstyled m-0">
           {list}
         </ul>

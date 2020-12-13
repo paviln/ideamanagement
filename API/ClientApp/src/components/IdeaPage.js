@@ -53,32 +53,32 @@ function IdeaPage() {
       <p className="text-break">{idea.description}</p>
       <Row>
         <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated effort</p>
-            <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated effort</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Priority</h5>
+            <ProgressBar now={0} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated impact</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
           </div>
         </Col>
       </Row>
       <Row>
         <Col sm="6">
           <div className="pt-4">
-            <p className="pr-2">Priority</p>
-            <ProgressBar className="flex-grow-1" now={0} label={`${now}`} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated impact</p>
-            <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated cost</p>
+            <h5>Estimated cost</h5>
             <p>100$</p>
           </div>
         </Col>

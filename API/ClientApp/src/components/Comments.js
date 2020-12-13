@@ -30,7 +30,7 @@ function Comments(props) {
   if (comments.length > 0) {
     return (
       <div>
-        <p className="pt-4">Comments</p>
+        <h5 className="pt-2">Comments</h5>
         {comments}
       </div>
     );
