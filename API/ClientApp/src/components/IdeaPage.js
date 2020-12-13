@@ -11,6 +11,7 @@ import Hashtags from './Hashtags';
 import Comments from './Comments';
 import Employees from './Employees';
 import Tasks from './task/Tasks';
+import Form from 'react-bootstrap/Form';
 
 function IdeaPage() {
   const [loading, setloading] = useState(true);
@@ -49,7 +50,7 @@ function IdeaPage() {
     2: 'Under Implementation',
     3: 'Implemented'
   }
-  
+
   const getIdeaStatus = (key) => {
 
     return ideaStatus[key];
@@ -105,6 +106,18 @@ function IdeaPage() {
       <Comments ideaComments={idea.ideaComments} />
       <Employees employees={idea.employees} />
       <Tasks tasks={idea.tasks} />
+      {idea.challenge &&
+        <div className="mt-2">
+          <h5>Challenges</h5>
+          <p>{idea.challenge}</p>
+        </div>
+      }
+      {idea.result &&
+        <div className="mt-2">
+          <h5>Results</h5>
+          <p>{idea.result}</p>
+        </div>
+      }
     </div>
   );
 }
