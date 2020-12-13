@@ -144,11 +144,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
             Models.File file = new Models.File();
             file.IdeaId = idea.IdeaId;
             file.Name = element.FileName;
+            FileData fileData = new FileData();
             using (var ms = new MemoryStream())
             {
               element.CopyTo(ms);
-              file.Data = ms.ToArray();
+              fileData.Data = ms.ToArray();
             }
+            file.FileData = fileData;
             idea.Files.Add(file);
           }
           catch (System.Exception error)
