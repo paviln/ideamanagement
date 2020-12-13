@@ -22,5 +22,7 @@ namespace EskobInnovation.IdeaManagement.API.Data
     public DbSet<IdeaComment> IdeaComments { get; set; }
     public DbSet<FileData> FileDatas { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Task> Tasks { get; set; }
+    public DbSet<TaskComment> TaskComments { get; set; }
   }
 }
