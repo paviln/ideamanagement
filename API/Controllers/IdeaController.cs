@@ -103,12 +103,19 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       var file = await _context.Files
         .Where(f => f.FileId == fileId)
         .FirstOrDefaultAsync();
+      
+      if (file != null) {
+        var fileData = await _context.fileDatas
+          .Where(fd => fd.FileId == fileId)
+          .FirstOrDefaultAsync();
+        
+        if (fileData != null) {
+          
+          return File(fileData.Data, file.Type);
+        }
+      }
 
-      var fileData = await _context.fileDatas
-        .Where(fd => fd.FileId == fileId)
-        .FirstOrDefaultAsync();
-
-      return File(fileData.Data, file.Type);
+      return NotFound();
     }
 
     // PUT: api/Idea/5
