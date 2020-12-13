@@ -91,13 +91,13 @@ const Overview = (props) => {
       </div>
       <Row>
         <Col sm={12} md={4}>
-          <Table title="New" ideas={ideas.filter(f => f.status == 'New')} loading={loading} bg="table-success" handleClick={handleClick}/>
+          <Table title="New" ideas={ideas.filter(f => f.status == '0')} loading={loading} bg="table-success" handleClick={handleClick}/>
         </Col>
         <Col sm={12} md={4}>
-          <Table title="In Progress" ideas={ideas.filter(f => f.status == 'UnderReview' || f.status == 'UnderImplementation')} loading={loading} bg="table-warning" handleClick={handleClick} />
+          <Table title="In Progress" ideas={ideas.filter(f => f.status == '1' || f.status == '2')} loading={loading} bg="table-warning" handleClick={handleClick} />
         </Col>
         <Col sm={12} md={4}>
-          <Table title="Implemented" ideas={ideas.filter(f => f.status == 'Implemented')} loading={loading} bg="table-danger" handleClick={handleClick} />
+          <Table title="Implemented" ideas={ideas.filter(f => f.status == '3')} loading={loading} bg="table-danger" handleClick={handleClick} />
         </Col>
       </Row>
     </div>
