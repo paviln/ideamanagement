@@ -9,6 +9,8 @@ import ideaService from '../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
 import Comments from './Comments';
+import Employees from './Employees';
+import Tasks from './task/Tasks';
 
 function IdeaPage() {
   const [loading, setloading] = useState(true);
@@ -23,6 +25,8 @@ function IdeaPage() {
         .then(responce => {
           if (responce.status == '200') {
             setIdea(responce.data);
+            console.log(responce.data);
+
             setloading(false);
             console.log(responce.data);
           }
@@ -38,47 +42,60 @@ function IdeaPage() {
   if (loading === true) {
     return null;
   }
+
+  var ideaStatus = {
+    0: 'New',
+    1: 'Under Review',
+    2: 'Under Implementation',
+    3: 'Implemented'
+  }
+  
+  const getIdeaStatus = (key) => {
+
+    return ideaStatus[key];
+  }
+
   return (
-    <div>
+    <div className="mb-4">
       <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
         <h3>Idea Page</h3>
         <div>
           <p>Employee number: {idea.employeeNumber}</p>
           <p>Submission: {moment(idea.date).format("DD/MM/YYYY, HH:mm:ss")}</p>
           <p>Last edited: </p>
-          <p>Status: {idea.status}</p>
+          <p>Status: {getIdeaStatus(idea.status)}</p>
         </div>
       </div>
       <h4>{idea.title}</h4>
       <p className="text-break">{idea.description}</p>
       <Row>
         <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated effort</p>
-            <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated effort</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Priority</h5>
+            <ProgressBar now={0} label={`${now}`} />
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="6">
+          <div className="pt-2">
+            <h5 className="pr-2">Estimated impact</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
           </div>
         </Col>
       </Row>
       <Row>
         <Col sm="6">
           <div className="pt-4">
-            <p className="pr-2">Priority</p>
-            <ProgressBar className="flex-grow-1" now={0} label={`${now}`} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated impact</p>
-            <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col sm="6">
-          <div className="pt-4">
-            <p className="pr-2">Estimated cost</p>
+            <h5>Estimated cost</h5>
             <p>100$</p>
           </div>
         </Col>
@@ -86,6 +103,8 @@ function IdeaPage() {
       <Files files={idea.files} />
       <Hashtags hashtags={idea.hashtags} />
       <Comments ideaComments={idea.ideaComments} />
+      <Employees employees={idea.employees} />
+      <Tasks tasks={idea.tasks} />
     </div>
   );
 }

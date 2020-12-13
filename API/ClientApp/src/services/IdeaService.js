@@ -20,6 +20,16 @@ const getPeriod = () => {
   return http.get(`/idea/getperiod`);
 };
 
+const getIdeaFileData = id => {
+  const config = {
+    responseType: 'blob', 
+    timeout: 30000, 
+    params: { fileId: id },
+  }
+
+  return http.get(`/idea/getideafiledata`, config);
+};
+
 const create = data => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
@@ -49,6 +59,7 @@ export default {
   getSiteIdeas,
   getIdeasPeriod,
   getPeriod,
+  getIdeaFileData,
   create,
   update,
   remove,

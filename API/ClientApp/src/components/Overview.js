@@ -43,6 +43,8 @@ const Overview = (props) => {
         var period = [start, end];
         const response = await ideaService.getIdeasPeriod(period);
         setIdeas(response.data);
+        console.log(response.data);
+
         setLoading(false);
 
       } catch (error) {
@@ -89,13 +91,13 @@ const Overview = (props) => {
       </div>
       <Row>
         <Col sm={12} md={4}>
-          <Table title="New" ideas={ideas.filter(f => f.status == 0)} loading={loading} bg="table-success" handleClick={handleClick}/>
+          <Table title="New" ideas={ideas.filter(f => f.status == '0')} loading={loading} bg="table-success" handleClick={handleClick}/>
         </Col>
         <Col sm={12} md={4}>
-          <Table title="In Progress" ideas={ideas.filter(f => f.status == 1 || f.status == 2)} loading={loading} bg="table-warning" handleClick={handleClick} />
+          <Table title="In Progress" ideas={ideas.filter(f => f.status == '1' || f.status == '2')} loading={loading} bg="table-warning" handleClick={handleClick} />
         </Col>
         <Col sm={12} md={4}>
-          <Table title="Implemented" ideas={ideas.filter(f => f.status == 3)} loading={loading} bg="table-danger" handleClick={handleClick} />
+          <Table title="Implemented" ideas={ideas.filter(f => f.status == '3')} loading={loading} bg="table-danger" handleClick={handleClick} />
         </Col>
       </Row>
     </div>

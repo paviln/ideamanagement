@@ -1,6 +1,8 @@
 import React from 'react';
 import { IconContext } from "react-icons";
 import { HiOutlineDocumentDownload } from "react-icons/hi";
+import ideaService from '../services/IdeaService';
+import saveAs from 'file-saver';
 
 function Files(props) {
 
@@ -10,8 +12,8 @@ function Files(props) {
     if (files !== null) {
       for (let i = 0; i < files.length; i++) {
         list.push(
-          <li className="pt-2">
-            <a className="text-decoration-none" href="">
+          <li>
+            <a className="btn" onClick={() => downloadFile(files[i])}>
               <i className="pr-2">
                 <IconContext.Provider value={{ color: "black", size: "1.2em" }}>
                   <HiOutlineDocumentDownload />
@@ -26,12 +28,24 @@ function Files(props) {
     return list;
   }
 
+  const downloadFile = (file) => {
+    ideaService.getIdeaFileData(file.fileId)
+      .then( response => {
+        if (response.status == '200') {
+          saveAs(response.data, file.name);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   var list = populateFiles(props.files);
 
   if (list.length > 0) {
     return (
       <div>
-        <p className="pt-4">Files</p>
+        <h5 className="pt-2">Files</h5>
         <ul className="list-unstyled m-0">
           {list}
         </ul>

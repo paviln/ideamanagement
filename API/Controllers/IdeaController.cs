@@ -70,6 +70,27 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
+      var tasks = await _context.Tasks
+        .Where(t => t.Idea.IdeaId == idea.IdeaId)
+        .ToListAsync();
+
+      foreach (var item in tasks)
+      {
+        await _context.Entry(item)
+        .Collection(t => t.TaskComments)
+        .LoadAsync();
+      }
+
+      idea.Tasks = tasks;
+
+      await _context.Entry(idea)
+        .Collection(i => i.Tasks)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Employees)
+        .LoadAsync();
+
       await _context.Entry(idea)
        .Collection(i => i.Files)
        .LoadAsync();
@@ -94,6 +115,30 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .ToListAsync();
 
       return ideas;
+    }
+
+    // GET: api/Idea/GetIdeaFileData
+    [HttpGet("Getideafiledata")]
+    public async Task<ActionResult> GetIdeaFileData(int fileId)
+    {
+      var file = await _context.Files
+        .Where(f => f.FileId == fileId)
+        .FirstOrDefaultAsync();
+
+      if (file != null)
+      {
+        var fileData = await _context.FileDatas
+          .Where(fd => fd.FileId == fileId)
+          .FirstOrDefaultAsync();
+
+        if (fileData != null)
+        {
+
+          return File(fileData.Data, file.Type);
+        }
+      }
+
+      return NotFound();
     }
 
     // PUT: api/Idea/5
@@ -144,6 +189,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
             Models.File file = new Models.File();
             file.IdeaId = idea.IdeaId;
             file.Name = element.FileName;
+            file.Type = element.ContentType;
             FileData fileData = new FileData();
             using (var ms = new MemoryStream())
             {

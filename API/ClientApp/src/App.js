@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
-
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-//import authService from './components/api-authorization/AuthorizeService';
 import siteService from './services/SiteService';
-
 import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
-//import Test from './components/Test';
-
-import './App.scss';
 import authService from './components/api-authorization/AuthorizeService';
 import userService from './services/UserService';
 import NewIdeas from './components/NewIdeas';
@@ -24,6 +18,7 @@ import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
 import Overview from './components/Overview';
 import Browse from './components/Browse';
+import './App.scss';
 
 export default class App extends Component {
 

@@ -69,6 +69,8 @@ export default class AddIdea extends Component {
     fileData.append('hashtags', idea['hashtags']);
     fileData.append('siteId', this.props.siteId);
 
+    console.log(fileData);
+
     IdeaService.create(fileData)
     .then(responce => {
       const idea = {};
