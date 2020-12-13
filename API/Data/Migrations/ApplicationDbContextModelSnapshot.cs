@@ -159,7 +159,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.HasIndex("FileId")
                         .IsUnique();
 
-                    b.ToTable("FileData");
+                    b.ToTable("fileDatas");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Hashtag", b =>
