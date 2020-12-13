@@ -8,8 +8,8 @@ function Comment(props) {
   return (
     <div className="d-flex bg-light border border-dark rounded p-2 mt-2">
       <div className="flex-grow-1">
-        <p>{comment.name}</p>
-        <p>{comment.text}</p>
+        <p>{comment.employee.name}</p>
+        <p>{comment.content}</p>
       </div>
       <div className="align-self-center">
         <p >{moment(comment.date).format("DD/MM/YYYY, HH:mm:ss")}</p>

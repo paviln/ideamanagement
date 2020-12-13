@@ -13,7 +13,6 @@ function Task(props) {
 
     if (comments !== null) {
       for (let i = 0; i < comments.length; i++) {
-        console.log(comments)
         list.push(
           <Comment comment={comments[i]} />
         );
