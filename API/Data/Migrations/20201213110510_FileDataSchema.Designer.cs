@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201213105024_FileDataSchema")]
+    [Migration("20201213110510_FileDataSchema")]
     partial class FileDataSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,7 +161,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.HasIndex("FileId")
                         .IsUnique();
 
-                    b.ToTable("FileData");
+                    b.ToTable("fileDatas");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Hashtag", b =>

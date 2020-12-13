@@ -12,7 +12,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 table: "Files");
 
             migrationBuilder.CreateTable(
-                name: "FileData",
+                name: "fileDatas",
                 columns: table => new
                 {
                     FileDataId = table.Column<int>(type: "int", nullable: false)
@@ -22,9 +22,9 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FileData", x => x.FileDataId);
+                    table.PrimaryKey("PK_fileDatas", x => x.FileDataId);
                     table.ForeignKey(
-                        name: "FK_FileData_Files_FileId",
+                        name: "FK_fileDatas_Files_FileId",
                         column: x => x.FileId,
                         principalTable: "Files",
                         principalColumn: "FileId",
@@ -32,8 +32,8 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_FileData_FileId",
-                table: "FileData",
+                name: "IX_fileDatas_FileId",
+                table: "fileDatas",
                 column: "FileId",
                 unique: true);
         }
@@ -41,7 +41,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FileData");
+                name: "fileDatas");
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "Data",
