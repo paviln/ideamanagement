@@ -20,6 +20,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
     public string EmployeeNumber { get; set; }
     public DateTime Date { get; set; }
     public Status Status { get; set; }
+    public ICollection<Employee> Employees { get; set; }
     public ICollection<Hashtag> Hashtags { get; set; }
     public ICollection<IdeaComment> IdeaComments { get; set; }
     public ICollection<File> Files { get; set; }

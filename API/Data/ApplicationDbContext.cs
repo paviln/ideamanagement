@@ -20,6 +20,7 @@ namespace EskobInnovation.IdeaManagement.API.Data
     public DbSet<File> Files { get; set; }
     public DbSet<Hashtag> Hashtags { get; set; }
     public DbSet<IdeaComment> IdeaComments { get; set; }
-    public DbSet<FileData> fileDatas { get; set; }
+    public DbSet<FileData> FileDatas { get; set; }
+    public DbSet<Employee> Employees { get; set; }
   }
 }
