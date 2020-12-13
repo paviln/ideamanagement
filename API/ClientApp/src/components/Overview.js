@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import moment from 'moment';
 import DatePicker from "react-datepicker";
 import Row from 'react-bootstrap/Row';
@@ -6,15 +7,14 @@ import Col from 'react-bootstrap/Col';
 import ideaService from '../services/IdeaService';
 import Table from './Table';
 
-const Overview = () => {
-
+const Overview = (props) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [ideas, setIdeas] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [minDate, setMinDate] = useState(new Date());
   const [maxDate, setMaxDate] = useState(new Date());
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +30,7 @@ const Overview = () => {
     }
     fetchData();
   }, []);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -43,12 +44,17 @@ const Overview = () => {
         const response = await ideaService.getIdeasPeriod(period);
         setIdeas(response.data);
         setLoading(false);
+
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, [startDate, endDate]);
+
+  const handleClick = (ideaId) => {
+    history.push(props.prefix + "/overview/" + ideaId);
+  }
   
   return (
     <div>
@@ -83,13 +89,13 @@ const Overview = () => {
       </div>
       <Row>
         <Col sm={12} md={4}>
-          <Table title="New" ideas={ideas.filter(f => f.status == 0)} loading={loading} bg="table-success"/>
+          <Table title="New" ideas={ideas.filter(f => f.status == 0)} loading={loading} bg="table-success" handleClick={handleClick}/>
         </Col>
         <Col sm={12} md={4}>
-          <Table title="In Progress" ideas={ideas.filter(f => f.status == 1 || f.status == 2)} loading={loading} bg="table-warning" />
+          <Table title="In Progress" ideas={ideas.filter(f => f.status == 1 || f.status == 2)} loading={loading} bg="table-warning" handleClick={handleClick} />
         </Col>
         <Col sm={12} md={4}>
-          <Table title="Implemented" ideas={ideas.filter(f => f.status == 3)} loading={loading} bg="table-danger" />
+          <Table title="Implemented" ideas={ideas.filter(f => f.status == 3)} loading={loading} bg="table-danger" handleClick={handleClick} />
         </Col>
       </Row>
     </div>

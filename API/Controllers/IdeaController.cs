@@ -41,13 +41,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return ideas;
     }
 
-    // GET: api/Idea/getperiod
+    // GET: api/Idea/GetPeriod
     [HttpGet("getperiod")]
     public async Task<ActionResult<List<DateTime>>> GetPeriod()
     {
       DateTime firstDate = await _context.Ideas
         .MinAsync(i => i.Date);
-        
+
       DateTime lastDate = await _context.Ideas
         .MaxAsync(i => i.Date);
 
@@ -69,6 +69,14 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       {
         return NotFound();
       }
+
+      await _context.Entry(idea)
+       .Collection(i => i.Files)
+       .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Hashtags)
+        .LoadAsync();
 
       return idea;
     }
