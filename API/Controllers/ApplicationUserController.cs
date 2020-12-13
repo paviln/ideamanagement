@@ -16,22 +16,18 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
   {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
-
     public ApplicationUserController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
       _context = context;
       _userManager = userManager;
     }
-
     [HttpGet("getsite")]
     public async Task<ActionResult<ApplicationUser>> GetSite() 
     {
       var currentUser = await _userManager.GetUserAsync(HttpContext.User);
       await _context.Entry(currentUser).Reference(u => u.Site).LoadAsync();
-
       return currentUser;
     }
-
     [HttpPost("createuser")]
     public async Task<ActionResult<IdentityResult>> CreateUser(ApplicationUser user)
     {
