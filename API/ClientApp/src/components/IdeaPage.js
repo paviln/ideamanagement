@@ -8,24 +8,28 @@ import './My.css';
 import ideaService from '../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
+import Comments from './Comments';
 
 function IdeaPage() {
   const [loading, setloading] = useState(true);
-
   const { id } = useParams();
   const [idea, setIdea] = useState();
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        setloading(true);
-        var idea = await ideaService.get(id);
-        setIdea(idea.data);
-      } catch (error) {
-        throw error;
-      } finally {
-        setloading(false);
-      }
+      setloading(true);
+
+      await ideaService.get(id)
+        .then(responce => {
+          if (responce.status == '200') {
+            setIdea(responce.data);
+            setloading(false);
+            console.log(responce.data);
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        });
     }
     fetchData();
   }, [])
@@ -54,6 +58,8 @@ function IdeaPage() {
             <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
           </div>
         </Col>
+      </Row>
+      <Row>
         <Col sm="6">
           <div className="pt-4">
             <p className="pr-2">Priority</p>
@@ -68,16 +74,18 @@ function IdeaPage() {
             <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
           </div>
         </Col>
-
+      </Row>
+      <Row>
         <Col sm="6">
           <div className="pt-4">
             <p className="pr-2">Estimated cost</p>
-            <ProgressBar className="flex-grow-1" now={20 * now} label={`${now}`} />
+            <p>100$</p>
           </div>
         </Col>
       </Row>
       <Files files={idea.files} />
       <Hashtags hashtags={idea.hashtags} />
+      <Comments ideaComments={idea.ideaComments} />
     </div>
   );
 }

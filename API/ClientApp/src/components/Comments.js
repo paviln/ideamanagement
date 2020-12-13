@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function Comments(props) {
 
@@ -8,9 +9,9 @@ function Comments(props) {
     if (comments !== null) {
       for (let i = 0; i < comments.length; i++) {
         list.push(
-          <li className="pt-2">
-            {comments[i].name}
-          </li>
+          <ListGroup.Item>
+            {comments[i].text}
+          </ListGroup.Item>
         );
       }
     }
@@ -18,17 +19,19 @@ function Comments(props) {
     return list;
   }
 
-  var comments = populateComments(props.comments)
+  var comments = populateComments(props.ideaComments)
 
   if (comments.length > 0) {
     return (
       <div>
-        <ul>
+        <p className="pt-4">Comments</p>
+        <ListGroup>
           {comments}
-        </ul>
+        </ListGroup>
       </div>
     );
   }
+  return null;
 }
 
 export default Comments
