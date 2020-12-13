@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EskobInnovation.IdeaManagement.API.Models
@@ -11,6 +12,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
     public string Name { get; set; }
     [Required]
     public string Position { get; set; }
+    public DateTime Date { get; set; }
     public Idea Idea { get; set; }
   }
 }
