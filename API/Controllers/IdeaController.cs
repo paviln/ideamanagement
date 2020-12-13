@@ -70,6 +70,23 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
+      var tasks = await _context.Tasks
+        .Where(t => t.Idea.IdeaId == idea.IdeaId)
+        .ToListAsync();
+
+      foreach (var item in tasks)
+      {
+        await _context.Entry(item)
+        .Collection(t => t.TaskComments)
+        .LoadAsync();
+      }
+
+      idea.Tasks = tasks;
+
+      await _context.Entry(idea)
+        .Collection(i => i.Tasks)
+        .LoadAsync();
+
       await _context.Entry(idea)
         .Collection(i => i.Employees)
         .LoadAsync();
@@ -107,14 +124,16 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       var file = await _context.Files
         .Where(f => f.FileId == fileId)
         .FirstOrDefaultAsync();
-      
-      if (file != null) {
+
+      if (file != null)
+      {
         var fileData = await _context.FileDatas
           .Where(fd => fd.FileId == fileId)
           .FirstOrDefaultAsync();
-        
-        if (fileData != null) {
-          
+
+        if (fileData != null)
+        {
+
           return File(fileData.Data, file.Type);
         }
       }

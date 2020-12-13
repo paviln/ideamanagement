@@ -10,6 +10,7 @@ import Files from './Files';
 import Hashtags from './Hashtags';
 import Comments from './Comments';
 import Employees from './Employees';
+import Tasks from './task/Tasks';
 
 function IdeaPage() {
   const [loading, setloading] = useState(true);
@@ -24,6 +25,8 @@ function IdeaPage() {
         .then(responce => {
           if (responce.status == '200') {
             setIdea(responce.data);
+            console.log(responce.data);
+
             setloading(false);
             console.log(responce.data);
           }
@@ -88,6 +91,7 @@ function IdeaPage() {
       <Hashtags hashtags={idea.hashtags} />
       <Comments ideaComments={idea.ideaComments} />
       <Employees employees={idea.employees} />
+      <Tasks tasks={idea.tasks} />
     </div>
   );
 }

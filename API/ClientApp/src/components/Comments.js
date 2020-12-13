@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import Comment from './commen/Comment';
 
 function Comments(props) {
 
@@ -9,15 +9,7 @@ function Comments(props) {
     if (comments !== null) {
       for (let i = 0; i < comments.length; i++) {
         list.push(
-          <div className="d-flex bg-light border border-dark rounded p-2 mt-2">
-            <div className="flex-grow-1">
-              <p>{comments[i].name}</p>
-              <p>{comments[i].text}</p>
-            </div>
-            <div className="align-self-center">
-              <p >{moment(comments[i].date).format("DD/MM/YYYY, HH:mm:ss")}</p>
-            </div>
-          </div>
+          <Comment comment={comments[i]} />
         );
       }
     }
