@@ -33,12 +33,12 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       get { return _companyName; }
       set { SetProperty(ref _companyName, value); }
     }
-    private string _streetAddresse;
+    private string _streetAddress;
 
-    public string StreetAddresse
+    public string StreetAddress
     {
-      get { return _streetAddresse; }
-      set { SetProperty(ref _streetAddresse, value); }
+      get { return _streetAddress; }
+      set { SetProperty(ref _streetAddress, value); }
     }
     private string _zipCode;
 
@@ -46,6 +46,13 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       get { return _zipCode; }
       set { SetProperty(ref _zipCode, value); }
+    }
+    private string _city;
+
+    public string City
+    {
+      get { return _city; }
+      set { SetProperty(ref _city, value); }
     }
     private string _contactPerson;
 
@@ -105,30 +112,17 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     public IAsyncCommand CreateURLCmd { get; private set; } 
     #endregion
 
-    public MessageViewModel ErrorMessageViewModel { get; }
-
-    public string ErrorMessage
-    {
-      set => ErrorMessageViewModel.Message = value;
-    }
-
-    public MessageViewModel StatusMessageViewModel { get; }
-
-    public string StatusMessage
-    {
-      set => StatusMessageViewModel.Message = value;
-    }
     #region Async Executes
     public async Task ExecuteSubmitAsyncCustomer()
     {
       try
       {
-        RegistrationResultCustomer registrationResult = await _manageCustomerService.CreateCustomer(CompanyName, StreetAddresse, ZipCode, ContactPerson);
+        RegistrationResultCustomer registrationResult = await _manageCustomerService.CreateCustomer(CompanyName, StreetAddress, ZipCode, ContactPerson, City);
         this.CompanyName = string.Empty;
-        this.StreetAddresse = string.Empty;
+        this.StreetAddress = string.Empty;
         this.ZipCode = string.Empty;
         this.ContactPerson = string.Empty;
-
+        this.City = string.Empty;
         MessageBox.Show("The Customer registration was a: " + registrationResult);
       }
       finally
@@ -154,7 +148,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       try
       {
-        SiteRegistration siteRegistrationResult = await _siteService.CreateSite(Link);
+        SiteRegistrationResult siteRegistrationResult = await _siteService.CreateSite(Link);
         this.Link = string.Empty;
         MessageBox.Show("The Site registration was a: " + siteRegistrationResult);
       }

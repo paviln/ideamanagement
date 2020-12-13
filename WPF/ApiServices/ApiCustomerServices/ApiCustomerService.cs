@@ -43,14 +43,14 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
       return customer;
     }
     //DELETE Request
-    public async Task<HttpStatusCode> DeleteCustomerAsync(string id)
+    public async Task<HttpStatusCode> DeleteCustomerAsync(int id)
     {
       HttpResponseMessage response = await client.DeleteAsync(
           $"api/customer/{id}");
       return response.StatusCode;
     }
 
-    public async Task<int> GetByIDAsync(string id)
+    public async Task<string> GetByIDAsync(string id)
     {
       string url = "api/Customer/"+id;
       Customer customer = null;
@@ -59,19 +59,8 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
       {
         customer = await response.Content.ReadAsAsync<Customer>();
       }
-      return customer.Id;
-    }
-
-    public async Task<string> GetByName(string customername)
-    {
-      string uri = "api/customer/" + customername;
-      Customer customer = null;
-      HttpResponseMessage response = await client.GetAsync(uri);
-      if (response.IsSuccessStatusCode)
-      {
-        customer = await response.Content.ReadAsAsync<Customer>();
-      }
       return customer.CompanyName;
     }
+
   }
 }

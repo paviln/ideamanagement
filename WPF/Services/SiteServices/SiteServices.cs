@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service.SiteServices;
@@ -8,26 +9,34 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
   public class SiteServices : ISiteServices
   {
     private readonly IApiSiteService _apiSiteService;
+    private ObservableCollection<Site> _sites = new ObservableCollection<Site>();
+    public ObservableCollection<Site> Sites { get; set; }
+    
+
     public SiteServices(IApiSiteService apiSiteService)
     {
       _apiSiteService = apiSiteService;
     }
     public SiteServices()
     {
+      FillSiteList();
       _apiSiteService = new ApiSiteService();
     }
 
-    public async Task<SiteRegistration> CreateSite(string urlname)
+    public async Task<SiteRegistrationResult> CreateSite(string urlname)
     {
-      SiteRegistration result = SiteRegistration.Success;
+      SiteRegistrationResult result = SiteRegistrationResult.Success;
 
+      
+
+       //SingleOrDefault(c => c.CompanyName == companyname);
       //Site siteName = await _apiSiteService.GetLinkByName(urlname);
       string testsite = null;
       if(testsite != null)
       {
-        result = SiteRegistration.SiteAlreadyExists;
+        result = SiteRegistrationResult.SiteAlreadyExists;
       }
-      if(result == SiteRegistration.Success)
+      if(result == SiteRegistrationResult.Success)
       {
         Site site = new Site()
         {
@@ -38,9 +47,25 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
       return result;
     }
 
-    public Task<Site> GetSiteByName()
+    private async void FillSiteList()
     {
-      throw new NotImplementedException();
+      try
+      {
+        var _sites = await _apiSiteService.GetSitesAsync();
+
+        foreach (var item in _sites)
+        {
+          Site site = new Site()
+          {
+            Link = item.Link
+          };
+          Sites.Add(site);
+        }
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+      }
     }
   }
 }

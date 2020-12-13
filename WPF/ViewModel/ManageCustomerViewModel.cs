@@ -5,6 +5,7 @@ using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System;
+using EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices;
 
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
@@ -32,12 +33,12 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _id; }
             set {SetProperty(ref _id, value); }
         }
-        private string  _streetAdresse;
+        private string  _streetAddress;
 
-        public  string StreetAdresse
+        public  string StreetAddress
         {
-            get { return _streetAdresse; }
-            set { SetProperty(ref _streetAdresse, value); }
+            get { return _streetAddress; }
+            set { SetProperty(ref _streetAddress, value); }
         }
         private string _zipCode;
 
@@ -46,8 +47,15 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _zipCode; }
             set { SetProperty(ref _zipCode ,value); }
         }
+        private string _city;
 
-        private string _contactPerson;
+        public string City
+        {
+          get { return _city; }
+          set { SetProperty(ref _city, value); }
+        }
+
+    private string _contactPerson;
 
         public string ContactPerson
         {
@@ -61,28 +69,32 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _customers; }
             set { SetProperty(ref _customers, value); }
         }
-        #endregion
-        private readonly IApiCustomerService _customerService;
+    #endregion
+    private readonly IApiCustomerService _apicustomerService;
+    //private readonly IManageCustomerServices _customerService;
         //Constructor injection (IoC)
-        public ManageCustomerViewModel(IApiCustomerService customerService)
+        public ManageCustomerViewModel( IApiCustomerService apiCustomerService)
         {
-            _customerService = customerService;
+            //_customerService = customerService;
+            _apicustomerService = apiCustomerService;
         }
         public ManageCustomerViewModel()
         {
-            _customerService = new ApiCustomerService();
+           // _customerService = new ManageCustomerServices();
+            _apicustomerService = new ApiCustomerService();
             FillDataGrid();
-            DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
+            DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncDelete, CanExecuteSubmit);
             UpdateCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncUpdate, CanExecuteSubmit);
         }
         #region DeleteCommand And Execute
         public IAsyncCommand DeleteCustomerCmd { get; private set; }
 
-        private async Task ExecuteSubmitAsync()
+        private async Task ExecuteSubmitAsyncDelete()
         {
             try
             {
-                await _customerService.DeleteCustomerAsync(Id.ToString());
+              await _apicustomerService.DeleteCustomerAsync(Id);
+           // await _customerService.DeleteCustomer(Id);
             }
             finally
             {
@@ -98,13 +110,14 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         {
             try
             {
-                Customer customer = new Customer()
-                {
-                    Id = Id,
-                    CompanyName = CompanyName,
-                };
+              Customer customer = new Customer()
+              {
+                Id = Id,
+                CompanyName = CompanyName
+              };
 
-             await _customerService.UpdateCustomerAsync(customer);
+              await _apicustomerService.UpdateCustomerAsync(customer);
+            //await _customerService.UpdateCustomer(Id, CompanyName);
             this.CompanyName = string.Empty;
             }
             finally
@@ -118,11 +131,11 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         {
             return !IsBusy;
         }
-        private async void FillDataGrid()
+        public async void FillDataGrid()
         {
             try
             {
-                var customers = await _customerService.GetCustomersAsync();
+                var customers = await _apicustomerService.GetCustomersAsync();
                 
                 foreach (var item in customers)
                 {
@@ -130,8 +143,9 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                     {
                         CompanyName = item.CompanyName,
                         Id = item.Id,
-                        StreetAdresse = item.StreetAdresse,
+                        StreetAddress = item.StreetAddress,
                         ZipCode = item.ZipCode,
+                        City = item.City,
                         ContactPerson = item.ContactPerson
                     };
                     Customers.Add(customer);
@@ -141,6 +155,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             {
                 Console.WriteLine(e);
             }
+      
         }
         #endregion
     }

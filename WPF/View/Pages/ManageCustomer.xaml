@@ -45,11 +45,16 @@
                         Width="auto"/>
                     <DataGridTextColumn 
                         Header="Street Addresse" 
-                        Binding="{Binding StreetAdresse}"
+                        Binding="{Binding StreetAddress}"
                         Width="auto"/>
                     <DataGridTextColumn 
                         Header="Zip Code" 
                         Binding="{Binding ZipCode}"
+                        Width="auto"
+                        />
+                    <DataGridTextColumn 
+                        Header="City" 
+                        Binding="{Binding City}"
                         Width="auto"
                         />
                     <DataGridTextColumn 
