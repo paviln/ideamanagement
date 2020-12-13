@@ -39,7 +39,7 @@ function IdeaPage() {
     return null;
   }
   return (
-    <div>
+    <div className="mb-4">
       <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
         <h3>Idea Page</h3>
         <div>

@@ -8,7 +8,7 @@ function Hashtags(props) {
     if (hashtags !== null) {
       for (let i = 0; i < hashtags.length; i++) {
         list.push(
-          <p className="pt-2">#{hashtags[i].name}</p>
+          <p className="pt-2 pl-2">#{hashtags[i].name}</p>
         );
       }
     }
@@ -23,7 +23,9 @@ function Hashtags(props) {
     return (
       <div>
         <p className="pt-4">Hashtags</p>
-        {list}
+        <div className="d-flex">
+          {list}
+        </div>
       </div>
     );
   }

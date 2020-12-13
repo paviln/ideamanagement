@@ -9,7 +9,7 @@ function Comments(props) {
     if (comments !== null) {
       for (let i = 0; i < comments.length; i++) {
         list.push(
-          <div className="d-flex bg-light border border-dark rounded p-2">
+          <div className="d-flex bg-light border border-dark rounded p-2 mt-2">
             <div className="flex-grow-1">
               <p>{comments[i].name}</p>
               <p>{comments[i].text}</p>
@@ -30,7 +30,7 @@ function Comments(props) {
   if (comments.length > 0) {
     return (
       <div>
-        <p className="pt-4 pb-2">Comments</p>
+        <p className="pt-4">Comments</p>
         {comments}
       </div>
     );
