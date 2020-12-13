@@ -78,6 +78,10 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .Collection(i => i.Hashtags)
         .LoadAsync();
 
+      await _context.Entry(idea)
+      .Collection(i => i.IdeaComments)
+      .LoadAsync();
+
       return idea;
     }
 
