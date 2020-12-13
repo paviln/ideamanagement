@@ -9,6 +9,7 @@ import ideaService from '../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
 import Comments from './Comments';
+import Employees from './Employees';
 
 function IdeaPage() {
   const [loading, setloading] = useState(true);
@@ -86,6 +87,7 @@ function IdeaPage() {
       <Files files={idea.files} />
       <Hashtags hashtags={idea.hashtags} />
       <Comments ideaComments={idea.ideaComments} />
+      <Employees employees={idea.employees} />
     </div>
   );
 }

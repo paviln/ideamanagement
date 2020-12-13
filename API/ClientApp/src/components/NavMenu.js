@@ -16,7 +16,7 @@ export class NavMenu extends Component {
 
     return (
       <header>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
             <LinkContainer to={prefix + "/idea"}>
               <Navbar.Brand>IdeaManagement</Navbar.Brand>

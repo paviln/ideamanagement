@@ -71,6 +71,10 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       }
 
       await _context.Entry(idea)
+        .Collection(i => i.Employees)
+        .LoadAsync();
+
+      await _context.Entry(idea)
        .Collection(i => i.Files)
        .LoadAsync();
 
@@ -105,7 +109,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .FirstOrDefaultAsync();
       
       if (file != null) {
-        var fileData = await _context.fileDatas
+        var fileData = await _context.FileDatas
           .Where(fd => fd.FileId == fileId)
           .FirstOrDefaultAsync();
         
