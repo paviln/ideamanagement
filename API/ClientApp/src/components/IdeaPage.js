@@ -42,6 +42,19 @@ function IdeaPage() {
   if (loading === true) {
     return null;
   }
+
+  var ideaStatus = {
+    0: 'New',
+    1: 'Under Review',
+    2: 'Under Implementation',
+    3: 'Implemented'
+  }
+  
+  const getIdeaStatus = (key) => {
+
+    return ideaStatus[key];
+  }
+
   return (
     <div className="mb-4">
       <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
@@ -50,7 +63,7 @@ function IdeaPage() {
           <p>Employee number: {idea.employeeNumber}</p>
           <p>Submission: {moment(idea.date).format("DD/MM/YYYY, HH:mm:ss")}</p>
           <p>Last edited: </p>
-          <p>Status: {idea.status}</p>
+          <p>Status: {getIdeaStatus(idea.status)}</p>
         </div>
       </div>
       <h4>{idea.title}</h4>
