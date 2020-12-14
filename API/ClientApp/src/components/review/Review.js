@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import ideaService from '../../services/IdeaService';
 import authService from '../api-authorization/AuthorizeService';
 import Comments from '../commen/Comments';
+import Cost from '../idea/Cost';
+import AddTask from '../task/AddTask';
+import AddUser from './AddUser';
+import Comment from './Comment';
 
 function Review() {
 
@@ -34,8 +38,15 @@ function Review() {
   }
 
   return (
-    <div>
-      <Comments comments={idea.ideaComments} />
+    <div className="pb-4">
+      <h3 className="pt-4">Review</h3>
+      <Comment />
+      <hr />
+      <AddUser />
+      <hr />
+      <AddTask />
+      <hr />
+      <Cost />
     </div>
   )
 }
