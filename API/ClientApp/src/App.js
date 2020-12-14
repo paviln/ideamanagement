@@ -43,44 +43,39 @@ export default class App extends Component {
     return url;
   }
 
-  async getSite() {
-    var url = this.getLink();
+  async validateSite() {
+    const isAuthenticated = await authService.isAuthenticated();
 
-    if (url) {
-      siteService.findByLink(url)
+    if (isAuthenticated) {
+      userService.getSite()
         .then(response => {
-          if (response.status == 200) {
-            this.setState({
-              site: {
-                siteId: response.data.siteId,
-                link: response.data.link
-              },
-              ready: true
-            })
-          }
+          this.setState({
+            site: {
+              siteId: response.data.siteId,
+              link: response.data.link
+            },
+            authenticated: true,
+            ready: true
+          });
         })
         .catch(error => {
           console.log(error);
         });
-    }
-  }
+    } else {
+      var url = this.getLink();
 
-  async authSite() {
-    if (this.state.authenticated == false) {
-      const isAuthenticated = await authService.isAuthenticated();
-      const user = await authService.getUser();
-
-      if (isAuthenticated) {
-        userService.getSite()
+      if (url) {
+        siteService.findByLink(url)
           .then(response => {
-            this.setState({
-              site: {
-                siteId: response.data.siteId,
-                link: response.data.link
-              },
-              authenticated: true,
-              ready: true
-            });
+            if (response.status == 200) {
+              this.setState({
+                site: {
+                  siteId: response.data.siteId,
+                  link: response.data.link
+                },
+                ready: true
+              })
+            }
           })
           .catch(error => {
             console.log(error);
@@ -90,8 +85,7 @@ export default class App extends Component {
   }
 
   async populateState() {
-    this.getSite();
-    this.authSite();
+    this.validateSite();
   }
 
   componentDidMount() {
