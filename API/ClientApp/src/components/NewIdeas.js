@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
 import ideaService from '../services/IdeaService';
-const NewIdeas = () => {
 
+const NewIdeas = (props) => {
+
+  const history = useHistory();
   const [ideas, setIdeas] = useState([]);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ const NewIdeas = () => {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr key={i}>
+          <tr key={i} onClick={() => handleClick(ideas[i].ideaId)}>
             <td>{ideas[i].ideaId}</td>
             <td>{ideas[i].title}</td>
             <td>{ideas[i].effort}</td>
@@ -33,13 +36,18 @@ const NewIdeas = () => {
     return null;
   }
 
+  const handleClick = (ideaId) => {
+    console.log(props.siteId)
+    history.push(props.prefix + "/ideapage/" + ideaId);
+  }
+
   return (
     <div>
-      <h1>New Ideas</h1>
+      <h3 className="pt-4">New Ideas</h3>
       <br />
       <Table striped bordered hover>
         <thead className="thead-dark">
-          <tr  onclick="location.href ='/ideapage';">
+          <tr>
             <th>S.no</th>
             <th>Title</th>
             <th>Effort</th>

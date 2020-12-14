@@ -129,7 +129,7 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route path={prefix + "/overview/:id"} children={<IdeaPage />} />
+            <Route path={prefix + "/ideapage/:id"} children={<IdeaPage />} />
             <Route
               exact path={prefix + "/browse"}
               render={props => (
@@ -138,10 +138,12 @@ export default class App extends Component {
                 />
               )}
             />
-            <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
+            <Route
+              exact path={prefix + "/newideas"}
+              children={<NewIdeas prefix={prefix} siteId={this.state.site.siteId} />}
+            />
             <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"} component={Implemented2} />
-            <AuthorizeRoute exact path={prefix + "/ideapage"} component={IdeaPage} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
             <AuthorizeRoute exact path={prefix + "/underview"} component={UnderView} />
             <AuthorizeRoute exact path={prefix + "/underview2"} component={UnderView2} />

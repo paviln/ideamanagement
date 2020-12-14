@@ -54,7 +54,7 @@ const Overview = (props) => {
 
   const handleClick = (ideaId) => {
     history.push({
-      pathname: props.prefix + "/overview/" + ideaId,
+      pathname: props.prefix + "/ideapage/" + ideaId,
     });
   }
   
