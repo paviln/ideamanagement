@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ideaService from '../services/IdeaService';
-
 const NewIdeas = () => {
 
   const [ideas, setIdeas] = useState([]);
@@ -33,13 +32,14 @@ const NewIdeas = () => {
 
     return null;
   }
+
   return (
     <div>
       <h1>New Ideas</h1>
       <br />
       <Table striped bordered hover>
         <thead className="thead-dark">
-          <tr>
+          <tr  onclick="location.href ='/ideapage';">
             <th>S.no</th>
             <th>Title</th>
             <th>Effort</th>

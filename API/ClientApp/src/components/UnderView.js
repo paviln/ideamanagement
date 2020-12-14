@@ -3,9 +3,22 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import { Row, Col } from 'react-bootstrap';
+import {withRouter, Redirect} from 'react-router-dom';
 
 export default class UnderView extends Component {
-
+  state = {
+    redirect: false
+  }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/underview2'/>
+    }
+  }
     render () {
          return (
              <div>
@@ -13,7 +26,7 @@ export default class UnderView extends Component {
               <br/>
             <Table striped bordered hover>
             <thead class="thead-dark">
-            <tr>
+            <tr >
             <th>S.no</th>
             <th>Idea</th>
             <th>Status</th>
@@ -28,7 +41,10 @@ export default class UnderView extends Component {
             <td></td>
             <td>under review</td>
             <td></td>
-            <td></td>
+            <td>           
+            {this.renderRedirect()}
+            <button onClick={this.setRedirect}>Redirect</button>     
+            </td>
             </tr>
 
             <tr>
