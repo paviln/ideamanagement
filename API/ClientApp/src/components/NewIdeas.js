@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import ideaService from '../services/IdeaService';
+import authService from './api-authorization/AuthorizeService';
 
-const NewIdeas = (props) => {
+const NewIdeas = () => {
 
   const history = useHistory();
+  const [site, setSite] = useState();
   const [ideas, setIdeas] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await ideaService.getSiteIdeas(props.siteId);
-      setIdeas(response.data);
+      try {
+        var res = await authService.getSite();
+        setSite(res);
+        var response = await ideaService.getSiteIdeas(res);
+        setIdeas(response.data);
+
+      } catch (error) {
+        console.log(error);
+      }
     }
+ 
     fetchData();
   }, []);
 
@@ -39,7 +49,7 @@ const NewIdeas = (props) => {
   }
 
   const handleClick = (ideaId) => {
-    history.push(props.prefix + "/idea/" + ideaId);
+    history.push("/" + site + "/idea/" + ideaId);
   }
 
   return (

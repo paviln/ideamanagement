@@ -60,7 +60,6 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return (dateTimes);
     }
 
-
     // GET: api/Idea/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Idea>> GetIdea(int id)
@@ -108,12 +107,23 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return idea;
     }
 
-    // GET: api/Idea
+    // GET: api/Idea/GetSiteIdeas
     [HttpGet("getsiteideas")]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeas(int siteId)
+    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeas(string link)
     {
       var ideas = await _context.Ideas
-        .Where(i => i.SiteId == siteId)
+        .Where(i => i.Site.Link == link)
+        .ToListAsync();
+
+      return ideas;
+    }
+
+    // GET: api/Idea/GetSiteIdeasUnderReview
+    [HttpGet("getsiteideasunderreview")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeasUnderReview(string link)
+    {
+      var ideas = await _context.Ideas
+        .Where(i => i.Site.Link == link && i.Status == Enums.Status.UnderReview)
         .ToListAsync();
 
       return ideas;

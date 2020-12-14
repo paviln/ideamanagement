@@ -132,14 +132,11 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route
-              exact path={prefix + "/newideas"}
-              children={<NewIdeas prefix={prefix} siteId={this.state.site.siteId} />}
-            />
+            <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"} component={Implemented2} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
-            <AuthorizeRoute exact path={prefix + "/underview"} component={UnderView} />
+            <AuthorizeRoute exact path={prefix + "/underview"} component={UnderView} prop={[this.state.site]} />
             <AuthorizeRoute exact path={prefix + "/underview2"} component={UnderView2} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route path="*">

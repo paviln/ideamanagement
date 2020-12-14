@@ -8,8 +8,12 @@ const get = id => {
   return http.get(`/idea/${id}`);
 };
 
-const getSiteIdeas = id => {
-  return http.get(`/idea/getsiteideas`, { params: { siteId: id } });
+const getSiteIdeas = link => {
+  return http.get(`/idea/getsiteideas`, { params: { link: link } });
+};
+
+const getSiteIdeasUnderReview = link => {
+  return http.get(`/idea/getsiteideasunderreview`, { params: { link: link } });
 };
 
 const getIdeasPeriod = (siteId, period) => {
@@ -61,6 +65,7 @@ export default {
   getAll,
   get,
   getSiteIdeas,
+  getSiteIdeasUnderReview,
   getIdeasPeriod,
   getPeriod,
   getIdeaFileData,

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Employees(props) {
 
-  const populateFiles = (employees) => {
+  const populateEmployees = (employees) => {
     const list = [];
 
     if (employees !== null) {
@@ -18,7 +18,7 @@ function Employees(props) {
     return list;
   }
 
-  var list = populateFiles(props.employees);
+  var list = populateEmployees(props.employees);
 
   if (list.length > 0) {
     return (

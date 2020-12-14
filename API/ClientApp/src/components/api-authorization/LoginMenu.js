@@ -52,20 +52,14 @@ export class LoginMenu extends Component {
         <LinkContainer to={prefix + "/newideas"}>
           <NavDropdown.Item>NewIdeas</NavDropdown.Item>
         </LinkContainer>
-        <LinkContainer to={prefix + "/implemented"}>
-          <NavDropdown.Item>Implemented</NavDropdown.Item>
-        </LinkContainer>
-        <LinkContainer to={prefix + "/implemented2"}>
-          <NavDropdown.Item>Implemented2</NavDropdown.Item>
+        <LinkContainer to={prefix + "/underview"}>
+          <NavDropdown.Item>Under Review</NavDropdown.Item>
         </LinkContainer>
         <LinkContainer to={prefix + "/underimplementation"}>
-          <NavDropdown.Item>Underimplementation</NavDropdown.Item>
+          <NavDropdown.Item>Under Implementation</NavDropdown.Item>
         </LinkContainer>
-        <LinkContainer to={prefix + "/underview"}>
-          <NavDropdown.Item>Underview</NavDropdown.Item>
-        </LinkContainer>
-        <LinkContainer to={prefix + "/underview2"}>
-          <NavDropdown.Item>Underview2</NavDropdown.Item>
+        <LinkContainer to={prefix + "/implemented"}>
+          <NavDropdown.Item>Implemented</NavDropdown.Item>
         </LinkContainer>
         <NavDropdown.Divider />
         <LinkContainer to={profilePath}>
