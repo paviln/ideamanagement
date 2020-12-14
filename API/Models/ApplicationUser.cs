@@ -7,6 +7,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
   public class ApplicationUser : IdentityUser
   {
     private Site _site;
+    private Employee _employee;
     public ApplicationUser()
     { }
     private ApplicationUser(Action<object, string> lazyLoader)
@@ -20,6 +21,12 @@ namespace EskobInnovation.IdeaManagement.API.Models
     {
       get => LazyLoader.Load(this, ref _site);
       set => _site = value;
+    }
+    [PersonalData]
+    public Employee Employee
+    {
+      get => LazyLoader.Load(this, ref _employee);
+      set => _employee = value;
     }
   }
 }
