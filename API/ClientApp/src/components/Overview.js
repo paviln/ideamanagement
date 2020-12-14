@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom'
 import moment from 'moment';
 import DatePicker from "react-datepicker";
 import Row from 'react-bootstrap/Row';
@@ -41,10 +41,8 @@ const Overview = (props) => {
         end.setSeconds(59)
         end = moment(end).format("MM/DD/YYYY, HH:mm:ss");
         var period = [start, end];
-        const response = await ideaService.getIdeasPeriod(period);
+        const response = await ideaService.getIdeasPeriod(props.siteId, period);
         setIdeas(response.data);
-        console.log(response.data);
-
         setLoading(false);
 
       } catch (error) {
@@ -55,7 +53,9 @@ const Overview = (props) => {
   }, [startDate, endDate]);
 
   const handleClick = (ideaId) => {
-    history.push(props.prefix + "/overview/" + ideaId);
+    history.push({
+      pathname: props.prefix + "/ideapage/" + ideaId,
+    });
   }
   
   return (

@@ -6,6 +6,7 @@ $theme-colors: (
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 @import "~react-datepicker/dist/react-datepicker.css";
+@import "~react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 p {
   margin: 0px;

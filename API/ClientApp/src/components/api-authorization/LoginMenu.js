@@ -52,7 +52,6 @@ export class LoginMenu extends Component {
                 <NavDropdown.Item as={Link} to={prefix+"/newideas"}>NewIdeas</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to={prefix + "/implemented"}>Implemented</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to={prefix + "/implemented2"}>Implemented2</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to={prefix + "/ideapage"}>Ideapage</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to={prefix + "/underimplementation"}>Underimplementation</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to={prefix + "/underview"}>Underview</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to={prefix + "/underview2"}>Underview2</NavDropdown.Item>
