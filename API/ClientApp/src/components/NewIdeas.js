@@ -39,7 +39,7 @@ const NewIdeas = (props) => {
   }
 
   const handleClick = (ideaId) => {
-    history.push(props.prefix + "/ideapage/" + ideaId);
+    history.push(props.prefix + "/idea/" + ideaId);
   }
 
   return (

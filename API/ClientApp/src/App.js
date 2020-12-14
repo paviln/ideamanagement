@@ -9,10 +9,10 @@ import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
 import authService from './components/api-authorization/AuthorizeService';
 import userService from './services/UserService';
+import Idea from './components/Idea';
 import NewIdeas from './components/NewIdeas';
 import Implemented from './components/Implemented';
 import Implemented2 from './components/Implemented2';
-import IdeaPage from './components/IdeaPage';
 import UnderView from './components/UnderView';
 import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
@@ -103,10 +103,10 @@ export default class App extends Component {
         <Layout prefix={prefix}>
           <Switch>
             <Route exact path={prefix}>
-              <Redirect to={prefix + "/idea"} />
+              <Redirect to={prefix + "/addidea"} />
             </Route>
             <Route
-              exact path={prefix + "/idea"}
+              exact path={prefix + "/addidea"}
               render={props => (
                 <AddIdea {...props}
                   siteId={this.state.site.siteId}
@@ -123,7 +123,7 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route path={prefix + "/ideapage/:id"} children={<IdeaPage />} />
+            <Route path={prefix + "/idea/:id"} children={<Idea />} />
             <Route
               exact path={prefix + "/browse"}
               render={props => (

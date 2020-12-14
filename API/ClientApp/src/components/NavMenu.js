@@ -18,13 +18,13 @@ export class NavMenu extends Component {
       <header>
         <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
-            <LinkContainer to={prefix + "/idea"}>
+            <LinkContainer to={prefix + "/addidea"}>
               <Navbar.Brand>IdeaManagement</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="ml-auto">
-                <LinkContainer to={prefix + "/idea"}>
+                <LinkContainer to={prefix + "/addidea"}>
                  <Nav.Link>Idea</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to={prefix + "/overview"}>
