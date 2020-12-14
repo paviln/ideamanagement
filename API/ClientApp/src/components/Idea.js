@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import IdeaService from '../services/IdeaService';
 import AddIdea from './AddIdea';
 import ListIdeas from './ListIdeas';
 

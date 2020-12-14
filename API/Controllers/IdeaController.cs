@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Data;
 using EskobInnovation.IdeaManagement.API.Models;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,35 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return await _context.Ideas.ToListAsync();
     }
 
+    // POST: api/Idea/getideasperiod
+    [HttpPost("getideasperiod")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod(List<DateTime> period)
+    {
+      var ideas = await _context.Ideas
+        .Where(i => (i.Date >= period[0] && i.Date <= period[1]))
+        .ToListAsync();
+
+      return ideas;
+    }
+
+    // GET: api/Idea/GetPeriod
+    [HttpGet("getperiod")]
+    public async Task<ActionResult<List<DateTime>>> GetPeriod()
+    {
+      DateTime firstDate = await _context.Ideas
+        .MinAsync(i => i.Date);
+
+      DateTime lastDate = await _context.Ideas
+        .MaxAsync(i => i.Date);
+
+      List<DateTime> dateTimes = new List<DateTime>();
+      dateTimes.Add(firstDate);
+      dateTimes.Add(lastDate);
+
+      return (dateTimes);
+    }
+
+
     // GET: api/Idea/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Idea>> GetIdea(int id)
@@ -40,6 +70,39 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
+      var tasks = await _context.Tasks
+        .Where(t => t.Idea.IdeaId == idea.IdeaId)
+        .ToListAsync();
+
+      foreach (var item in tasks)
+      {
+        await _context.Entry(item)
+        .Collection(t => t.TaskComments)
+        .LoadAsync();
+      }
+
+      idea.Tasks = tasks;
+
+      await _context.Entry(idea)
+        .Collection(i => i.Tasks)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Employees)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+       .Collection(i => i.Files)
+       .LoadAsync();
+
+      await _context.Entry(idea)
+        .Collection(i => i.Hashtags)
+        .LoadAsync();
+
+      await _context.Entry(idea)
+      .Collection(i => i.IdeaComments)
+      .LoadAsync();
+
       return idea;
     }
 
@@ -50,8 +113,32 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       var ideas = await _context.Ideas
         .Where(i => i.SiteId == siteId)
         .ToListAsync();
-        
+
       return ideas;
+    }
+
+    // GET: api/Idea/GetIdeaFileData
+    [HttpGet("Getideafiledata")]
+    public async Task<ActionResult> GetIdeaFileData(int fileId)
+    {
+      var file = await _context.Files
+        .Where(f => f.FileId == fileId)
+        .FirstOrDefaultAsync();
+
+      if (file != null)
+      {
+        var fileData = await _context.FileDatas
+          .Where(fd => fd.FileId == fileId)
+          .FirstOrDefaultAsync();
+
+        if (fileData != null)
+        {
+
+          return File(fileData.Data, file.Type);
+        }
+      }
+
+      return NotFound();
     }
 
     // PUT: api/Idea/5
@@ -93,25 +180,52 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     public async Task<ActionResult<Idea>> PostIdea([FromForm] Idea idea, [FromForm] List<IFormFile> files, [FromForm] List<String> hashtags)
     {
       idea.Files = new List<Models.File>();
-      foreach (var file in files)
+      foreach (var element in files)
       {
-        Models.File f = new Models.File();
-        f.IdeaId = idea.IdeaId;
-        f.Name = file.FileName;
-        using (var ms = new MemoryStream())
+        if (element != null)
         {
-          file.CopyTo(ms);
-          f.Data = ms.ToArray();
+          try
+          {
+            Models.File file = new Models.File();
+            file.IdeaId = idea.IdeaId;
+            file.Name = element.FileName;
+            file.Type = element.ContentType;
+            FileData fileData = new FileData();
+            using (var ms = new MemoryStream())
+            {
+              element.CopyTo(ms);
+              fileData.Data = ms.ToArray();
+            }
+            file.FileData = fileData;
+            idea.Files.Add(file);
+          }
+          catch (System.Exception error)
+          {
+            System.Console.WriteLine(error);
+          }
         }
-        idea.Files.Add(f);
       }
 
       idea.Hashtags = new List<Hashtag>();
-      foreach (var hashtag in hashtags)
+      foreach (var element in hashtags)
       {
-        Hashtag h = new Hashtag();
-        h.Name = hashtag;
-        idea.Hashtags.Add(h);
+        if (!element.IsNullOrEmpty())
+        {
+          var hashtag = await _context.Hashtags
+          .Where(h => h.Name == element)
+          .FirstOrDefaultAsync();
+
+          if (hashtag != null)
+          {
+            idea.Hashtags.Add(hashtag);
+          }
+          else
+          {
+            Hashtag h = new Hashtag();
+            h.Name = element;
+            idea.Hashtags.Add(h);
+          }
+        }
       }
 
       _context.Ideas.Add(idea);

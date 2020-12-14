@@ -12,6 +12,24 @@ const getSiteIdeas = id => {
   return http.get(`/idea/getsiteideas`, { params: { siteId: id } });
 };
 
+const getIdeasPeriod = period => {
+  return http.post(`/idea/getideasperiod`, period);
+};
+
+const getPeriod = () => {
+  return http.get(`/idea/getperiod`);
+};
+
+const getIdeaFileData = id => {
+  const config = {
+    responseType: 'blob', 
+    timeout: 30000, 
+    params: { fileId: id },
+  }
+
+  return http.get(`/idea/getideafiledata`, config);
+};
+
 const create = data => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' }
@@ -39,6 +57,9 @@ export default {
   getAll,
   get,
   getSiteIdeas,
+  getIdeasPeriod,
+  getPeriod,
+  getIdeaFileData,
   create,
   update,
   remove,

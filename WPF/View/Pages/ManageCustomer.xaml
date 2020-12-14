@@ -43,6 +43,19 @@
                         Header="Customer Name" 
                         Binding="{Binding CompanyName}"
                         Width="auto"/>
+                    <DataGridTextColumn 
+                        Header="Street Addresse" 
+                        Binding="{Binding StreetAdresse}"
+                        Width="auto"/>
+                    <DataGridTextColumn 
+                        Header="Zip Code" 
+                        Binding="{Binding ZipCode}"
+                        Width="auto"
+                        />
+                    <DataGridTextColumn 
+                        Header="Contact Person" 
+                        Binding="{Binding ContactPerson}"
+                        Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
             <!--Bottom Grid-->

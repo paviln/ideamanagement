@@ -32,12 +32,12 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _id; }
             set {SetProperty(ref _id, value); }
         }
-        private string  _streetAddresse;
+        private string  _streetAdresse;
 
-        public  string StreetAddresse
+        public  string StreetAdresse
         {
-            get { return _streetAddresse; }
-            set { SetProperty(ref _streetAddresse, value); }
+            get { return _streetAdresse; }
+            set { SetProperty(ref _streetAdresse, value); }
         }
         private string _zipCode;
 
@@ -47,21 +47,30 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             set { SetProperty(ref _zipCode ,value); }
         }
 
-        public ObservableCollection<Customer> Customers
+        private string _contactPerson;
+
+        public string ContactPerson
+        {
+          get { return _contactPerson; }
+          set { SetProperty(ref _contactPerson, value); }
+
+        }
+
+    public ObservableCollection<Customer> Customers
         {
             get { return _customers; }
             set { SetProperty(ref _customers, value); }
         }
         #endregion
-        private readonly ICustomerService _customerService;
+        private readonly IApiCustomerService _customerService;
         //Constructor injection (IoC)
-        public ManageCustomerViewModel(ICustomerService customerService)
+        public ManageCustomerViewModel(IApiCustomerService customerService)
         {
             _customerService = customerService;
         }
         public ManageCustomerViewModel()
         {
-            _customerService = new CustomerService();
+            _customerService = new ApiCustomerService();
             FillDataGrid();
             DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
             UpdateCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncUpdate, CanExecuteSubmit);
@@ -92,11 +101,11 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                 Customer customer = new Customer()
                 {
                     Id = Id,
-                    CompanyName = CompanyName
+                    CompanyName = CompanyName,
                 };
 
-                await _customerService.UpdateCustomerAsync(customer);
-
+             await _customerService.UpdateCustomerAsync(customer);
+            this.CompanyName = string.Empty;
             }
             finally
             {
@@ -122,7 +131,8 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
                         CompanyName = item.CompanyName,
                         Id = item.Id,
                         StreetAdresse = item.StreetAdresse,
-                        ZipCode = item.ZipCode
+                        ZipCode = item.ZipCode,
+                        ContactPerson = item.ContactPerson
                     };
                     Customers.Add(customer);
                 }
@@ -134,5 +144,4 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         }
         #endregion
     }
-
 }

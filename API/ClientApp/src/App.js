@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
-
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-//import authService from './components/api-authorization/AuthorizeService';
 import siteService from './services/SiteService';
-
 import AddIdea from './components/AddIdea';
 import NoMatch from './components/NoMatch';
-//import Test from './components/Test';
-
-import './App.scss';
 import authService from './components/api-authorization/AuthorizeService';
 import userService from './services/UserService';
 import NewIdeas from './components/NewIdeas';
@@ -24,6 +18,7 @@ import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
 import Overview from './components/Overview';
 import Browse from './components/Browse';
+import './App.scss';
 
 export default class App extends Component {
 
@@ -53,20 +48,20 @@ export default class App extends Component {
 
     if (url) {
       siteService.findByLink(url)
-      .then(response => {
-        if (response.status == 200) {
-          this.setState({
-            site: {
-              siteId: response.data.siteId,
-              link: response.data.link
-            },
-            ready: true
-          })
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(response => {
+          if (response.status == 200) {
+            this.setState({
+              site: {
+                siteId: response.data.siteId,
+                link: response.data.link
+              },
+              ready: true
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 
@@ -75,20 +70,20 @@ export default class App extends Component {
       const isAuthenticated = await authService.isAuthenticated();
       if (isAuthenticated) {
         userService.getSite()
-        .then(response => {
-          this.setState({
-            site: {
-              siteId: response.data.site.siteId,
-              link: response.data.site.link
-            },
-            authenticated: true,
-            ready: true
+          .then(response => {
+            this.setState({
+              site: {
+                siteId: response.data.site.siteId,
+                link: response.data.site.link
+              },
+              authenticated: true,
+              ready: true
+            });
+          })
+          .catch(error => {
+            console.log(error);
           });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      } 
+      }
     }
   }
 
@@ -101,7 +96,7 @@ export default class App extends Component {
     this.populateState();
   }
 
-  render () {
+  render() {
     if (this.state.ready) {
       if (this.getLink() != this.state.site.link) {
         window.location.replace('https://localhost:5001/' + this.state.site.link);
@@ -114,16 +109,39 @@ export default class App extends Component {
             <Route exact path={prefix}>
               <Redirect to={prefix + "/idea"} />
             </Route>
-            <Route exact path={prefix + "/idea"} render={() => <AddIdea siteId={this.state.site.siteId}/>} />
-            <Route exact path={prefix + "/overview"} render={() => <Overview siteId={this.state.site.siteId}/>} />
-            <Route exact path={prefix + "/browse"} render={() => <Browse siteId={this.state.site.siteId}/>} />
-            <AuthorizeRoute exact path={prefix + "/newideas"}  component={NewIdeas} />
-            <AuthorizeRoute exact path={prefix + "/implemented"}  component={Implemented} />
-            <AuthorizeRoute exact path={prefix + "/implemented2"}  component={Implemented2} />
-            <AuthorizeRoute exact path={prefix + "/ideapage"}  component={IdeaPage} />
-            <AuthorizeRoute exact path={prefix + "/underimplementation"}  component={UnderImplementation } />
-            <AuthorizeRoute exact path={prefix + "/underview"}  component={UnderView} />
-            <AuthorizeRoute exact path={prefix + "/underview2"}  component={UnderView2} />
+            <Route
+              exact path={prefix + "/idea"}
+              render={props => (
+                <AddIdea {...props}
+                  siteId={this.state.site.siteId}
+                />
+              )}
+            />
+            <Route
+              exact path={prefix + "/overview"}
+              render={props => (
+                <Overview {...props}
+                  siteId={this.state.site.siteId}
+                  prefix={prefix}
+                />
+              )}
+            />
+            <Route path={prefix + "/overview/:id"} children={<IdeaPage />} />
+            <Route
+              exact path={prefix + "/browse"}
+              render={props => (
+                <Browse {...props}
+                  siteId={this.state.site.siteId}
+                />
+              )}
+            />
+            <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
+            <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
+            <AuthorizeRoute exact path={prefix + "/implemented2"} component={Implemented2} />
+            <AuthorizeRoute exact path={prefix + "/ideapage"} component={IdeaPage} />
+            <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
+            <AuthorizeRoute exact path={prefix + "/underview"} component={UnderView} />
+            <AuthorizeRoute exact path={prefix + "/underview2"} component={UnderView2} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route path="*">
               <NoMatch></NoMatch>

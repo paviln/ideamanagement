@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
+import React, { Component } from 'react';
+import moment from 'moment';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import List from './List'
-import IdeaService from '../services/IdeaService'
+import List from './List';
+import IdeaService from '../services/IdeaService';
 
 export default class AddIdea extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class AddIdea extends Component {
         effort: '1',
         impact: '1',
         employeeNumber: '',
+        date: "",
         hashtags: [],
         files: []
       },
@@ -63,8 +65,11 @@ export default class AddIdea extends Component {
     fileData.append('effort', idea['effort']);
     fileData.append('impact', idea['impact']);
     fileData.append('employeeNumber', idea['employeeNumber']);
+    fileData.append('date', moment(new Date()).format("MM/DD/YYYY, H:mm:ss"));
     fileData.append('hashtags', idea['hashtags']);
     fileData.append('siteId', this.props.siteId);
+
+    console.log(fileData);
 
     IdeaService.create(fileData)
     .then(responce => {
@@ -75,6 +80,7 @@ export default class AddIdea extends Component {
       idea["effort"] = "1";
       idea["impact"] = "1";
       idea["employeeNumber"] = "";
+      idea['date'] = null;
       idea["hashtags"] = [];
       idea["files"] = [];
 

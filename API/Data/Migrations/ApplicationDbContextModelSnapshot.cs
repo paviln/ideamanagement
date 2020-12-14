@@ -19,6 +19,21 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("EmployeeIdea", b =>
+                {
+                    b.Property<int>("EmployeesEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdeasIdeaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesEmployeeId", "IdeasIdeaId");
+
+                    b.HasIndex("IdeasIdeaId");
+
+                    b.ToTable("EmployeeIdea");
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -96,6 +111,10 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,7 +123,7 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StreetAdresse")
+                    b.Property<string>("StreetAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -117,6 +136,26 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Employee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmployeeId");
+
+                    b.ToTable("Employees");
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.File", b =>
                 {
                     b.Property<int>("FileId")
@@ -124,13 +163,13 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<byte[]>("Data")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("IdeaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FileId");
@@ -138,6 +177,27 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.HasIndex("IdeaId");
 
                     b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.FileData", b =>
+                {
+                    b.Property<int>("FileDataId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("FileId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FileDataId");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.ToTable("FileDatas");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Hashtag", b =>
@@ -163,6 +223,12 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Challenge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -179,7 +245,13 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Result")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -193,6 +265,35 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.ToTable("Ideas");
                 });
 
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.IdeaComment", b =>
+                {
+                    b.Property<int>("IdeaCommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdeaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdeaCommentId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("IdeaId");
+
+                    b.ToTable("IdeaComments");
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>
                 {
                     b.Property<int>("SiteId")
@@ -200,13 +301,90 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SiteId");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Sites");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Task", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdeaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TaskStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("TaskId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("IdeaId");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.TaskComment", b =>
+                {
+                    b.Property<int>("TaskCommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TaskCommentId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskComments");
                 });
 
             modelBuilder.Entity("HashtagIdea", b =>
@@ -462,6 +640,21 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EmployeeIdea", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeasIdeaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.ApplicationUser", b =>
                 {
                     b.HasOne("EskobInnovation.IdeaManagement.API.Models.Site", "Site")
@@ -482,6 +675,17 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.Navigation("Idea");
                 });
 
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.FileData", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.File", "File")
+                        .WithOne("FileData")
+                        .HasForeignKey("EskobInnovation.IdeaManagement.API.Models.FileData", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("File");
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Idea", b =>
                 {
                     b.HasOne("EskobInnovation.IdeaManagement.API.Models.Site", "Site")
@@ -491,6 +695,60 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Site");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.IdeaComment", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", "Idea")
+                        .WithMany("IdeaComments")
+                        .HasForeignKey("IdeaId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Idea");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Customer", "Customer")
+                        .WithMany("Sites")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Task", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Idea", "Idea")
+                        .WithMany("Tasks")
+                        .HasForeignKey("IdeaId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Idea");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.TaskComment", b =>
+                {
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Task", "Task")
+                        .WithMany("TaskComments")
+                        .HasForeignKey("TaskId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("HashtagIdea", b =>
@@ -559,14 +817,33 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Customer", b =>
+                {
+                    b.Navigation("Sites");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.File", b =>
+                {
+                    b.Navigation("FileData");
+                });
+
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Idea", b =>
                 {
                     b.Navigation("Files");
+
+                    b.Navigation("IdeaComments");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Site", b =>
                 {
                     b.Navigation("Ideas");
+                });
+
+            modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.Task", b =>
+                {
+                    b.Navigation("TaskComments");
                 });
 #pragma warning restore 612, 618
         }
