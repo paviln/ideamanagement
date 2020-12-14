@@ -68,13 +68,15 @@ export default class App extends Component {
   async authSite() {
     if (this.state.authenticated == false) {
       const isAuthenticated = await authService.isAuthenticated();
+      const user = await authService.getUser();
+
       if (isAuthenticated) {
         userService.getSite()
           .then(response => {
             this.setState({
               site: {
-                siteId: response.data.site.siteId,
-                link: response.data.site.link
+                siteId: response.data.siteId,
+                link: response.data.link
               },
               authenticated: true,
               ready: true
@@ -121,6 +123,7 @@ export default class App extends Component {
               exact path={prefix + "/overview"}
               render={props => (
                 <Overview {...props}
+                  authenticated={this.authenticated}
                   siteId={this.state.site.siteId}
                   prefix={prefix}
                 />
