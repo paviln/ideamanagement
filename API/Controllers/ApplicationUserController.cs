@@ -4,10 +4,10 @@ using EskobInnovation.IdeaManagement.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EskobInnovation.IdeaManagement.API.Attributes;
+using System.Security.Claims;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
-  [ApiKey]
   [ApiController]
   [Route("api/[controller]")]
   public class ApplicationUserController : ControllerBase
@@ -22,14 +22,15 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     }
 
     [HttpGet("getsite")]
-    public async Task<ActionResult<ApplicationUser>> GetSite() 
+    public async Task<ActionResult<Site>> GetSite() 
     {
-      var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-      await _context.Entry(currentUser).Reference(u => u.Site).LoadAsync();
-
-      return currentUser;
+      var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(id);
+      
+      return user.Site;
     }
 
+    [ApiKey]
     [HttpPost("createuser")]
     public async Task<IdentityResult> CreateUser(ApplicationUser user)
     {

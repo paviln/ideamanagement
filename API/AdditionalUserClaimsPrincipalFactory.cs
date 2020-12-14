@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using EskobInnovation.IdeaManagement.API.Models;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
 using EskobInnovation.IdeaManagement.API.Data;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace EskobInnovation.IdeaManagement.API
 {
@@ -32,16 +29,7 @@ namespace EskobInnovation.IdeaManagement.API
 
     public async override Task<ClaimsPrincipal> CreateAsync(ApplicationUser user)
     {
-      
-      var userSite =_userManager.Users
-        .Include(u => u.Site)
-        .SingleAsync();
       var principal = await base.CreateAsync(user);
-      var test = user.Site.SiteId;
-      var site = await _context.Sites
-        .Where(s => s.SiteId == user.Site.SiteId)
-        .FirstOrDefaultAsync();
-      
       var identity = (ClaimsIdentity)principal.Identity;
 
       var claims = new List<Claim>();
