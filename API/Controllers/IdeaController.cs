@@ -9,6 +9,7 @@ using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
@@ -32,10 +33,11 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
     // POST: api/Idea/getideasperiod
     [HttpPost("getideasperiod")]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod(List<DateTime> period)
+    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod([FromForm] int siteId, [FromForm] String period)
     {
+      var p = JsonConvert.DeserializeObject<List<DateTime>>(period);
       var ideas = await _context.Ideas
-        .Where(i => (i.Date >= period[0] && i.Date <= period[1]))
+        .Where(i => (i.Date >= p[0] && i.Date <= p[1]) && (i.SiteId == siteId))
         .ToListAsync();
 
       return ideas;

@@ -12,8 +12,12 @@ const getSiteIdeas = id => {
   return http.get(`/idea/getsiteideas`, { params: { siteId: id } });
 };
 
-const getIdeasPeriod = period => {
-  return http.post(`/idea/getideasperiod`, period);
+const getIdeasPeriod = (siteId, period) => {
+  let formdata = new FormData();
+  formdata.append('siteId', siteId);
+  formdata.append('period', JSON.stringify(period));
+
+  return http.post(`/idea/getideasperiod`, formdata);
 };
 
 const getPeriod = () => {

@@ -10,7 +10,7 @@ const NewIdeas = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await ideaService.getAll();
+      const response = await ideaService.getSiteIdeas(props.siteId);
       setIdeas(response.data);
     }
     fetchData();
@@ -20,14 +20,16 @@ const NewIdeas = (props) => {
     if (ideas.length > 0) {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
-        list.push(
-          <tr key={i} onClick={() => handleClick(ideas[i].ideaId)}>
-            <td>{ideas[i].ideaId}</td>
-            <td>{ideas[i].title}</td>
-            <td>{ideas[i].effort}</td>
-            <td>{ideas[i].impact}</td>
-          </tr>
-        );
+        if (ideas[i].status == 0) {
+          list.push(
+            <tr key={i} onClick={() => handleClick(ideas[i].ideaId)}>
+              <td>{ideas[i].ideaId}</td>
+              <td>{ideas[i].title}</td>
+              <td>{ideas[i].effort}</td>
+              <td>{ideas[i].impact}</td>
+            </tr>
+          );
+        }
       }
 
       return list;
@@ -37,7 +39,6 @@ const NewIdeas = (props) => {
   }
 
   const handleClick = (ideaId) => {
-    console.log(props.siteId)
     history.push(props.prefix + "/ideapage/" + ideaId);
   }
 
