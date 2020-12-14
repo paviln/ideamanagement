@@ -6,19 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import {withRouter, Redirect} from 'react-router-dom';
 
 export default class UnderView extends Component {
-  state = {
-    redirect: false
-  }
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  }
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to='/underview2'/>
-    }
-  }
+  
     render () {
          return (
              <div>
@@ -42,8 +30,7 @@ export default class UnderView extends Component {
             <td>under review</td>
             <td></td>
             <td>           
-            {this.renderRedirect()}
-            <button onClick={this.setRedirect}>Redirect</button>     
+            
             </td>
             </tr>
 
