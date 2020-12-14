@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconContext } from "react-icons";
 import { HiOutlineDocumentDownload } from "react-icons/hi";
-import ideaService from '../services/IdeaService';
+import ideaService from '../../services/IdeaService';
 import saveAs from 'file-saver';
 
 function Files(props) {

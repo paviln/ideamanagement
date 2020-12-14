@@ -1,5 +1,5 @@
 import React from 'react';
-import Comment from './commen/Comment';
+import Comment from '../commen/Comment';
 
 function Comments(props) {
 

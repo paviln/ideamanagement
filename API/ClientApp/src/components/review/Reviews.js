@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import authService from './api-authorization/AuthorizeService';
-import ideaService from '../services/IdeaService';
+import authService from '../api-authorization/AuthorizeService';
+import ideaService from '../../services/IdeaService';
 
-function UnderView() {
+function Reviews() {
   const history = useHistory();
   const [site, setSite] = useState();
   const [ideas, setIdeas] = useState([]);
@@ -62,4 +62,4 @@ function UnderView() {
   );
 }
 
-export default UnderView;
+export default Reviews;

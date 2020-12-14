@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import authService from './api-authorization/AuthorizeService';
+import authService from '../api-authorization/AuthorizeService';
 import moment from 'moment';
 import RangeSlider from 'react-bootstrap-range-slider';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import './My.css';
-import ideaService from '../services/IdeaService';
+import ideaService from '../../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
 import Comments from './Comments';
 import Employees from './Employees';
-import Tasks from './task/Tasks';
+import Tasks from '../task/Tasks';
 import Form from 'react-bootstrap/Form';
 
 function Idea() {
