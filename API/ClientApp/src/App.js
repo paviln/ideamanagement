@@ -13,12 +13,13 @@ import Idea from './components/idea/Idea';
 import NewIdeas from './components/NewIdeas';
 import Implemented from './components/Implemented';
 import Implemented2 from './components/Implemented2';
-import UnderView2 from './components/UnderView2';
 import UnderImplementation from './components/UnderImplementation';
 import Overview from './components/Overview';
 import Browse from './components/Browse';
 import './App.scss';
 import Reviews from './components/review/Reviews';
+import Review from './components/review/Review';
+
 
 export default class App extends Component {
 
@@ -134,10 +135,10 @@ export default class App extends Component {
             />
             <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/underview"} component={Reviews} />
+            <AuthorizeRoute exact path={prefix + "/underview/:id"} component={Review} />
             <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented2"} component={Implemented2} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
-            <AuthorizeRoute exact path={prefix + "/underview2"} component={UnderView2} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route path="*">
               <NoMatch></NoMatch>

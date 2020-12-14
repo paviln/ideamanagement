@@ -41,7 +41,7 @@ function Reviews() {
   }
 
   const handleClick = (ideaId) => {
-    history.push("/" + site + "/idea/" + ideaId);
+    history.push("/" + site + "/underview/" + ideaId);
   }
 
   return (

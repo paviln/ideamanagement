@@ -126,6 +126,14 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .Where(i => i.Site.Link == link && i.Status == Enums.Status.UnderReview)
         .ToListAsync();
 
+      foreach (var item in ideas)
+      {
+        await _context.Entry(item)
+          .Collection(i => i.IdeaComments)
+          .LoadAsync();
+      }
+      
+
       return ideas;
     }
 

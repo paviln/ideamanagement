@@ -9,7 +9,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import ideaService from '../../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
-import Comments from './Comments';
+import Comments from '../commen/Comments';
 import Employees from './Employees';
 import Tasks from '../task/Tasks';
 import Form from 'react-bootstrap/Form';
@@ -39,7 +39,7 @@ function Idea() {
         });
     }
     fetchData();
-  }, [])
+  }, []);
 
   const now = 3;
   if (loading === true) {
@@ -118,7 +118,7 @@ function Idea() {
       </Row>
       <Files files={idea.files} />
       <Hashtags hashtags={idea.hashtags} />
-      <Comments ideaComments={idea.ideaComments} />
+      <Comments comments={idea.ideaComments} />
       <Employees employees={idea.employees} />
       <Tasks tasks={idea.tasks} />
       {idea.challenge &&

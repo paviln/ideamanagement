@@ -1,5 +1,5 @@
 import React from 'react';
-import Comment from '../commen/Comment';
+import Comment from './Comment';
 
 function Comments(props) {
 
@@ -17,7 +17,7 @@ function Comments(props) {
     return list;
   }
 
-  var comments = populateComments(props.ideaComments)
+  var comments = populateComments(props.comments)
 
   if (comments.length > 0) {
     return (
