@@ -27,6 +27,15 @@ namespace API.Controllers
       _user = contextAccessor.HttpContext.User;
     }
 
+    // GET: api/Task/
+    [HttpGet]
+    public async Task<ActionResult<List<EskobInnovation.IdeaManagement.API.Models.Task>>> GetPeriod()
+    {
+
+
+      return null;
+    }
+
     // POST: api/Task
     [HttpPost]
     public async Task<ActionResult<IdeaComment>> Post([FromForm] int ideaId, [FromForm] string content)

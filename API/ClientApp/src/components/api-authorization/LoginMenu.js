@@ -50,7 +50,7 @@ export class LoginMenu extends Component {
     return (<Fragment>
       <NavDropdown title="Manager" id="basic-nav-dropdown">
         <LinkContainer to={prefix + "/newideas"}>
-          <NavDropdown.Item>NewIdeas</NavDropdown.Item>
+          <NavDropdown.Item>New Ideas</NavDropdown.Item>
         </LinkContainer>
         <LinkContainer to={prefix + "/underview"}>
           <NavDropdown.Item>Under Review</NavDropdown.Item>

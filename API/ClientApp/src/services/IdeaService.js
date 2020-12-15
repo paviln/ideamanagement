@@ -20,13 +20,17 @@ const getUserIdeas = async () => {
   });
 };
 
-const getSiteIdeasUnderReview = link => {
-  return http.get(`/idea/getsiteideasunderreview`, { params: { link: link } });
+const getUserIdeasWithStatus = async (status) => {
+  const token = await authService.getAccessToken();
+  return http.get(`/idea/GetUserIdeasWithStatus`, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` },
+    params: { status: status }
+  });
 };
 
-const getIdeasPeriod = (siteId, period) => {
+const getIdeasPeriod = (link, period) => {
   let formdata = new FormData();
-  formdata.append('siteId', siteId);
+  formdata.append('link', link);
   formdata.append('period', JSON.stringify(period));
 
   return http.post(`/idea/getideasperiod`, formdata);
@@ -74,7 +78,7 @@ export default {
   get,
   getSiteIdeas,
   getUserIdeas,
-  getSiteIdeasUnderReview,
+  getUserIdeasWithStatus,
   getIdeasPeriod,
   getPeriod,
   getIdeaFileData,

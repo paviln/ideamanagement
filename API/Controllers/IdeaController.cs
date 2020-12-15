@@ -39,11 +39,11 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
     // POST: api/Idea/getideasperiod
     [HttpPost("getideasperiod")]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod([FromForm] int siteId, [FromForm] String period)
+    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod([FromForm] string link, [FromForm] String period)
     {
       var p = JsonConvert.DeserializeObject<List<DateTime>>(period);
       var ideas = await _context.Ideas
-        .Where(i => (i.Date >= p[0] && i.Date <= p[1]) && (i.SiteId == siteId))
+        .Where(i => (i.Date >= p[0] && i.Date <= p[1]) && (i.Site.Link == link))
         .ToListAsync();
 
       return ideas;
@@ -143,21 +143,17 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return ideas;
     }
 
-    // GET: api/Idea/GetSiteIdeasUnderReview
-    [HttpGet("getsiteideasunderreview")]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeasUnderReview(string link)
+    // GET: api/Idea/GetUserIdeasWithStatus
+    [Authorize]
+    [HttpGet("getuserideaswithstatus")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetUserIdeasWithStatus(int status)
     {
+      var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(id);
+
       var ideas = await _context.Ideas
-        .Where(i => i.Site.Link == link && i.Status == Enums.Status.UnderReview)
+        .Where(i => i.Site.Link == user.Site.Link && i.Status == (Enums.Status)status)
         .ToListAsync();
-
-      foreach (var item in ideas)
-      {
-        await _context.Entry(item)
-          .Collection(i => i.IdeaComments)
-          .LoadAsync();
-      }
-
 
       return ideas;
     }
@@ -284,6 +280,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     }
 
     // DELETE: api/Idea/5
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<Idea>> DeleteIdea(int id)
     {

@@ -119,7 +119,7 @@ export default class App extends Component {
               render={props => (
                 <Overview {...props}
                   authenticated={this.authenticated}
-                  siteId={this.state.site.siteId}
+                  link={this.state.site.link}
                   prefix={prefix}
                 />
               )}
@@ -136,9 +136,10 @@ export default class App extends Component {
             <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
             <AuthorizeRoute exact path={prefix + "/underview"} component={Reviews} />
             <AuthorizeRoute exact path={prefix + "/underview/:id"} component={Review} />
-            <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
-            <AuthorizeRoute exact path={prefix + "/implemented2"} component={Implemented2} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
+            <AuthorizeRoute exact path={prefix + "/underimplementation/"} component={UnderImplementation} />
+            <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
+            <AuthorizeRoute exact path={prefix + "/implemented/:id"} component={Implemented} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route path="*">
               <NoMatch></NoMatch>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
-import authService from '../api-authorization/AuthorizeService';
 import ideaService from '../../services/IdeaService';
+import IdeaTable from '../idea/IdeaTable';
 
 function Reviews() {
   const history = useHistory();
@@ -12,9 +11,7 @@ function Reviews() {
   useEffect(() => {
     async function fetchData() {
       try {
-        var res = await authService.getSite();
-        setSite(res);
-        var response = await ideaService.getSiteIdeasUnderReview(res);
+        var response = await ideaService.getUserIdeasWithStatus(1);
         setIdeas(response.data);
       } catch (error) {
         console.log(error);
@@ -32,6 +29,8 @@ function Reviews() {
           <tr onClick={() => handleClick(ideas[i].ideaId)}>
             <td>{ideas[i].ideaId}</td>
             <td>{ideas[i].title}</td>
+            <td>{ideas[i].effort}</td>
+            <td>{ideas[i].impact}</td>
           </tr>
         );
       }
@@ -40,24 +39,14 @@ function Reviews() {
     return list;
   }
 
-  const handleClick = (ideaId) => {
-    history.push("/" + site + "/underview/" + ideaId);
+  const handleClick = (ideaId, link) => {
+    history.push("/" + link + "/underview/" + ideaId);
   }
 
   return (
     <div>
       <h3 className="pt-4">Under Review</h3>
-      <Table striped bordered hover>
-        <thead class="thead-dark">
-          <tr >
-            <th>S.no</th>
-            <th>Idea</th>
-          </tr>
-        </thead>
-        <tbody>
-          {populateIdeas()}
-        </tbody>
-      </Table>
+      <IdeaTable ideas={ideas} handleClick={handleClick} />
     </div>
   );
 }

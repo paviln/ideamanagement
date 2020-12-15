@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ideaService from '../services/IdeaService';
 import Table from 'react-bootstrap/Table';
 
-
 const Overview = () => {
 
   const [ideas, setIdeas] = useState([]);

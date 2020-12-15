@@ -1,43 +1,37 @@
-import React,{Component, useState} from 'react';
-import { InputGroup } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
-import './My.css';
-export default class Implemented extends Component {
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ideaService from '../services/IdeaService';
+import IdeaTable from './idea/IdeaTable';
 
-    render () {  
-         return (
-            <div>
-                <h1>Implemented Ideas</h1>
-                <br/>
-            <Table striped bordered hover>
-            <thead class="thead-dark">
-            <tr>
-            <th>S.no</th>
-            <th>Ideas</th>
-            </tr>
-            </thead>
+function Implemented() {
 
-            <tbody>
-            <tr>
-            <td>1</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>2</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>3</td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>4</td>
-            <td></td>
-            </tr>
-            </tbody>
-          </Table>
-         </div>
-         )
+    const history = useHistory();
+    const [ideas, setIdeas] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                var response = await ideaService.getUserIdeasWithStatus(3);
+                setIdeas(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    const handleClick = (ideaId, link) => {
+        history.push("/" + link + "/implemented/" + ideaId);
     }
+    return (
+        <div>
+            <div>
+                <h3 className="pt-4">Implemented</h3>
+                <IdeaTable ideas={ideas} handleClick={handleClick} />
+            </div>
+        </div>
+    )
 }
+
+export default Implemented

@@ -41,7 +41,7 @@ const Overview = (props) => {
         end.setSeconds(59)
         end = moment(end).format("MM/DD/YYYY, HH:mm:ss");
         var period = [start, end];
-        const response = await ideaService.getIdeasPeriod(props.siteId, period);
+        const response = await ideaService.getIdeasPeriod(props.link, period);
         setIdeas(response.data);
         setLoading(false);
 
