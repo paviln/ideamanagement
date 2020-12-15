@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service.SiteServices;
@@ -17,30 +18,28 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
       _apiSiteService = new ApiSiteService();
     }
 
-    public async Task<SiteRegistration> CreateSite(string urlname)
+    public async Task<SiteRegistrationResult> CreateSite(string urlname, int customerid, string streetaddress, string zipcode, string city)
     {
-      SiteRegistration result = SiteRegistration.Success;
-
+      SiteRegistrationResult result = SiteRegistrationResult.Success;
       //Site siteName = await _apiSiteService.GetLinkByName(urlname);
       string testsite = null;
       if(testsite != null)
       {
-        result = SiteRegistration.SiteAlreadyExists;
+        result = SiteRegistrationResult.SiteAlreadyExists;
       }
-      if(result == SiteRegistration.Success)
+      if(result == SiteRegistrationResult.Success)
       {
         Site site = new Site()
         {
-          Link = urlname
+          Link = urlname,
+          StreetAddress = streetaddress,
+          ZipCode = zipcode,
+          City = city,
+
         };
         await _apiSiteService.CreateLinkAsync(site);
       }
       return result;
-    }
-
-    public Task<Site> GetSiteByName()
-    {
-      throw new NotImplementedException();
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using EskobInnovation.IdeaManagement.WPF.ViewModel;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -16,5 +17,5 @@ namespace EskobInnovation.IdeaManagement.WPF.View.Pages
             InitializeComponent();
             DataContext = new ManageCustomerViewModel();
          }
-    }
+  }
 }

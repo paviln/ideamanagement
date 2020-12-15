@@ -29,10 +29,10 @@ namespace EskobInnovation.IdeaManagement.API
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();      
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AdditionalUserClaimsPrincipalFactory>();
-            
+
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
@@ -44,7 +44,7 @@ namespace EskobInnovation.IdeaManagement.API
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            
+
             services.AddRazorPages();
 
             // In production, the React files will be served from this directory

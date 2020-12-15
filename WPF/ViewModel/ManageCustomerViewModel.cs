@@ -1,16 +1,19 @@
 ﻿using MvvmCross.ViewModels;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System;
+using Task = System.Threading.Tasks.Task;
+using EskobInnovation.IdeaManagement.WPF.View.Windows;
+using System.Windows;
+using System.Windows.Input;
 
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
     public class ManageCustomerViewModel : MvxViewModel
     {
-        #region Propertise
+    #region Propertise
         private ObservableCollection<Customer> _customers = new ObservableCollection<Customer>();
         private bool _isBusy;
 
@@ -32,12 +35,12 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _id; }
             set {SetProperty(ref _id, value); }
         }
-        private string  _streetAdresse;
+        private string  _streetAddress;
 
-        public  string StreetAdresse
+        public  string StreetAddress
         {
-            get { return _streetAdresse; }
-            set { SetProperty(ref _streetAdresse, value); }
+            get { return _streetAddress; }
+            set { SetProperty(ref _streetAddress, value); }
         }
         private string _zipCode;
 
@@ -46,8 +49,15 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _zipCode; }
             set { SetProperty(ref _zipCode ,value); }
         }
+        private string _city;
 
-        private string _contactPerson;
+        public string City
+        {
+          get { return _city; }
+          set { SetProperty(ref _city, value); }
+        }
+
+    private string _contactPerson;
 
         public string ContactPerson
         {
@@ -61,87 +71,90 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
             get { return _customers; }
             set { SetProperty(ref _customers, value); }
         }
-        #endregion
-        private readonly IApiCustomerService _customerService;
-        //Constructor injection (IoC)
-        public ManageCustomerViewModel(IApiCustomerService customerService)
-        {
-            _customerService = customerService;
-        }
-        public ManageCustomerViewModel()
-        {
-            _customerService = new ApiCustomerService();
-            FillDataGrid();
-            DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsync, CanExecuteSubmit);
-            UpdateCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncUpdate, CanExecuteSubmit);
-        }
-        #region DeleteCommand And Execute
-        public IAsyncCommand DeleteCustomerCmd { get; private set; }
-
-        private async Task ExecuteSubmitAsync()
-        {
-            try
-            {
-                await _customerService.DeleteCustomerAsync(Id.ToString());
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-        #endregion
-
-        #region UpdateCommand and Execute
-        public IAsyncCommand UpdateCustomerCmd { get; private set; }
-
-        private async Task ExecuteSubmitAsyncUpdate()
-        {
-            try
-            {
-                Customer customer = new Customer()
-                {
-                    Id = Id,
-                    CompanyName = CompanyName,
-                };
-
-             await _customerService.UpdateCustomerAsync(customer);
-            this.CompanyName = string.Empty;
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-        #endregion
-        #region implicit methods
-        private bool CanExecuteSubmit()
-        {
-            return !IsBusy;
-        }
-        private async void FillDataGrid()
-        {
-            try
-            {
-                var customers = await _customerService.GetCustomersAsync();
-                
-                foreach (var item in customers)
-                {
-                    Customer customer = new Customer()
-                    {
-                        CompanyName = item.CompanyName,
-                        Id = item.Id,
-                        StreetAdresse = item.StreetAdresse,
-                        ZipCode = item.ZipCode,
-                        ContactPerson = item.ContactPerson
-                    };
-                    Customers.Add(customer);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-        #endregion
+    private Customer _selectedElement;
+    public Customer SelectedElement
+    {
+      get { return _selectedElement; }
+      set {SetProperty(ref _selectedElement, value);}
     }
+    #endregion
+    private readonly IApiCustomerService _apicustomerService;
+        //Constructor injection (IoC)
+    public ManageCustomerViewModel(IApiCustomerService apiCustomerService)
+    {
+        _apicustomerService = apiCustomerService;
+    }
+    public ManageCustomerViewModel()
+    {
+      _apicustomerService = new ApiCustomerService();
+      DeleteCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncDelete, CanExecuteSubmit);
+      ShowUpdateCustomerWindowCmd = new SyncCommandBase(ExecuteUpdateWindow);
+      ShowUrlWindowCmd = new SyncCommandBase(ExecuteURLWindow);
+      FillDataGrid();
+    }
+    #region DeleteCommand And Execute
+    public IAsyncCommand DeleteCustomerCmd { get; private set; }
+
+    private async Task ExecuteSubmitAsyncDelete()
+    {
+      try
+    {
+      await _apicustomerService.DeleteCustomerAsync(SelectedElement.Id);
+      MessageBox.Show("Deleted Customer with ID : " + SelectedElement.Id);
+    }
+      finally
+      {
+        IsBusy = false;
+      }
+    }
+    #endregion
+
+    #region UpdateCommand and Execute
+    public ICommand ShowUpdateCustomerWindowCmd { get; private set; }
+    public ICommand ShowUrlWindowCmd { get; private set; }
+    private void ExecuteURLWindow()
+    {
+      Window window = new CreateUrlWindow();
+      window.Show();
+    }
+
+    private void ExecuteUpdateWindow()
+    {
+      Window window = new UpdateCustomerWindow();
+      window.Show();
+    }
+    #endregion
+    #region implicit methods
+  private bool CanExecuteSubmit()
+    {
+        return !IsBusy;
+    }
+  public async void FillDataGrid()
+  {
+    try
+    {
+      var customers = await _apicustomerService.GetCustomersAsync();
+
+      foreach (var item in customers)
+      {
+        Customer customer = new Customer()
+        {
+          CompanyName = item.CompanyName,
+          Id = item.Id,
+          StreetAddress = item.StreetAddress,
+          ZipCode = item.ZipCode,
+          City = item.City,
+          ContactPerson = item.ContactPerson
+        };
+        Customers.Add(customer);
+      }
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+    }
+
+  }
+  #endregion
+  }
 }
