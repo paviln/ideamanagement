@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import authService from './api-authorization/AuthorizeService';
+import authService from '../api-authorization/AuthorizeService';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
 import RangeSlider from 'react-bootstrap-range-slider';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import './My.css';
-import ideaService from '../services/IdeaService';
+import ideaService from '../../services/IdeaService';
 import Files from './Files';
 import Hashtags from './Hashtags';
-import Comments from './Comments';
+import Comments from '../commen/Comments';
 import Employees from './Employees';
-import Tasks from './task/Tasks';
+import Tasks from '../task/Tasks';
 import Form from 'react-bootstrap/Form';
 
-function IdeaPage() {
+function Idea() {
   const [loading, setloading] = useState(true);
   const { id } = useParams();
   const [idea, setIdea] = useState();
@@ -43,7 +42,7 @@ function IdeaPage() {
         });
     }
     fetchData();
-  }, [])
+  }, []);
 
   const now = 3;
   if (loading === true) {
@@ -185,7 +184,7 @@ function IdeaPage() {
       </Row>
       <Files files={idea.files} />
       <Hashtags hashtags={idea.hashtags} />
-      <Comments ideaComments={idea.ideaComments} />
+      <Comments comments={idea.ideaComments} />
       <Employees employees={idea.employees} />
       <Tasks tasks={idea.tasks} />
       {idea.challenge &&
@@ -204,4 +203,4 @@ function IdeaPage() {
   );
 }
 
-export default IdeaPage;
+export default Idea;

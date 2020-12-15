@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import List from './List';
+import List from './commen/List';
 import IdeaService from '../services/IdeaService';
 
 export default class AddIdea extends Component {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using EskobInnovation.IdeaManagement.API.Extenstions;
 using Microsoft.AspNetCore.Identity;
 
 namespace EskobInnovation.IdeaManagement.API.Models
@@ -7,6 +7,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
   public class ApplicationUser : IdentityUser
   {
     private Site _site;
+    private Employee _employee;
     public ApplicationUser()
     { }
     private ApplicationUser(Action<object, string> lazyLoader)
@@ -21,19 +22,11 @@ namespace EskobInnovation.IdeaManagement.API.Models
       get => LazyLoader.Load(this, ref _site);
       set => _site = value;
     }
-  }
-  public static class PocoLoadingExtensions
-  {
-    public static TRelated Load<TRelated>(
-        this Action<object, string> loader,
-        object entity,
-        ref TRelated navigationField,
-        [CallerMemberName] string navigationName = null)
-        where TRelated : class
+    [PersonalData]
+    public Employee Employee
     {
-      loader?.Invoke(entity, navigationName);
-
-      return navigationField;
+      get => LazyLoader.Load(this, ref _employee);
+      set => _employee = value;
     }
   }
 }

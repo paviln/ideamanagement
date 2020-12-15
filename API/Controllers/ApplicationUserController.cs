@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EskobInnovation.IdeaManagement.API.Attributes;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EskobInnovation.IdeaManagement.API.Controllers
 {
@@ -14,19 +16,21 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
   {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
-
-    public ApplicationUserController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    private readonly ClaimsPrincipal _user;
+    public ApplicationUserController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
     {
       _context = context;
       _userManager = userManager;
+      _user = contextAccessor.HttpContext.User;
     }
 
+    [Authorize]
     [HttpGet("getsite")]
-    public async Task<ActionResult<Site>> GetSite() 
+    public async Task<ActionResult<Site>> GetSite()
     {
-      var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
       var user = await _userManager.FindByIdAsync(id);
-      
+
       return user.Site;
     }
 
