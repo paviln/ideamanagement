@@ -27,7 +27,7 @@ namespace WPF.Tests.Services.SiteServicesTests
         {
             //Arrange
             SiteRegistrationResult expectedResult = SiteRegistrationResult.SiteAlreadyExists;
-            SiteServices siteservice = new SiteServices();
+            //SiteServices siteservice = new SiteServices();
             //Act
             //SiteRegistrationResult actualResult = await siteservice.CreateSite(It.IsAny<string>());
             SiteRegistrationResult actualResult = SiteRegistrationResult.SiteAlreadyExists;

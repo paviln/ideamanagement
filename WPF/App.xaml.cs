@@ -1,7 +1,6 @@
 ﻿using EskobInnovation.IdeaManagement.WPF.View;
 using EskobInnovation.IdeaManagement.WPF.ViewModel;
 using System.Windows;
-
 namespace EskobInnovation.IdeaManagement.WPF
 {
     /// <summary>
@@ -17,8 +16,6 @@ namespace EskobInnovation.IdeaManagement.WPF
     public App()
     {
       _manageCustomerViewModel = new ManageCustomerViewModel();
-
-
     }
     protected override void OnStartup(StartupEventArgs e)
     {

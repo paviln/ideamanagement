@@ -10,6 +10,6 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
   }
   public interface ISiteServices
   {
-    Task<SiteRegistrationResult> CreateSite(string urlname);
+    Task<SiteRegistrationResult> CreateSite(string urlname,int customerid ,string streetaddress, string zipcode, string city);
   }
 }

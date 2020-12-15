@@ -3,6 +3,7 @@ using EskobInnovation.IdeaManagement.WPF.Services.RegistrationServices;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace WPF.Tests.Services.RegistrationServicesTests
 {
@@ -33,8 +34,8 @@ namespace WPF.Tests.Services.RegistrationServicesTests
         {
             RegistrationResult expectedResult = RegistrationResult.EmailAlreadyExists;
 
-            string email = "test@gmail.com";
-            string pw = "Daw22!d";
+            //string email = "test@gmail.com";
+            //string pw = "Daw22!d";
 
             //var actual = await _registrationService.Register(email, pw);
             RegistrationResult actualResult = RegistrationResult.EmailAlreadyExists;

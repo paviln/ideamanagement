@@ -1,10 +1,8 @@
 ﻿using MvvmCross.ViewModels;
 using EskobInnovation.IdeaManagement.WPF.Command;
 using System.Threading.Tasks;
-using EskobInnovation.IdeaManagement.WPF.Service.SiteServices;
 using EskobInnovation.IdeaManagement.WPF.Services.RegistrationServices;
 using EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices;
-using EskobInnovation.IdeaManagement.WPF.Services.SiteServices;
 using System.Windows;
 /// <summary>
 /// 
@@ -15,7 +13,6 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
   {
     private readonly IRegistrationService _registrationService;
     private readonly IManageCustomerServices _manageCustomerService;
-    private readonly ISiteServices _siteService;
 
     #region Properties
     private bool _isBusy;
@@ -75,41 +72,25 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       get { return _password; }
       set { SetProperty(ref _password, value); }
     }
-
-    private string _link;
-
-    public string Link
-    {
-      get { return _link; }
-      set { _link = value; }
-    }
-
-
     #endregion
     #region Constructors
     //Constructor Injection - dependency injection - (IoC)
-    public AddCustomerViewModel(ISiteServices siteServices, IRegistrationService registrationService, IManageCustomerServices manageCustomerServices)
+    public AddCustomerViewModel(IRegistrationService registrationService, IManageCustomerServices manageCustomerServices)
     {
-      _siteService = siteServices;
       _registrationService = registrationService;
       _manageCustomerService = manageCustomerServices;
     }
     public AddCustomerViewModel()
     {
-      _siteService = new SiteServices();
       _registrationService = new RegistrationService();
       _manageCustomerService = new ManageCustomerServices();
       AddCustomerCmd = new AsyncCommand(ExecuteSubmitAsyncCustomer, CanExecuteSubmit);
       CreateAccountCmd = new AsyncCommand(ExecuteSubmitAsyncAccount, CanExecuteSubmit);
-      CreateURLCmd = new AsyncCommand(ExecuteSubmitAsyncSite, CanExecuteSubmit);
     }
     #endregion
     #region IAsyncCommands
     public IAsyncCommand AddCustomerCmd { get; private set; }
-
     public IAsyncCommand CreateAccountCmd { get; private set; }
-
-    public IAsyncCommand CreateURLCmd { get; private set; } 
     #endregion
 
     #region Async Executes
@@ -138,19 +119,6 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
         this.Email = string.Empty;
         this.Password = string.Empty;
         MessageBox.Show("The account registration was a: " + registrationResult);
-      }
-      finally
-      {
-        IsBusy = false;
-      }
-    }
-    public async Task ExecuteSubmitAsyncSite()
-    {
-      try
-      {
-        SiteRegistrationResult siteRegistrationResult = await _siteService.CreateSite(Link);
-        this.Link = string.Empty;
-        MessageBox.Show("The Site registration was a: " + siteRegistrationResult);
       }
       finally
       {

@@ -48,12 +48,12 @@ namespace WPF.Tests.Services.ManageCustomerServicesTests
             _manageCustomerViewModel.FillDataGrid();
             ManageCustomerServices managecustomerService = new ManageCustomerServices();
             //Act
-            
+
             string companyname = "Danfoss";
-            string streetaddress = "Teststreet";
-            string zipcode = "232test";
-            string contactperson = "testtest";
-            string city = "testcity";
+            //string streetaddress = "Teststreet";
+            //string zipcode = "232test";
+            //string contactperson = "testtest";
+            //string city = "testcity";
             var name = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.CompanyName == companyname);
             // RegistrationResultCustomer actualResult = await managecustomerService.CreateCustomer(companyname, streetaddress, zipcode, contactperson, city);
             RegistrationResultCustomer actualResult = RegistrationResultCustomer.CustomerAlreadyExists;

@@ -43,55 +43,54 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices
           ContactPerson = contactperson,
           City = city
         };
-
         await _customerService.CreateCustomerAsync(customer);
-
       }
       return result;
-     
     }
-
     public async Task<RegistrationResultCustomer> DeleteCustomer(int id)
     {
       RegistrationResultCustomer result = RegistrationResultCustomer.Success;
 
-      var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
+      //var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
 
-      if (cust_id.Id == id)
-      {
-        result = RegistrationResultCustomer.CustomerAlreadyExists;
-      }
+      //if (cust_id.Id == id)
+      //{
+      //  result = RegistrationResultCustomer.CustomerDoesNotExist;
+      //}
 
-      if (cust_id.Id != id)
-      {
-        await _customerService.DeleteCustomerAsync(id);
-      }
+      //if (cust_id.Id != id)
+      //{
+      await _customerService.DeleteCustomerAsync(id);
+      //}
 
       return result;
       
     }
 
-    public async Task<RegistrationResultCustomer> UpdateCustomer(int id, string companyname)
+    public async Task<RegistrationResultCustomer> UpdateCustomer(int id, string companyname, string streetaddress, string zipcode, string city, string contactperson)
     {
       RegistrationResultCustomer result = RegistrationResultCustomer.Success;
 
-      var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
+      //var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
 
-      if (cust_id.Id != id)
+      //if (cust_id.Id != id)
+      //{
+      //  result = RegistrationResultCustomer.CustomerDoesNotExist;
+      //}
+
+      //if (cust_id.Id == id)
+
+      Customer customer = new Customer()
       {
-        result = RegistrationResultCustomer.CustomerDoesNotExist;
-      }
+        Id = id,
+        CompanyName = companyname,
+        StreetAddress = streetaddress,
+        ZipCode = zipcode,
+        City = city,
+        ContactPerson = contactperson
+      };
 
-      if (cust_id.Id == id)
-      {
-        Customer customer = new Customer()
-        {
-          Id = id,
-          CompanyName = companyname
-        };
-
-        await _customerService.UpdateCustomerAsync(customer);
-      }
+      await _customerService.UpdateCustomerAsync(customer);
 
       return result;
     }

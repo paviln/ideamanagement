@@ -9,27 +9,18 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
   public class SiteServices : ISiteServices
   {
     private readonly IApiSiteService _apiSiteService;
-    private ObservableCollection<Site> _sites = new ObservableCollection<Site>();
-    public ObservableCollection<Site> Sites { get; set; }
-    
-
     public SiteServices(IApiSiteService apiSiteService)
     {
       _apiSiteService = apiSiteService;
     }
     public SiteServices()
     {
-      FillSiteList();
       _apiSiteService = new ApiSiteService();
     }
 
-    public async Task<SiteRegistrationResult> CreateSite(string urlname)
+    public async Task<SiteRegistrationResult> CreateSite(string urlname, int customerid, string streetaddress, string zipcode, string city)
     {
       SiteRegistrationResult result = SiteRegistrationResult.Success;
-
-      
-
-       //SingleOrDefault(c => c.CompanyName == companyname);
       //Site siteName = await _apiSiteService.GetLinkByName(urlname);
       string testsite = null;
       if(testsite != null)
@@ -40,32 +31,15 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
       {
         Site site = new Site()
         {
-          Link = urlname
+          Link = urlname,
+          StreetAddress = streetaddress,
+          ZipCode = zipcode,
+          City = city,
+
         };
         await _apiSiteService.CreateLinkAsync(site);
       }
       return result;
-    }
-
-    private async void FillSiteList()
-    {
-      try
-      {
-        var _sites = await _apiSiteService.GetSitesAsync();
-
-        foreach (var item in _sites)
-        {
-          Site site = new Site()
-          {
-            Link = item.Link
-          };
-          Sites.Add(site);
-        }
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-      }
     }
   }
 }

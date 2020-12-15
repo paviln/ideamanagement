@@ -5,8 +5,8 @@ using EskobInnovation.IdeaManagement.API.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 using Xunit;
+using Task = System.Threading.Tasks.Task;
 
 namespace EskobInnovation.IdeaManagement
 {

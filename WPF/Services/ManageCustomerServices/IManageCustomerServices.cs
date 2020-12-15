@@ -18,7 +18,7 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices
   public interface IManageCustomerServices
   {
     Task<RegistrationResultCustomer> CreateCustomer(string companyname, string streetaddresse, string zipcode, string contactperson, string city);
-    Task<RegistrationResultCustomer> UpdateCustomer(int id, string companyname);
+    Task<RegistrationResultCustomer> UpdateCustomer(int id, string companyname, string streetaddress, string zipcode, string city, string contactperson);
     Task<RegistrationResultCustomer> DeleteCustomer(int id);
     
   }
