@@ -26,6 +26,18 @@ export class AuthorizeService {
         return user && user.profile;
     }
 
+    async getSite() {
+        if (this._user && this._user.profile) {
+            return this._user.profile.website;
+        }
+
+        await this.ensureUserManagerInitialized();
+        const user = await this.userManager.getUser();
+        console.log(user)
+
+        return user.profile.website;
+    }
+
     async getAccessToken() {
         await this.ensureUserManagerInitialized();
         const user = await this.userManager.getUser();

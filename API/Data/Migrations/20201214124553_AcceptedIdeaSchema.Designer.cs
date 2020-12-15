@@ -4,14 +4,16 @@ using EskobInnovation.IdeaManagement.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201214124553_AcceptedIdeaSchema")]
+    partial class AcceptedIdeaSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +55,6 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -93,8 +92,6 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -665,15 +662,9 @@ namespace EskobInnovation.IdeaManagement.API.Data.Migrations
 
             modelBuilder.Entity("EskobInnovation.IdeaManagement.API.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("EskobInnovation.IdeaManagement.API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
                     b.HasOne("EskobInnovation.IdeaManagement.API.Models.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Site");
                 });

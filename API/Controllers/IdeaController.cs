@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Data;
 using EskobInnovation.IdeaManagement.API.Models;
 using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -18,10 +21,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
   public class IdeaController : ControllerBase
   {
     private readonly ApplicationDbContext _context;
-
-    public IdeaController(ApplicationDbContext context)
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ClaimsPrincipal _user;
+    public IdeaController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
     {
       _context = context;
+      _userManager = userManager;
+      _user = contextAccessor.HttpContext.User;
     }
 
     // GET: api/Idea
@@ -59,7 +65,6 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
       return (dateTimes);
     }
-
 
     // GET: api/Idea/5
     [HttpGet("{id}")]
@@ -108,13 +113,47 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return idea;
     }
 
-    // GET: api/Idea
+    // GET: api/Idea/GetSiteIdeas
     [HttpGet("getsiteideas")]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeas(int siteId)
+    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeas(string link)
     {
       var ideas = await _context.Ideas
-        .Where(i => i.SiteId == siteId)
+        .Where(i => i.Site.Link == link)
         .ToListAsync();
+
+      return ideas;
+    }
+
+    // GET: api/Idea/GetUserIdeas
+    [Authorize]
+    [HttpGet("getuserideas")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetUserIdeas()
+    {
+      var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(id);
+
+      var ideas = await _context.Ideas
+        .Where(i => i.Site.Link == user.Site.Link)
+        .ToListAsync();
+
+      return ideas;
+    }
+
+    // GET: api/Idea/GetSiteIdeasUnderReview
+    [HttpGet("getsiteideasunderreview")]
+    public async Task<ActionResult<IEnumerable<Idea>>> GetSiteIdeasUnderReview(string link)
+    {
+      var ideas = await _context.Ideas
+        .Where(i => i.Site.Link == link && i.Status == Enums.Status.UnderReview)
+        .ToListAsync();
+
+      foreach (var item in ideas)
+      {
+        await _context.Entry(item)
+          .Collection(i => i.IdeaComments)
+          .LoadAsync();
+      }
+
 
       return ideas;
     }
@@ -236,6 +275,31 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
       return CreatedAtAction("GetIdea", new { id = idea.IdeaId }, idea);
     }
+
+    // POST: api/Idea/PostIdeaComment
+    // To protect from overposting attacks, enable the specific properties you want to bind to, for
+    // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+    [Authorize]
+    [HttpPost("postideacomment")]
+    public async Task<ActionResult<IdeaComment>> PostIdeaComment(String content)
+    {
+      var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(id);
+
+      var comment = new IdeaComment
+      {
+        Content = content,
+        Employee = user.Employee,
+        Date = DateTime.Now
+      };
+
+      _context.IdeaComments.Add(comment);
+
+      await _context.SaveChangesAsync();
+
+      return comment;
+    }
+
 
     // DELETE: api/Idea/5
     [HttpDelete("{id}")]
