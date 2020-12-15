@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import authService from './api-authorization/AuthorizeService';
 import moment from 'moment';
+import { confirmAlert } from 'react-confirm-alert';
 import RangeSlider from 'react-bootstrap-range-slider';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +21,7 @@ function IdeaPage() {
   const { id } = useParams();
   const [idea, setIdea] = useState();
   const [auth, setAuth] = useState();
-  const [priority, setPriority] = useState(0); 
+  const [priority, setPriority] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -31,6 +32,8 @@ function IdeaPage() {
       await ideaService.get(id)
         .then(responce => {
           if (responce.status == '200') {
+            console.log(responce)
+
             setIdea(responce.data);
             setloading(false);
           }
@@ -59,16 +62,79 @@ function IdeaPage() {
     return ideaStatus[key];
   }
 
+  const updateIdea = async (id, i) => {
+    var result =
+      console.log(result);
+  }
+
+  // To reject the idea
+  const accept = () => {
+    confirmAlert({
+      title: 'Confirm to Reject',
+      message: 'Are you sure to reject the idea.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            var i = idea;
+            i.accepted = true;
+            var response = await ideaService.update(id, i);
+            if (response.status == '204') {
+              setIdea(i);
+            }
+          }
+        },
+        {
+          label: 'No'
+        }
+      ]
+    });
+  };
+  // To reject the idea
+  const reject = () => {
+    confirmAlert({
+      title: 'Confirm to Reject',
+      message: 'Are you sure to reject the idea.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async() => {
+           var i = idea;
+           i.accepted = false;
+           var response = await ideaService.remove(id, i);
+            if (response.status == '204') {
+              setIdea(i);
+             // <Redirect to="/newideas" />
+            }
+          }
+        },
+        {
+          label: 'No'
+        }
+      ]
+    });
+  };
+
   return (
     <div className="mb-4">
       <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
         <h3>Idea Page</h3>
-        <div>
-          <p>Employee number: {idea.employeeNumber}</p>
-          <p>Submission: {moment(idea.date).format("DD/MM/YYYY, HH:mm:ss")}</p>
-          <p>Last edited: </p>
-          <p>Status: {getIdeaStatus(idea.status)}</p>
-        </div>
+        <Row>
+          {idea.accepted == false &&
+            <Col>
+              <button class="btn btn-primary badge-pill" badge-pill onClick={accept}>Accept Idea</button>{' '}
+              <button class="btn btn-danger badge-pill" onClick={reject}>Reject Idea</button>{' '}
+            </Col>
+          }
+          <Col>
+            <div>
+              <p>Employee number: {idea.employeeNumber}</p>
+              <p>Submission: {moment(idea.date).format("DD/MM/YYYY, HH:mm:ss")}</p>
+              <p>Last edited: </p>
+              <p>Status: {getIdeaStatus(idea.status)}</p>
+            </div>
+          </Col>
+        </Row>
       </div>
       <h4>{idea.title}</h4>
       <p className="text-break">{idea.description}</p>
@@ -92,18 +158,18 @@ function IdeaPage() {
             <h5 className="pr-2">Priority</h5>
             {auth
               ? <Form>
-                  <Form.Group className="mb-0" controlId="formBasicRange">
-                    <RangeSlider
-                      value={priority}
-                      min="0" 
-                      max="3" 
-                      step="1"
-                      tooltip="auto"
-                      tooltipPlacement="top"
-                      onChange={changeEvent => setPriority(changeEvent.target.value)}
-                    />
-                  </Form.Group>
-                </Form>
+                <Form.Group className="mb-0" controlId="formBasicRange">
+                  <RangeSlider
+                    value={priority}
+                    min="0"
+                    max="3"
+                    step="1"
+                    tooltip="auto"
+                    tooltipPlacement="top"
+                    onChange={changeEvent => setPriority(changeEvent.target.value)}
+                  />
+                </Form.Group>
+              </Form>
               : <ProgressBar now={0} label={`${now}`} />
             }
           </div>

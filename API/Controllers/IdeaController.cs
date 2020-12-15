@@ -154,7 +154,10 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return BadRequest();
       }
 
-      _context.Entry(idea).State = EntityState.Modified;
+      var entity = await _context.Ideas
+        .FindAsync(idea.IdeaId);
+      _context.Entry(entity).CurrentValues.SetValues(idea);
+      _context.Entry(entity).State = EntityState.Modified;
 
       try
       {
