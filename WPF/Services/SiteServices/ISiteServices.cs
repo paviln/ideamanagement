@@ -3,14 +3,13 @@ using EskobInnovation.IdeaManagement.API.Models;
 
 namespace EskobInnovation.IdeaManagement.WPF.Services.SiteServices
 {
-  public enum SiteRegistration
+  public enum SiteRegistrationResult
   {
     Success, 
     SiteAlreadyExists
   }
   public interface ISiteServices
   {
-    Task<SiteRegistration> CreateSite(string urlname);
-    Task<Site> GetSiteByName();
+    Task<SiteRegistrationResult> CreateSite(string urlname,int customerid ,string streetaddress, string zipcode, string city);
   }
 }

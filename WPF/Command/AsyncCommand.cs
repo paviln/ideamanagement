@@ -1,8 +1,9 @@
-﻿using EskobInnovation.IdeaManagement.Domain.Exceptions;
-using EskobInnovation.IdeaManagement.Domain.Utilities;
+﻿
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using EskobInnovation.IdeaManagement.WPF.Exceptions;
+using EskobInnovation.IdeaManagement.WPF.Utilities;
 
 namespace EskobInnovation.IdeaManagement.WPF.Command
 {
