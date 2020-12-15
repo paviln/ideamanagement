@@ -31,8 +31,6 @@ function Idea() {
       await ideaService.get(id)
         .then(responce => {
           if (responce.status == '200') {
-            console.log(responce)
-
             setIdea(responce.data);
             setloading(false);
           }
@@ -59,11 +57,6 @@ function Idea() {
   const getIdeaStatus = (key) => {
 
     return ideaStatus[key];
-  }
-
-  const updateIdea = async (id, i) => {
-    var result =
-      console.log(result);
   }
 
   // To reject the idea

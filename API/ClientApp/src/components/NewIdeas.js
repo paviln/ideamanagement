@@ -14,8 +14,6 @@ const NewIdeas = () => {
       try {
         var response = await ideaService.getUserIdeas();
         setIdeas(response.data);
-        console.log(response)
-
       } catch (error) {
         console.log(error);
       }

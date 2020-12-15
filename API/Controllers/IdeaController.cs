@@ -86,6 +86,10 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         await _context.Entry(item)
         .Collection(t => t.TaskComments)
         .LoadAsync();
+
+        await _context.Entry(item)
+        .Reference(t => t.Employee)
+        .LoadAsync();
       }
 
       idea.Tasks = tasks;
