@@ -22,6 +22,9 @@ namespace EskobInnovation.IdeaManagement.API.Models
     public Status Status { get; set; }
     public string Challenge { get; set; }
     public string Result { get; set; }
+    
+    [DataType(DataType.Currency)]
+    public float Saving { get; set; }
     public bool Accepted { get; set; }
     public ICollection<Task> Tasks { get; set; }
     public ICollection<Employee> Employees { get; set; }
