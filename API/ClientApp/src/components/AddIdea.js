@@ -34,6 +34,8 @@ export default class AddIdea extends Component {
   }
 
   handleChange(event) {
+    console.log("sadsads");
+
     const idea = this.state.idea;
 
     const target = event.target;
