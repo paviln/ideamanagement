@@ -19,7 +19,7 @@ const Overview = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        var response = await ideaService.getPeriod();
+        var response = await ideaService.getPeriod(props.link);
         setMinDate(new Date(response.data[0]));
         setMaxDate(new Date(response.data[1]));
         setStartDate(new Date(response.data[0]));
@@ -55,6 +55,7 @@ const Overview = (props) => {
   const handleClick = (ideaId) => {
     history.push({
       pathname: props.prefix + "/idea/" + ideaId,
+      state: { link: props.link }
     });
   }
   

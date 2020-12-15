@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import authService from '../api-authorization/AuthorizeService';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
@@ -15,7 +15,7 @@ import Employees from './Employees';
 import Tasks from '../task/Tasks';
 import Form from 'react-bootstrap/Form';
 
-function Idea() {
+function Idea(props) {
   const [loading, setloading] = useState(true);
   const { id } = useParams();
   const [idea, setIdea] = useState();
@@ -28,7 +28,7 @@ function Idea() {
 
       setAuth(await authService.isAuthenticated());
 
-      await ideaService.get(id)
+      await ideaService.get(props.link, id)
         .then(responce => {
           if (responce.status == '200') {
             setIdea(responce.data);

@@ -40,7 +40,10 @@ function Reviews() {
   }
 
   const handleClick = (ideaId, link) => {
-    history.push("/" + link + "/underview/" + ideaId);
+    history.push({
+      pathname: "/" + link + "/underview/" + ideaId,
+      state: { link: link }
+    });
   }
 
   return (

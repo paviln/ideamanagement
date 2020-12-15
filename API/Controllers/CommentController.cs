@@ -36,19 +36,33 @@ namespace API.Controllers
       var idea = await _context.Ideas
         .FindAsync(ideaId);
 
-      var comment = new IdeaComment
+      if (idea == null)
       {
-        Content = content,
-        Employee = user.Employee,
-        Date = DateTime.Now,
-        Idea = idea
-      };
+        return NotFound();
+      }
 
-      _context.IdeaComments.Add(comment);
+      await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
 
-      await _context.SaveChangesAsync();
+      if (user.Site.Link == idea.Site.Link)
+      {
+        var comment = new IdeaComment
+        {
+          Content = content,
+          Employee = user.Employee,
+          Date = DateTime.Now,
+          Idea = idea
+        };
 
-      return comment;
+        _context.IdeaComments.Add(comment);
+
+        await _context.SaveChangesAsync();
+
+        return comment;
+      }
+
+      return Unauthorized();
     }
   }
 }

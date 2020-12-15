@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation} from 'react-router-dom';
 import ideaService from '../../services/IdeaService';
 import Saving from './Saving';
 import AddTask from '../task/AddTask';
@@ -8,6 +8,7 @@ import Comment from './Comment';
 
 function Review() {
 
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [idea, setIdea] = useState();
@@ -16,7 +17,7 @@ function Review() {
     async function fetchData() {
       setLoading(true);
 
-      await ideaService.get(id)
+      await ideaService.get(location.state.link, id)
         .then(responce => {
           if (responce.status === 200) {
             setIdea(responce.data);

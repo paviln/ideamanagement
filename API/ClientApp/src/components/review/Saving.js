@@ -11,11 +11,7 @@ function Saving(props) {
     e.preventDefault();
 
     if (saving) {
-
-      var idea = props.idea;
-
-      idea.saving = saving 
-      await ideaService.update(props.idea.ideaId, idea)
+      await ideaService.update(props.idea.ideaId, saving)
         .then(response => {
           if (response.status === 204) {
 

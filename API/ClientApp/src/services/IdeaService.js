@@ -1,12 +1,12 @@
 import authService from '../components/api-authorization/AuthorizeService';
 import http from '../http-commen';
 
-const getAll = () => {
-  return http.get("/idea");
-};
-
-const get = id => {
-  return http.get(`/idea/${id}`);
+const get = async (link, id) => {
+  const token = await authService.getAccessToken();
+  return http.get(`/idea/${id}`, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` },
+    params: { link: link }
+  });
 };
 
 const getSiteIdeas = link => {
@@ -36,8 +36,10 @@ const getIdeasPeriod = (link, period) => {
   return http.post(`/idea/getideasperiod`, formdata);
 };
 
-const getPeriod = () => {
-  return http.get(`/idea/getperiod`);
+const getPeriod = (link) => {
+  return http.get(`/idea/getperiod`, {
+    params: { link: link}
+  });
 };
 
 const getIdeaFileData = id => {
@@ -57,9 +59,15 @@ const create = data => {
   return http.post("/idea", data, config);
 };
 
-const update = (id, data) => {
-  return http.put(`/idea/${id}`, data);
+const update = async (id, saving) => {
+  const token = await authService.getAccessToken();
+  let formdata = new FormData();
+  formdata.append('saving', saving);
+  return http.put(`/idea/${id}`, formdata, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+  });
 };
+
 
 const remove = id => {
   return http.delete(`/idea/${id}`);
@@ -69,12 +77,7 @@ const removeAll = () => {
   return http.delete(`/idea`);
 };
 
-const findByTitle = title => {
-  return http.get(`/idea?title=${title}`);
-};
-
 export default {
-  getAll,
   get,
   getSiteIdeas,
   getUserIdeas,
@@ -85,6 +88,5 @@ export default {
   create,
   update,
   remove,
-  removeAll,
-  findByTitle
+  removeAll
 };

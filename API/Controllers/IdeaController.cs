@@ -30,13 +30,6 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       _user = contextAccessor.HttpContext.User;
     }
 
-    // GET: api/Idea
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Idea>>> GetIdeas()
-    {
-      return await _context.Ideas.ToListAsync();
-    }
-
     // POST: api/Idea/getideasperiod
     [HttpPost("getideasperiod")]
     public async Task<ActionResult<IEnumerable<Idea>>> GetIdeasPeriod([FromForm] string link, [FromForm] String period)
@@ -51,12 +44,14 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
     // GET: api/Idea/GetPeriod
     [HttpGet("getperiod")]
-    public async Task<ActionResult<List<DateTime>>> GetPeriod()
+    public async Task<ActionResult<List<DateTime>>> GetPeriod(string link)
     {
       DateTime firstDate = await _context.Ideas
+        .Where(i => i.Site.Link == link)
         .MinAsync(i => i.Date);
 
       DateTime lastDate = await _context.Ideas
+        .Where(i => i.Site.Link == link)
         .MaxAsync(i => i.Date);
 
       List<DateTime> dateTimes = new List<DateTime>();
@@ -68,7 +63,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
     // GET: api/Idea/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Idea>> GetIdea(int id)
+    public async Task<ActionResult<Idea>> GetIdea(string link, int id)
     {
       var idea = await _context.Ideas.FindAsync(id);
 
@@ -77,44 +72,53 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
-      var tasks = await _context.Tasks
-        .Where(t => t.Idea.IdeaId == idea.IdeaId)
-        .ToListAsync();
+      await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
 
-      foreach (var item in tasks)
+      if (idea.Site.Link == link)
       {
-        await _context.Entry(item)
-        .Collection(t => t.TaskComments)
+        var tasks = await _context.Tasks
+               .Where(t => t.Idea.IdeaId == idea.IdeaId)
+               .ToListAsync();
+
+        foreach (var item in tasks)
+        {
+          await _context.Entry(item)
+          .Collection(t => t.TaskComments)
+          .LoadAsync();
+
+          await _context.Entry(item)
+          .Reference(t => t.Employee)
+          .LoadAsync();
+        }
+
+        idea.Tasks = tasks;
+
+        await _context.Entry(idea)
+          .Collection(i => i.Tasks)
+          .LoadAsync();
+
+        await _context.Entry(idea)
+          .Collection(i => i.Employees)
+          .LoadAsync();
+
+        await _context.Entry(idea)
+         .Collection(i => i.Files)
+         .LoadAsync();
+
+        await _context.Entry(idea)
+          .Collection(i => i.Hashtags)
+          .LoadAsync();
+
+        await _context.Entry(idea)
+        .Collection(i => i.IdeaComments)
         .LoadAsync();
 
-        await _context.Entry(item)
-        .Reference(t => t.Employee)
-        .LoadAsync();
+        return idea;
       }
 
-      idea.Tasks = tasks;
-
-      await _context.Entry(idea)
-        .Collection(i => i.Tasks)
-        .LoadAsync();
-
-      await _context.Entry(idea)
-        .Collection(i => i.Employees)
-        .LoadAsync();
-
-      await _context.Entry(idea)
-       .Collection(i => i.Files)
-       .LoadAsync();
-
-      await _context.Entry(idea)
-        .Collection(i => i.Hashtags)
-        .LoadAsync();
-
-      await _context.Entry(idea)
-      .Collection(i => i.IdeaComments)
-      .LoadAsync();
-
-      return idea;
+      return Unauthorized();
     }
 
     // GET: api/Idea/GetSiteIdeas
@@ -160,7 +164,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
 
     // GET: api/Idea/GetIdeaFileData
     [HttpGet("Getideafiledata")]
-    public async Task<ActionResult> GetIdeaFileData(int fileId)
+    public async Task<ActionResult> GetIdeaFileData(string link, int fileId)
     {
       var file = await _context.Files
         .Where(f => f.FileId == fileId)
@@ -185,36 +189,53 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     // PUT: api/Idea/5
     // To protect from overposting attacks, enable the specific properties you want to bind to, for
     // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+    [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutIdea(int id, Idea idea)
+    public async Task<IActionResult> PutIdea(int id, [FromForm] float saving)
     {
-      if (id != idea.IdeaId)
+      var userId = _user.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(userId);
+
+      var idea = await _context.Ideas
+        .FindAsync(id);
+
+      if (idea == null)
       {
-        return BadRequest();
+        return NotFound();
       }
 
-      var entity = await _context.Ideas
-        .FindAsync(idea.IdeaId);
-      _context.Entry(entity).CurrentValues.SetValues(idea);
-      _context.Entry(entity).State = EntityState.Modified;
+      await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
 
-      try
+      if (user.Site.Link == idea.Site.Link)
       {
-        await _context.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!IdeaExists(id))
+        idea.Saving = saving;
+        var entity = await _context.Ideas
+          .FindAsync(idea.IdeaId);
+        _context.Entry(entity).CurrentValues.SetValues(idea);
+        _context.Entry(entity).State = EntityState.Modified;
+
+        try
         {
-          return NotFound();
+          await _context.SaveChangesAsync();
         }
-        else
+        catch (DbUpdateConcurrencyException)
         {
-          throw;
+          if (!IdeaExists(id))
+          {
+            return NotFound();
+          }
+          else
+          {
+            throw;
+          }
         }
+
+        return NoContent();
       }
 
-      return NoContent();
+      return Unauthorized();
     }
 
     // POST: api/Idea
@@ -282,7 +303,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     // DELETE: api/Idea/5
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Idea>> DeleteIdea(int id)
+    public async Task<ActionResult<Idea>> DeleteIdea(string link, int id)
     {
       var idea = await _context.Ideas.FindAsync(id);
       if (idea == null)
@@ -290,10 +311,19 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         return NotFound();
       }
 
-      _context.Ideas.Remove(idea);
-      await _context.SaveChangesAsync();
+      await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
 
-      return idea;
+      if (idea.Site.Link == link)
+      {
+        _context.Ideas.Remove(idea);
+        await _context.SaveChangesAsync();
+
+        return idea;
+      }
+
+      return Unauthorized();
     }
 
     private bool IdeaExists(int id)

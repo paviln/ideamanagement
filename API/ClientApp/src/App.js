@@ -124,7 +124,14 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route path={prefix + "/idea/:id"} children={<Idea />} />
+            <Route
+              exact path={prefix + "/idea/:id"}
+              render={props => (
+                <Idea  {...props}
+                  link={this.state.site.link}
+                />
+              )}
+            />
             <Route
               exact path={prefix + "/browse"}
               render={props => (
