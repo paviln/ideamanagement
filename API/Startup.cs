@@ -3,6 +3,7 @@ using EskobInnovation.IdeaManagement.API.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,13 +28,14 @@ namespace EskobInnovation.IdeaManagement.API
           options.UseSqlServer(
               Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-          .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();      
 
-      services.Configure<IdentityOptions>(options =>
-      {
-        options.User.RequireUniqueEmail = true;
-      });
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AdditionalUserClaimsPrincipalFactory>();
+            
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
       services.AddIdentityServer()
           .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
@@ -41,7 +43,11 @@ namespace EskobInnovation.IdeaManagement.API
       services.AddAuthentication()
           .AddIdentityServerJwt();
 
-      services.AddHttpContextAccessor();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
+            services.AddRazorPages();
 
       services.AddControllersWithViews()
           .AddNewtonsoftJson(options =>

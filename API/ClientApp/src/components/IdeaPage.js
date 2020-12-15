@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import authService from './api-authorization/AuthorizeService';
 import moment from 'moment';
+import RangeSlider from 'react-bootstrap-range-slider';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -17,19 +19,20 @@ function IdeaPage() {
   const [loading, setloading] = useState(true);
   const { id } = useParams();
   const [idea, setIdea] = useState();
+  const [auth, setAuth] = useState();
+  const [priority, setPriority] = useState(0); 
 
   useEffect(() => {
     async function fetchData() {
       setloading(true);
 
+      setAuth(await authService.isAuthenticated());
+
       await ideaService.get(id)
         .then(responce => {
           if (responce.status == '200') {
             setIdea(responce.data);
-            console.log(responce.data);
-
             setloading(false);
-            console.log(responce.data);
           }
         })
         .catch(error => {
@@ -76,20 +79,33 @@ function IdeaPage() {
             <ProgressBar now={20 * now} label={`${now}`} />
           </div>
         </Col>
-      </Row>
-      <Row>
         <Col sm="6">
           <div className="pt-2">
-            <h5 className="pr-2">Priority</h5>
-            <ProgressBar now={0} label={`${now}`} />
+            <h5 className="pr-2">Estimated impact</h5>
+            <ProgressBar now={20 * now} label={`${now}`} />
           </div>
         </Col>
       </Row>
       <Row>
         <Col sm="6">
           <div className="pt-2">
-            <h5 className="pr-2">Estimated impact</h5>
-            <ProgressBar now={20 * now} label={`${now}`} />
+            <h5 className="pr-2">Priority</h5>
+            {auth
+              ? <Form>
+                  <Form.Group className="mb-0" controlId="formBasicRange">
+                    <RangeSlider
+                      value={priority}
+                      min="0" 
+                      max="3" 
+                      step="1"
+                      tooltip="auto"
+                      tooltipPlacement="top"
+                      onChange={changeEvent => setPriority(changeEvent.target.value)}
+                    />
+                  </Form.Group>
+                </Form>
+              : <ProgressBar now={0} label={`${now}`} />
+            }
           </div>
         </Col>
       </Row>

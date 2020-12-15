@@ -39,8 +39,6 @@ function Task(props) {
 
   var task = props.task;
 
-  console.log(task);
-
   return (
     <div className="d-flex bg-light border border-dark rounded p-3 mt-2">
       <div className="flex-grow-1">
