@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ideaService from '../../services/IdeaService';
-import authService from '../api-authorization/AuthorizeService';
-import Comments from '../commen/Comments';
-import Cost from '../idea/Cost';
+import Saving from './Saving';
 import AddTask from '../task/AddTask';
 import AddUser from './AddUser';
 import Comment from './Comment';
@@ -43,9 +41,9 @@ function Review() {
       <hr />
       <AddUser idea={idea} />
       <hr />
-      <AddTask />
+      <AddTask idea={idea} />
       <hr />
-      <Cost />
+      <Saving idea={idea} />
     </div>
   )
 }

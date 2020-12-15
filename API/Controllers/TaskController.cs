@@ -14,22 +14,22 @@ namespace API.Controllers
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
-  public class EmployeeController : ControllerBase
+  public class TaskController : ControllerBase
   {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ClaimsPrincipal _user;
 
-    public EmployeeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
+    public TaskController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
     {
       _context = context;
       _userManager = userManager;
       _user = contextAccessor.HttpContext.User;
     }
 
-    // POST: api/Comment
+    // POST: api/Task
     [HttpPost]
-    public async Task<ActionResult> Post([FromForm] int ideaId, [FromForm] string postition, [FromForm] string name)
+    public async Task<ActionResult<IdeaComment>> Post([FromForm] int ideaId, [FromForm] string content)
     {
       var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
       var user = await _userManager.FindByIdAsync(id);
@@ -41,15 +41,18 @@ namespace API.Controllers
       {
         if (user.Site.SiteId == idea.SiteId) 
         {
-          var employee = new Employee
+          var task = new EskobInnovation.IdeaManagement.API.Models.Task
           {
-            Position = postition,
-            Name = name
+            Content = content,
+            Employee = user.Employee,
+            Idea = idea,
+            Date = DateTime.Now,
+            TaskStatus = EskobInnovation.IdeaManagement.API.Enums.TaskStatus.NotStarted,
           };
 
-          idea.Employees = new List<Employee>();
+          idea.Tasks = new List<EskobInnovation.IdeaManagement.API.Models.Task>();
 
-          idea.Employees.Add(employee);
+          idea.Tasks.Add(task);
 
           await _context.SaveChangesAsync();
 

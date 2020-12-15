@@ -177,8 +177,8 @@ function Idea() {
       <Row>
         <Col sm="6">
           <div className="pt-4">
-            <h5>Estimated cost</h5>
-            <p>100$</p>
+            <h5>Estimated cost savings</h5>
+            <p>{idea.saving}</p>
           </div>
         </Col>
       </Row>
