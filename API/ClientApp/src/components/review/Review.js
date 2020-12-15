@@ -40,7 +40,7 @@ function Review() {
   return (
     <div className="pb-4">
       <h3 className="pt-4">Review</h3>
-      <Comment />
+      <Comment idea={idea} />
       <hr />
       <AddUser />
       <hr />

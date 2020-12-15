@@ -45,6 +45,26 @@ export default class App extends Component {
   }
 
   async validateSite() {
+    var url = this.getLink();
+
+    if (url) {
+      siteService.findByLink(url)
+        .then(response => {
+          if (response.status == 200) {
+            this.setState({
+              site: {
+                siteId: response.data.siteId,
+                link: response.data.link
+              },
+              ready: true
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    
     const isAuthenticated = await authService.isAuthenticated();
 
     if (isAuthenticated) {
@@ -62,26 +82,6 @@ export default class App extends Component {
         .catch(error => {
           console.log(error);
         });
-    } else {
-      var url = this.getLink();
-
-      if (url) {
-        siteService.findByLink(url)
-          .then(response => {
-            if (response.status == 200) {
-              this.setState({
-                site: {
-                  siteId: response.data.siteId,
-                  link: response.data.link
-                },
-                ready: true
-              })
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
     }
   }
 

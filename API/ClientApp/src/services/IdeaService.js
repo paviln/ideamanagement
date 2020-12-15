@@ -1,3 +1,4 @@
+import authService from '../components/api-authorization/AuthorizeService';
 import http from '../http-commen';
 
 const getAll = () => {
@@ -10,6 +11,13 @@ const get = id => {
 
 const getSiteIdeas = link => {
   return http.get(`/idea/getsiteideas`, { params: { link: link } });
+};
+
+const getUserIdeas = async () => {
+  const token = await authService.getAccessToken();
+  return http.get(`/idea/getuserideas`, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+  });
 };
 
 const getSiteIdeasUnderReview = link => {
@@ -45,6 +53,10 @@ const create = data => {
   return http.post("/idea", data, config);
 };
 
+const postIdeaComment = data => {
+  return http.post("/idea/postideacomment", data);
+};
+
 const update = (id, data) => {
   return http.put(`/idea/${id}`, data);
 };
@@ -65,11 +77,13 @@ export default {
   getAll,
   get,
   getSiteIdeas,
+  getUserIdeas,
   getSiteIdeasUnderReview,
   getIdeasPeriod,
   getPeriod,
   getIdeaFileData,
   create,
+  postIdeaComment,
   update,
   remove,
   removeAll,

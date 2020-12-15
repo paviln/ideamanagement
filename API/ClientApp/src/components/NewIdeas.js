@@ -7,16 +7,14 @@ import authService from './api-authorization/AuthorizeService';
 const NewIdeas = () => {
 
   const history = useHistory();
-  const [site, setSite] = useState();
   const [ideas, setIdeas] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        var res = await authService.getSite();
-        setSite(res);
-        var response = await ideaService.getSiteIdeas(res);
+        var response = await ideaService.getUserIdeas();
         setIdeas(response.data);
+        console.log(response)
 
       } catch (error) {
         console.log(error);
@@ -32,7 +30,7 @@ const NewIdeas = () => {
       for (let i = 0; i < ideas.length; i++) {
         if (ideas[i].status == 0) {
           list.push(
-            <tr key={i} onClick={() => handleClick(ideas[i].ideaId)}>
+            <tr key={i} onClick={() => handleClick(ideas[i].ideaId, ideas[i].site.link)}>
               <td>{ideas[i].ideaId}</td>
               <td>{ideas[i].title}</td>
               <td>{ideas[i].effort}</td>
@@ -48,8 +46,8 @@ const NewIdeas = () => {
     return null;
   }
 
-  const handleClick = (ideaId) => {
-    history.push("/" + site + "/idea/" + ideaId);
+  const handleClick = (ideaId, link) => {
+    history.push("/" + link + "/idea/" + ideaId);
   }
 
   return (
