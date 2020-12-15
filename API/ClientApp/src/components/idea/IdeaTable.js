@@ -11,7 +11,7 @@ function IdeaTable(props) {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr key={i} onClick={() => props.handleClick(ideas[i].ideaId, ideas[i].site.link)}>
+          <tr key={i} onClick={() => props.handleClick(ideas[i])}>
             <td>{ideas[i].ideaId}</td>
             <td>{ideas[i].title}</td>
             <td>{ideas[i].effort}</td>

@@ -52,12 +52,9 @@ const Overview = (props) => {
     fetchData();
   }, [startDate, endDate]);
 
-  const handleClick = (ideaId) => {
-    history.push({
-      pathname: props.prefix + "/idea/" + ideaId,
-      state: { link: props.link }
-    });
-  }
+  const handleClick = (idea) => {
+    history.push(props.prefix + "/idea/" + idea.ideaId);
+  }  
   
   return (
     <div>

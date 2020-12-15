@@ -20,8 +20,11 @@ function UnderImplementation() {
     fetchData();
   }, []);
 
-  const handleClick = (ideaId, link) => {
-    history.push("/" + link + "/idea/" + ideaId);
+  const handleClick = (idea) => {
+    history.push({
+      pathname: "/" + idea.site.link + "/underimplementation/" + idea.ideaId,
+      state: { idea: idea}
+    });
   }
 
   return (

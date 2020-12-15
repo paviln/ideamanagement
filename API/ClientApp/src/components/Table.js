@@ -9,7 +9,7 @@ function Table(props) {
       const list = [];
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr key={i} className={props.bg} onClick={() => props.handleClick(ideas[i].ideaId)}>
+          <tr key={i} className={props.bg} onClick={() => props.handleClick(ideas[i])}>
             <td>{ideas[i].title}</td>
           </tr>
         );

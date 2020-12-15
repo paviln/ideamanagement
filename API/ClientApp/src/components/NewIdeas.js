@@ -21,8 +21,8 @@ const NewIdeas = () => {
     fetchData();
   }, []);
 
-  const handleClick = (ideaId, link) => {
-    history.push("/" + link + "/idea/" + ideaId);
+  const handleClick = (idea) => {
+    history.push("/" + idea.site.link + "/idea/" + idea.ideaId);
   }
 
   return (

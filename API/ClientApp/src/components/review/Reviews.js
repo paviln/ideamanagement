@@ -39,10 +39,10 @@ function Reviews() {
     return list;
   }
 
-  const handleClick = (ideaId, link) => {
+  const handleClick = (idea) => {
     history.push({
-      pathname: "/" + link + "/underview/" + ideaId,
-      state: { link: link }
+      pathname: "/" + idea.site.link + "/underview/" + idea.ideaId,
+      state: { link: idea.site.link }
     });
   }
 

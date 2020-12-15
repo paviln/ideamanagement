@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.API.Data;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -28,12 +30,25 @@ namespace API.Controllers
     }
 
     // GET: api/Task/
-    [HttpGet]
-    public async Task<ActionResult<List<EskobInnovation.IdeaManagement.API.Models.Task>>> GetPeriod()
+    [HttpGet("{id}")]
+    public async Task<ActionResult<List<EskobInnovation.IdeaManagement.API.Models.Task>>> GetTasks(int id)
     {
+      var tasks = await _context.Tasks
+        .Where(t => t.Idea.IdeaId == id)
+        .ToListAsync();
 
+        foreach (var item in tasks)
+        {
+          await _context.Entry(item)
+          .Collection(t => t.TaskComments)
+          .LoadAsync();
 
-      return null;
+          await _context.Entry(item)
+          .Reference(t => t.Employee)
+          .LoadAsync();
+        }
+
+      return tasks;
     }
 
     // POST: api/Task

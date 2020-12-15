@@ -19,6 +19,7 @@ import Browse from './components/Browse';
 import './App.scss';
 import Reviews from './components/review/Reviews';
 import Review from './components/review/Review';
+import Implement from './components/task/Implement';
 
 
 export default class App extends Component {
@@ -144,7 +145,7 @@ export default class App extends Component {
             <AuthorizeRoute exact path={prefix + "/underview"} component={Reviews} />
             <AuthorizeRoute exact path={prefix + "/underview/:id"} component={Review} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
-            <AuthorizeRoute exact path={prefix + "/underimplementation/"} component={UnderImplementation} />
+            <AuthorizeRoute exact path={prefix + "/underimplementation/:id"} component={Implement} />
             <AuthorizeRoute exact path={prefix + "/implemented"} component={Implemented} />
             <AuthorizeRoute exact path={prefix + "/implemented/:id"} component={Implemented} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
