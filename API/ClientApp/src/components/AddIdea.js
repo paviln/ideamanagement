@@ -65,8 +65,7 @@ export default class AddIdea extends Component {
     fileData.append('effort', idea['effort']);
     fileData.append('impact', idea['impact']);
     fileData.append('employeeNumber', idea['employeeNumber']);
-    var date = new Date();
-    fileData.append('date', date.toJSON());
+    fileData.append('date', moment().format('YYYY-MM-DDTHH:mm:ss'));
     fileData.append('hashtags', idea['hashtags']);
     fileData.append('siteId', this.props.siteId);
 
