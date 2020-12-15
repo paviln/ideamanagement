@@ -1,27 +1,23 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-import ideaService from '../../services/IdeaService';
+import commentService from '../../services/CommentService';
 
 function Comment(props) {
 
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   
-  const handleChange = () => {
-
-  }
-
   const addComment = async (e) => {
     e.preventDefault();
-    console.log(comment)
 
-    await ideaService.postIdeaComment(comment)
-    .then(response => {
-      if (response == '200') {
-      }
-      console.log(response);
-
-    });
+    if (comment) {
+      await commentService.post(props.idea.ideaId, comment)
+      .then(response => {
+        if (response.status === 200) {
+          setComment('');
+        }
+      });
+    }
   }
 
   return (

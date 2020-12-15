@@ -20,8 +20,7 @@ function Review() {
 
       await ideaService.get(id)
         .then(responce => {
-          console.log(responce);
-          if (responce.status == '200') {
+          if (responce.status === 200) {
             setIdea(responce.data);
             setLoading(false);
           }
@@ -42,7 +41,7 @@ function Review() {
       <h3 className="pt-4">Review</h3>
       <Comment idea={idea} />
       <hr />
-      <AddUser />
+      <AddUser idea={idea} />
       <hr />
       <AddTask />
       <hr />

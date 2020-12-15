@@ -276,31 +276,6 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return CreatedAtAction("GetIdea", new { id = idea.IdeaId }, idea);
     }
 
-    // POST: api/Idea/PostIdeaComment
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for
-    // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-    [Authorize]
-    [HttpPost("postideacomment")]
-    public async Task<ActionResult<IdeaComment>> PostIdeaComment(String content)
-    {
-      var id = _user.FindFirstValue(ClaimTypes.NameIdentifier);
-      var user = await _userManager.FindByIdAsync(id);
-
-      var comment = new IdeaComment
-      {
-        Content = content,
-        Employee = user.Employee,
-        Date = DateTime.Now
-      };
-
-      _context.IdeaComments.Add(comment);
-
-      await _context.SaveChangesAsync();
-
-      return comment;
-    }
-
-
     // DELETE: api/Idea/5
     [HttpDelete("{id}")]
     public async Task<ActionResult<Idea>> DeleteIdea(int id)

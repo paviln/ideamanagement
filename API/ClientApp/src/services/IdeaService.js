@@ -53,10 +53,6 @@ const create = data => {
   return http.post("/idea", data, config);
 };
 
-const postIdeaComment = data => {
-  return http.post("/idea/postideacomment", data);
-};
-
 const update = (id, data) => {
   return http.put(`/idea/${id}`, data);
 };
@@ -83,7 +79,6 @@ export default {
   getPeriod,
   getIdeaFileData,
   create,
-  postIdeaComment,
   update,
   remove,
   removeAll,
