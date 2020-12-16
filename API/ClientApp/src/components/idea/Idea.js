@@ -20,7 +20,7 @@ function Idea(props) {
   const { id } = useParams();
   const [idea, setIdea] = useState();
   const [auth, setAuth] = useState();
-  const [priority, setPriority] = useState(0);
+  const [priority, setPriority] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -32,6 +32,8 @@ function Idea(props) {
         .then(responce => {
           if (responce.status == '200') {
             setIdea(responce.data);
+            console.log(responce.data)
+            setPriority(responce.data.priority);
             setloading(false);
           }
         })
@@ -41,6 +43,25 @@ function Idea(props) {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (loading == false && auth) {
+        idea.priority = priority;
+        await ideaService.update(idea.ideaId, idea)
+          .then(responce => {
+            if (responce.status == '200') {
+              console.log(responce.data)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          });
+      }
+    }
+    fetchData();
+  }, [priority]);
+
 
   const now = 3;
   if (loading === true) {
