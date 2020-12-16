@@ -27,7 +27,7 @@ namespace API.Controllers
       _user = contextAccessor.HttpContext.User;
     }
 
-    // POST: api/Comment
+    // POST: api/Employee
     [HttpPost]
     public async Task<ActionResult> Post([FromForm] int ideaId, [FromForm] string postition, [FromForm] string name)
     {

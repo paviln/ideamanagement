@@ -92,7 +92,7 @@ namespace API.Controllers
       return NotFound();
     }
 
-    // POST: api/Task
+    // POST: api/Task/Comment
     [HttpPost("comment")]
     public async Task<ActionResult<IdeaComment>> SaveComment([FromForm] int taskId, [FromForm] string comment)
     {

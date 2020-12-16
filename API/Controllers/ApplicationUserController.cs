@@ -24,6 +24,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       _user = contextAccessor.HttpContext.User;
     }
 
+    // GET: api/ApplicationUser/GetSite
     [Authorize]
     [HttpGet("getsite")]
     public async Task<ActionResult<Site>> GetSite()
@@ -34,6 +35,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       return user.Site;
     }
 
+    // POST: api/ApplicationUser/CreateUser
     [ApiKey]
     [HttpPost("createuser")]
     public async Task<IdentityResult> CreateUser(ApplicationUser user)
