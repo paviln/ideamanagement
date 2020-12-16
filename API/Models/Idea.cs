@@ -25,6 +25,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
     
     [DataType(DataType.Currency)]
     public float Saving { get; set; }
+    public Priority Priority { get; set; }
     public bool Accepted { get; set; }
     public ICollection<Task> Tasks { get; set; }
     public ICollection<Employee> Employees { get; set; }
