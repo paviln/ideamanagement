@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams} from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import authService from '../api-authorization/AuthorizeService';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
@@ -16,6 +16,7 @@ import Tasks from '../task/Tasks';
 import Form from 'react-bootstrap/Form';
 
 function Idea(props) {
+  const history = useHistory();
   const [loading, setloading] = useState(true);
   const { id } = useParams();
   const [idea, setIdea] = useState();
@@ -51,7 +52,6 @@ function Idea(props) {
         await ideaService.update(idea.ideaId, idea)
           .then(responce => {
             if (responce.status == '200') {
-              console.log(responce.data)
             }
           })
           .catch(error => {
@@ -80,20 +80,20 @@ function Idea(props) {
     return ideaStatus[key];
   }
 
-  // To reject the idea
+  // To accept the idea
   const accept = () => {
     confirmAlert({
-      title: 'Confirm to Reject',
-      message: 'Are you sure to reject the idea.',
+      title: 'Confirm to Accept',
+      message: 'Are you sure to accept the idea.',
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
-            var i = idea;
-            i.accepted = true;
-            var response = await ideaService.update(id, i);
+            let i = idea;
+            i.status = 1;
+            var response = await ideaService.update(i.ideaId, i);
             if (response.status == '204') {
-              setIdea(i);
+              history.goBack();
             }
           }
         },
@@ -111,13 +111,10 @@ function Idea(props) {
       buttons: [
         {
           label: 'Yes',
-          onClick: async() => {
-           var i = idea;
-           i.accepted = false;
-           var response = await ideaService.remove(id, i);
-            if (response.status == '204') {
-              setIdea(i);
-             // <Redirect to="/newideas" />
+          onClick: async () => {
+            var response = await ideaService.remove(idea.ideaId);
+            if (response.status == '200') {
+              history.goBack();
             }
           }
         },

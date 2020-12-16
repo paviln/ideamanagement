@@ -3,12 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ideaService from '../../services/IdeaService';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 function TaskList() {
 
   const history = useHistory();
   const location = useLocation();
   const [tasks, setTasks] = useState([]);
+  var idea = location.state.idea;
 
   useEffect(() => {
     async function fetchData() {
@@ -42,18 +44,31 @@ function TaskList() {
   }
 
   const handleClick = (task) => {
-    console.log(task)
-
-    var idea = location.state.idea;
     history.push({
       pathname: "/" + idea.site.link + "/underimplementation/" + idea.ideaId + "/" + task.taskId,
       state: { task: task }
     });
   }
 
+  const accept = async () => {
+    idea.status = 3;
+    var response = await ideaService.update(idea.ideaId, idea);
+    if (response.status == '204') {
+      history.push({
+        pathname: "/" + idea.site.link + "/implemented/" + idea.ideaId,
+        state: { idea: idea}
+      });
+    }
+  }
+
   return (
-    <div>
-      <h3 className="pt-4">Tasks</h3>
+    <div className="pt-4">
+      <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
+        <h3>Tasks</h3>
+        <div>
+          <Button variant="secondary" onClick={accept}>Accept implementation</Button>       
+         </div>
+      </div>
       <Table className="mt-4" bordered hover>
         <thead className="thead-dark">
           <tr>

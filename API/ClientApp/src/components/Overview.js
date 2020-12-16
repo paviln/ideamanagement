@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import moment from 'moment';
 import DatePicker from "react-datepicker";
 import Row from 'react-bootstrap/Row';

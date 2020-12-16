@@ -66,12 +66,11 @@ const update = async (id, idea) => {
   });
 };
 
-const remove = id => {
-  return http.delete(`/idea/${id}`);
-};
-
-const removeAll = () => {
-  return http.delete(`/idea`);
+const remove = async (id) => {
+  const token = await authService.getAccessToken();
+  return http.delete(`/idea/${id}`, {
+    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+  });
 };
 
 export default {
@@ -84,6 +83,5 @@ export default {
   getIdeaFileData,
   create,
   update,
-  remove,
-  removeAll
+  remove
 };

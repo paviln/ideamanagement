@@ -318,8 +318,11 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     // DELETE: api/Idea/5
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Idea>> DeleteIdea(string link, int id)
+    public async Task<ActionResult<Idea>> DeleteIdea(int id)
     {
+      var userId = _user.FindFirstValue(ClaimTypes.NameIdentifier);
+      var user = await _userManager.FindByIdAsync(userId);
+
       var idea = await _context.Ideas.FindAsync(id);
       if (idea == null)
       {
@@ -330,7 +333,7 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .Reference(i => i.Site)
         .LoadAsync();
 
-      if (idea.Site.Link == link)
+      if (idea.Site.Link == user.Site.Link)
       {
         _context.Ideas.Remove(idea);
         await _context.SaveChangesAsync();
