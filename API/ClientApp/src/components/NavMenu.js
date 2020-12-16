@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
 
 import { LoginMenu } from './api-authorization/LoginMenu';
 
@@ -18,15 +18,15 @@ export class NavMenu extends Component {
       <header>
         <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Container>
-            <LinkContainer to={prefix + "/createidea"}>
+            <IndexLinkContainer to={prefix}>
               <Navbar.Brand>IdeaManagement</Navbar.Brand>
-            </LinkContainer>
+            </IndexLinkContainer>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="ml-auto">
-                <LinkContainer to={prefix + "/createidea"}>
+                <IndexLinkContainer to={prefix}>
                  <Nav.Link>Create idea</Nav.Link>
-                </LinkContainer>
+                </IndexLinkContainer>
                 <LinkContainer to={prefix + "/overview"}>
                   <Nav.Link>The overview</Nav.Link>
                 </LinkContainer>

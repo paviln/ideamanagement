@@ -105,11 +105,8 @@ export default class App extends Component {
       return (
         <Layout prefix={prefix}>
           <Switch>
-            <Route exact path={prefix}>
-              <Redirect to={prefix + "/createidea"} />
-            </Route>
             <Route
-              exact path={prefix + "/createidea"}
+              exact path={prefix}
               render={props => (
                 <AddIdea {...props}
                   siteId={this.state.site.siteId}
