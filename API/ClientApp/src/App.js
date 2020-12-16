@@ -143,8 +143,8 @@ export default class App extends Component {
               )}
             />
             <AuthorizeRoute exact path={prefix + "/newideas"} component={NewIdeas} />
-            <AuthorizeRoute exact path={prefix + "/underview"} component={Reviews} />
-            <AuthorizeRoute exact path={prefix + "/underview/:id"} component={Review} />
+            <AuthorizeRoute exact path={prefix + "/underreview"} component={Reviews} />
+            <AuthorizeRoute exact path={prefix + "/underreview/:id"} component={Review} />
             <AuthorizeRoute exact path={prefix + "/underimplementation"} component={UnderImplementation} />
             <AuthorizeRoute exact path={prefix + "/underimplementation/:id"} component={TaskList} />
             <AuthorizeRoute exact path={prefix + "/underimplementation/:id/:id"} component={Implement} />

@@ -93,8 +93,10 @@ function Idea(props) {
             i.status = 1;
             var response = await ideaService.update(i.ideaId, i);
             if (response.status == '204') {
-              history.goBack();
-            }
+              history.push({
+                pathname: "/" + i.site.link + "/underreview/" + i.ideaId,
+                state: { link: i.site.link }
+              });            }
           }
         },
         {
@@ -130,7 +132,7 @@ function Idea(props) {
       <div className="d-flex justify-content-between align-items-center pt-4 pb-2">
         <h3>Idea Page</h3>
         <Row>
-          {idea.accepted == false &&
+          {(idea.status === 0 && auth === true) &&
             <Col>
               <button class="btn btn-primary badge-pill" badge-pill onClick={accept}>Accept Idea</button>{' '}
               <button class="btn btn-danger badge-pill" onClick={reject}>Reject Idea</button>{' '}

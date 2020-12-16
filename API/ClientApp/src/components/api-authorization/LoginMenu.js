@@ -52,7 +52,7 @@ export class LoginMenu extends Component {
         <LinkContainer to={prefix + "/newideas"}>
           <NavDropdown.Item>New Ideas</NavDropdown.Item>
         </LinkContainer>
-        <LinkContainer to={prefix + "/underview"}>
+        <LinkContainer to={prefix + "/underreview"}>
           <NavDropdown.Item>Under Review</NavDropdown.Item>
         </LinkContainer>
         <LinkContainer to={prefix + "/underimplementation"}>

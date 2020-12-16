@@ -40,7 +40,7 @@ function Review() {
   const accept = async () => {
     idea.status = 2;
     var response = await ideaService.update(idea.ideaId, idea);
-    if (response.status == '204') {
+    if (response.status === 204) {
       history.push({
         pathname: "/" + idea.site.link + "/underimplementation/" + idea.ideaId,
         state: { idea: idea}

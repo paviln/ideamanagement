@@ -41,7 +41,7 @@ function Reviews() {
 
   const handleClick = (idea) => {
     history.push({
-      pathname: "/" + idea.site.link + "/underview/" + idea.ideaId,
+      pathname: "/" + idea.site.link + "/underreview/" + idea.ideaId,
       state: { link: idea.site.link }
     });
   }
