@@ -62,8 +62,6 @@ function Idea(props) {
     fetchData();
   }, [priority]);
 
-
-  const now = 3;
   if (loading === true) {
     return null;
   }
@@ -154,13 +152,13 @@ function Idea(props) {
         <Col sm="6">
           <div className="pt-2">
             <h5 className="pr-2">Estimated effort</h5>
-            <ProgressBar now={20 * now} label={`${now}`} />
+            <ProgressBar now={20 * idea.effort} label={`${idea.effort}`} />
           </div>
         </Col>
         <Col sm="6">
           <div className="pt-2">
             <h5 className="pr-2">Estimated impact</h5>
-            <ProgressBar now={20 * now} label={`${now}`} />
+            <ProgressBar now={20 * idea.impact} label={`${idea.impact}`} />
           </div>
         </Col>
       </Row>
@@ -182,7 +180,7 @@ function Idea(props) {
                   />
                 </Form.Group>
               </Form>
-              : <ProgressBar now={0} label={`${now}`} />
+              : <ProgressBar now={0} label={`${idea.priority}`} />
             }
           </div>
         </Col>
