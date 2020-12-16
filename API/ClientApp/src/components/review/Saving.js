@@ -6,12 +6,15 @@ import ideaService from '../../services/IdeaService';
 function Saving(props) {
 
   const [saving, setSaving] = useState(props.idea.saving);
+  var idea = props.idea;
 
   const addSaving = async (e) => {
     e.preventDefault();
 
     if (saving) {
-      await ideaService.update(props.idea.ideaId, saving)
+      idea.saving = saving;
+      
+      await ideaService.update(idea.ideaId, idea)
         .then(response => {
           if (response.status === 204) {
 

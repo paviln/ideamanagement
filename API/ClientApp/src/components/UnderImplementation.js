@@ -21,6 +21,8 @@ function UnderImplementation() {
   }, []);
 
   const handleClick = (idea) => {
+    console.log(idea)
+
     history.push({
       pathname: "/" + idea.site.link + "/underimplementation/" + idea.ideaId,
       state: { idea: idea}

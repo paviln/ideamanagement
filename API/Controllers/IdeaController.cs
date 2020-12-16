@@ -79,8 +79,8 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       if (idea.Site.Link == link)
       {
         var tasks = await _context.Tasks
-               .Where(t => t.Idea.IdeaId == idea.IdeaId)
-               .ToListAsync();
+          .Where(t => t.Idea.IdeaId == idea.IdeaId)
+          .ToListAsync();
 
         foreach (var item in tasks)
         {
@@ -102,6 +102,10 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         await _context.Entry(idea)
           .Collection(i => i.Employees)
           .LoadAsync();
+
+        await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
 
         await _context.Entry(idea)
          .Collection(i => i.Files)
@@ -144,6 +148,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
         .Where(i => i.Site.Link == user.Site.Link)
         .ToListAsync();
 
+      foreach (var idea in ideas)
+      {
+        await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
+      }
+
       return ideas;
     }
 
@@ -158,6 +169,13 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       var ideas = await _context.Ideas
         .Where(i => i.Site.Link == user.Site.Link && i.Status == (Enums.Status)status)
         .ToListAsync();
+
+      foreach (var idea in ideas)
+      {
+        await _context.Entry(idea)
+        .Reference(i => i.Site)
+        .LoadAsync();
+      }
 
       return ideas;
     }
@@ -191,28 +209,25 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
     [Authorize]
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutIdea(int id, [FromForm] float saving)
+    public async Task<IActionResult> PutIdea(int id, Idea idea)
     {
       var userId = _user.FindFirstValue(ClaimTypes.NameIdentifier);
       var user = await _userManager.FindByIdAsync(userId);
 
-      var idea = await _context.Ideas
+      var entity = await _context.Ideas
         .FindAsync(id);
 
-      if (idea == null)
+      if (id != entity.IdeaId)
       {
         return NotFound();
       }
 
-      await _context.Entry(idea)
+      await _context.Entry(entity)
         .Reference(i => i.Site)
         .LoadAsync();
 
-      if (user.Site.Link == idea.Site.Link)
+      if (user.Site.Link == entity.Site.Link)
       {
-        idea.Saving = saving;
-        var entity = await _context.Ideas
-          .FindAsync(idea.IdeaId);
         _context.Entry(entity).CurrentValues.SetValues(idea);
         _context.Entry(entity).State = EntityState.Modified;
 

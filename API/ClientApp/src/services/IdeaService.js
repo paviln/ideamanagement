@@ -59,15 +59,12 @@ const create = data => {
   return http.post("/idea", data, config);
 };
 
-const update = async (id, saving) => {
+const update = async (id, idea) => {
   const token = await authService.getAccessToken();
-  let formdata = new FormData();
-  formdata.append('saving', saving);
-  return http.put(`/idea/${id}`, formdata, {
+  return http.put(`/idea/${id}`, idea, {
     headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
   });
 };
-
 
 const remove = id => {
   return http.delete(`/idea/${id}`);

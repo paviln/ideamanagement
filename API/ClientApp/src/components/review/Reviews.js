@@ -26,7 +26,7 @@ function Reviews() {
     if (ideas !== null) {
       for (let i = 0; i < ideas.length; i++) {
         list.push(
-          <tr onClick={() => handleClick(ideas[i].ideaId)}>
+          <tr key={i} onClick={() => handleClick(ideas[i].ideaId)}>
             <td>{ideas[i].ideaId}</td>
             <td>{ideas[i].title}</td>
             <td>{ideas[i].effort}</td>

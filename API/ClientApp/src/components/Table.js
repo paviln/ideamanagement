@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import BTable from 'react-bootstrap/Table';
 
 function Table(props) {
