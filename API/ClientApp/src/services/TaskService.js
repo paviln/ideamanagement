@@ -1,13 +1,6 @@
 import http from '../http-commen';
 import authService from '../components/api-authorization/AuthorizeService';
 
-const get = async (id) => {
-  const token = await authService.getAccessToken();
-  return http.get(`/task/${id}`, {
-    headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-  });
-};
-
 const post = async (ideaId, content) => {
   const token = await authService.getAccessToken();
   let formdata = new FormData();
@@ -36,7 +29,6 @@ const update = async (id, task) => {
 };
 
 export default {
-  get,
   post,
   saveComment,
   update

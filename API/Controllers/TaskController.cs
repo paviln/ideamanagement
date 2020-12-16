@@ -29,28 +29,6 @@ namespace API.Controllers
       _user = contextAccessor.HttpContext.User;
     }
 
-    // GET: api/Task/
-    [HttpGet("{id}")]
-    public async Task<ActionResult<List<EskobInnovation.IdeaManagement.API.Models.Task>>> GetTasks(int id)
-    {
-      var tasks = await _context.Tasks
-        .Where(t => t.Idea.IdeaId == id)
-        .ToListAsync();
-
-      foreach (var item in tasks)
-      {
-        await _context.Entry(item)
-        .Collection(t => t.TaskComments)
-        .LoadAsync();
-
-        await _context.Entry(item)
-        .Reference(t => t.Employee)
-        .LoadAsync();
-      }
-
-      return tasks;
-    }
-
     // POST: api/Task
     [HttpPost]
     public async Task<ActionResult<IdeaComment>> Post([FromForm] int ideaId, [FromForm] string content)
