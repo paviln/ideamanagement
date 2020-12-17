@@ -11,9 +11,7 @@ export default class AddIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: {
-        hastag: ''
-      },
+      hashtag: '',
       idea: {
         title:  '',
         description: '',
@@ -94,9 +92,7 @@ export default class AddIdea extends Component {
 
   handleChangeHashtag(event) {
     this.setState({
-      input: {
-        hashtag: event.target.value
-      }
+      hashtag: event.target.value
     });
   }
 
@@ -106,7 +102,8 @@ export default class AddIdea extends Component {
     if (this.state.hashtag) {
       idea.hashtags.push(this.state.hashtag);
       this.setState({
-        idea: idea
+        idea: idea,
+        hashtag: ''
       });
     }
   }
@@ -229,6 +226,7 @@ export default class AddIdea extends Component {
                 <Form.Control 
                   name="hashtag" 
                   type="text" 
+                  value={this.state.hashtag}
                   onChange={this.handleChange} />
                 <button className="btn btn-secondary ml-2" type="button" onClick={this.addHashtag}>Add</button>
               </div>
