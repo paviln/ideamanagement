@@ -31,7 +31,7 @@ console.log(idea)
 
   return (
     <div className="pb-4">
-      <h3 className="pt-4">Review</h3>
+      <h3 className="pt-4">Evaluate</h3>
       <Form onSubmit={save}>
         <Form.Group controlId="exampleForm.ControlTextarea1">
           <Form.Label>Challenges</Form.Label>
