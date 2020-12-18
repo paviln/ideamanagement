@@ -13,5 +13,8 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
     Task<Uri> CreateCustomerAsync(Customer customer);
     Task<Customer> UpdateCustomerAsync(Customer customer);
     Task<HttpStatusCode> DeleteCustomerAsync(int id);
+
+    Task<Customer> GetCustomerByID(int id);
+
   }
 }

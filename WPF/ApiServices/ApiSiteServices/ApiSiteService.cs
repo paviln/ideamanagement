@@ -11,9 +11,23 @@ namespace EskobInnovation.IdeaManagement.WPF.Service.SiteServices
   { 
     private static PrepHttpClient client = new PrepHttpClient();
 
+    public async Task<Site> GetSiteByID(int id)
+    {
+
+      HttpResponseMessage response = await client.GetAsync(
+                $"api/site/{id}");
+      if (response.IsSuccessStatusCode)
+      {
+        Site site = await response.Content.ReadAsAsync<Site>();
+
+        return site;
+      }
+      return null;
+    }
+
     public async Task<Uri> CreateLinkAsync(Site site)
     {
-      string uri = "/api/Site";
+      string uri = "/api/site";
       HttpResponseMessage response = await client.PostAsJsonAsync(uri, site);
       return response.Headers.Location;
     }
@@ -27,10 +41,6 @@ namespace EskobInnovation.IdeaManagement.WPF.Service.SiteServices
         sites = await response.Content.ReadAsAsync<List<Site>>();
       }
       return sites;
-    }
-    public  Task<Site> GetLinkByName(string linkname)
-    {
-      throw new NotImplementedException();
     }
   }
 }

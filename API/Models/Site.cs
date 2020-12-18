@@ -13,6 +13,7 @@ namespace EskobInnovation.IdeaManagement.API.Models
     public string ZipCode { get; set; }
     [Required]
     public string City { get; set; }
+  
     public ICollection<Idea> Ideas { get; set; }
     public Customer Customer { get; set; }
   }

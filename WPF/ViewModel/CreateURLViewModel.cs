@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Command;
 using EskobInnovation.IdeaManagement.WPF.Services.SiteServices;
 using EskobInnovation.IdeaManagement.WPF.View.Windows;
 using MvvmCross.ViewModels;
+using Task = System.Threading.Tasks.Task;
 
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
@@ -69,9 +71,13 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       try
       {
+        
         SiteRegistrationResult siteRegistrationResult = await _siteServices.CreateSite(Link, Id, StreetAddress, ZipCode, City);
         this.Link = string.Empty;
-        MessageBox.Show("The Site registration was a: " + siteRegistrationResult);
+
+
+
+        MessageBox.Show("The Site registration was a: " + siteRegistrationResult +"\n The site ID is: "+ Id);
 
         //Window window = new CreateUrlWindow();
         //window.Close();

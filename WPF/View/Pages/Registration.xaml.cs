@@ -1,20 +1,23 @@
-﻿using System.Text.RegularExpressions;
+﻿using EskobInnovation.IdeaManagement.WPF.ViewModel;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using EskobInnovation.IdeaManagement.WPF.ViewModel;
 
-namespace EskobInnovation.IdeaManagement.WPF.View.Windows
+namespace EskobInnovation.IdeaManagement.WPF.View.Pages
 {
-  /// <summary>
-  /// Interaction logic for UpdateCustomerWindow.xaml
-  /// </summary>
-  public partial class UpdateCustomerWindow : Window
-  {
-    public UpdateCustomerWindow()
+    /// <summary>
+    /// Interaction logic for AddCustomer.xaml
+    /// </summary>
+
+    public partial class Registration : UserControl
     {
-      InitializeComponent();
-      DataContext = new UpdateCustomerViewModel();
-    }
+        public Registration()
+        {
+            InitializeComponent();
+      DataContext = new RegistrationViewModel();
+        }
+      
     private void Textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
       Regex regex = new Regex("[^a-zA-Z]+");
@@ -32,5 +35,6 @@ namespace EskobInnovation.IdeaManagement.WPF.View.Windows
         MessageBox.Show("Invalid Input !");
       }
     }
+
   }
 }

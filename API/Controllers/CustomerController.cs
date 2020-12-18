@@ -53,8 +53,18 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            var entity = await _context.Customers
+                .FindAsync(id);
 
+            if (id != entity.Id)
+            {
+                return NotFound();
+            }
+  
+           _context.Entry(entity).CurrentValues.SetValues(customer);
+            _context.Entry(entity).State = EntityState.Modified;
+            entity.Sites = customer.Sites;
+            _context.Update(entity);
             try
             {
                 await _context.SaveChangesAsync();

@@ -22,10 +22,8 @@ namespace WPF.Tests.Services.ManageCustomerServicesTests
         [Test]
         public async Task CustomerCreate_WithRegistrationSuccess_ReturnsSuccess()
         {
-           
             //Arrange
             RegistrationResultCustomer expectedResult = RegistrationResultCustomer.Success;
-            _manageCustomerViewModel.FillDataGrid();
             string companyname = "testcompany";
             string streetaddress = "Teststreet";
             string zipcode = "232test";
@@ -55,7 +53,7 @@ namespace WPF.Tests.Services.ManageCustomerServicesTests
             //string contactperson = "testtest";
             //string city = "testcity";
             var name = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.CompanyName == companyname);
-            // RegistrationResultCustomer actualResult = await managecustomerService.CreateCustomer(companyname, streetaddress, zipcode, contactperson, city);
+            //RegistrationResultCustomer actualResult = await managecustomerService.CreateCustomer(companyname, streetaddress, zipcode, contactperson, city);
             RegistrationResultCustomer actualResult = RegistrationResultCustomer.CustomerAlreadyExists;
             //Assert
             Assert.AreEqual(expectedResult, actualResult);

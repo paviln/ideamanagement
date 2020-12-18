@@ -9,12 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/WPF.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/WPF.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "stopAtEntry": false,
-            "requireExactSource": false
+            "stopAtEntry": false
         },
         {
             "name": ".NET Core Attach",

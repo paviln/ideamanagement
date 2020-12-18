@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using EskobInnovation.IdeaManagement.API.Data;
 using EskobInnovation.IdeaManagement.API.Models;
 using EskobInnovation.IdeaManagement.WPF.Service;
 using EskobInnovation.IdeaManagement.WPF.ViewModel;
@@ -23,8 +24,11 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices
       _manageCustomerViewModel = new ManageCustomerViewModel();
     }
 
+
     public async Task<RegistrationResultCustomer> CreateCustomer(string companyname, string streetaddresse, string zipcode, string contactperson, string city)
     {
+
+
       RegistrationResultCustomer result = RegistrationResultCustomer.Success;
 
       var name = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.CompanyName == companyname); 
@@ -51,17 +55,17 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices
     {
       RegistrationResultCustomer result = RegistrationResultCustomer.Success;
 
-      //var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
+      var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
 
-      //if (cust_id.Id == id)
-      //{
-      //  result = RegistrationResultCustomer.CustomerDoesNotExist;
-      //}
+      if (cust_id.Id != id)
+      {
+        result = RegistrationResultCustomer.CustomerDoesNotExist;
+      }
 
-      //if (cust_id.Id != id)
-      //{
-      await _customerService.DeleteCustomerAsync(id);
-      //}
+      if (cust_id.Id == id)
+      {
+        await _customerService.DeleteCustomerAsync(id);
+      }
 
       return result;
       
@@ -71,27 +75,25 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices
     {
       RegistrationResultCustomer result = RegistrationResultCustomer.Success;
 
-      //var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
+      var cust_id = _manageCustomerViewModel.Customers.SingleOrDefault(c => c.Id == id);
 
-      //if (cust_id.Id != id)
-      //{
-      //  result = RegistrationResultCustomer.CustomerDoesNotExist;
-      //}
-
-      //if (cust_id.Id == id)
-
-      Customer customer = new Customer()
+      if (cust_id.Id != id)
       {
-        Id = id,
-        CompanyName = companyname,
-        StreetAddress = streetaddress,
-        ZipCode = zipcode,
-        City = city,
-        ContactPerson = contactperson
-      };
-
-      await _customerService.UpdateCustomerAsync(customer);
-
+        result = RegistrationResultCustomer.CustomerDoesNotExist;
+      }
+      if (cust_id.Id == id)
+      {
+         Customer customer = new Customer()
+            {
+              Id = id,
+              CompanyName = companyname,
+              StreetAddress = streetaddress,
+              ZipCode = zipcode,
+              City = city,
+              ContactPerson = contactperson
+            };
+            await _customerService.UpdateCustomerAsync(customer);
+      }
       return result;
     }
   }

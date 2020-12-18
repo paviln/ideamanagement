@@ -12,7 +12,23 @@ namespace EskobInnovation.IdeaManagement.WPF.Service
   {
     private static PrepHttpClient client = new PrepHttpClient();
     public ApiCustomerService() { }
-   
+
+    public async Task<Customer> GetCustomerByID(int id)
+    {
+      
+      HttpResponseMessage response = await client.GetAsync(
+                $"api/customer/{id}");
+      if (response.IsSuccessStatusCode)
+      {
+        Customer customer = await response.Content.ReadAsAsync<Customer>();
+
+        return customer;
+      }
+      return null;
+    }
+
+
+
     public async Task<IEnumerable<Customer>> GetCustomersAsync()
     {
       string uri = "api/customer/";

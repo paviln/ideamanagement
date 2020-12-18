@@ -40,9 +40,20 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     [HttpPost("createuser")]
     public async Task<IdentityResult> CreateUser(ApplicationUser user)
     {
-      var result = await _userManager.CreateAsync(user);
 
-      return result;
+
+      var site = await _context.Sites
+        .FindAsync(user.Site.SiteId);
+
+      if (site != null)
+      {
+        user.Site = site;
+
+        var result = await _userManager.CreateAsync(user);
+
+        return result;
+      }
+      return null;
     }
   }
 }

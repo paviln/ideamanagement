@@ -19,7 +19,7 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       {
         return new List<MenuItemsData>
         {
-          new MenuItemsData(){MenuText="Create Customer"},
+          new MenuItemsData(){MenuText="Registration"},
           new MenuItemsData(){MenuText="Manage Customer"}
         };
       }

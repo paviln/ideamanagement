@@ -19,11 +19,23 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
     {
       _context = context;
     }
-
-    // PUT: api/Site/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for
-    // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+    // GET: api/Site/5
     [ApiKey]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Site>> GetSite(int id)
+    {
+        var site = await _context.Sites.FindAsync(id);
+
+        if (site == null)
+        {
+            return NotFound();
+        }
+        return site;
+    }
+        // PUT: api/Site/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [ApiKey]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutSite(int id, Site site)
     {
@@ -31,10 +43,17 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
       {
         return BadRequest();
       }
+        var entity = await _context.Sites
+            .FindAsync(id);
 
-      _context.Entry(site).State = EntityState.Modified;
+        if (id != entity.SiteId)
+        {
+            return NotFound();
+        }
 
-      try
+        _context.Entry(entity).CurrentValues.SetValues(site);
+        _context.Entry(entity).State = EntityState.Modified;
+        try
       {
         await _context.SaveChangesAsync();
       }
@@ -49,7 +68,6 @@ namespace EskobInnovation.IdeaManagement.API.Controllers
           throw;
         }
       }
-
       return NoContent();
     }
 

@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using EskobInnovation.IdeaManagement.WPF.Services.RegistrationServices;
 using EskobInnovation.IdeaManagement.WPF.Services.ManageCustomerServices;
 using System.Windows;
+using EskobInnovation.IdeaManagement.API.Models;
+using Task = System.Threading.Tasks.Task;
 /// <summary>
 /// 
 /// </summary>
 namespace EskobInnovation.IdeaManagement.WPF.ViewModel
 {
-  public class AddCustomerViewModel : MvxViewModel
+  public class RegistrationViewModel : MvxViewModel
   {
     private readonly IRegistrationService _registrationService;
     private readonly IManageCustomerServices _manageCustomerService;
@@ -72,15 +74,33 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       get { return _password; }
       set { SetProperty(ref _password, value); }
     }
+    private int _siteId;
+    public int SiteId
+    {
+      get { return _siteId; }
+      set { SetProperty(ref _siteId, value); }
+    }
+    private string _name;
+    public string Name
+    {
+      get { return _name; }
+      set { SetProperty(ref _name, value); }
+    }
+    private string _position;
+    public string Position
+    {
+      get { return _position; }
+      set { SetProperty(ref _position, value); }
+    }
     #endregion
     #region Constructors
     //Constructor Injection - dependency injection - (IoC)
-    public AddCustomerViewModel(IRegistrationService registrationService, IManageCustomerServices manageCustomerServices)
+    public RegistrationViewModel(IRegistrationService registrationService, IManageCustomerServices manageCustomerServices)
     {
       _registrationService = registrationService;
       _manageCustomerService = manageCustomerServices;
     }
-    public AddCustomerViewModel()
+    public RegistrationViewModel()
     {
       _registrationService = new RegistrationService();
       _manageCustomerService = new ManageCustomerServices();
@@ -115,7 +135,8 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
     {
       try
       {
-        RegistrationResult registrationResult = await _registrationService.Register(Email, Password);
+
+        RegistrationResult registrationResult = await _registrationService.Register(Email, Password, Name, Position, SiteId);
         this.Email = string.Empty;
         this.Password = string.Empty;
         MessageBox.Show("The account registration was a: " + registrationResult);

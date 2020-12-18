@@ -25,7 +25,8 @@ namespace WPF.Tests.Services.RegistrationServicesTests
             
             string email = "test@gmail.com";
             string pw = "Daw22!d";
-            var actual = await _registrationService.Register(email, pw);
+            int siteid = 1;
+            var actual = await _registrationService.Register(email, pw, siteid);
 
             Assert.AreEqual(expectedResult, actual);
         }

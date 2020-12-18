@@ -18,7 +18,7 @@ namespace WPF.Tests.Services.SiteServicesTests
             //string urlname = "testsite";
             SiteServices siteservice = new SiteServices();
             //Act
-            SiteRegistrationResult actualResult = await siteservice.CreateSite(It.IsAny<string>());
+            SiteRegistrationResult actualResult = await siteservice.CreateSite(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>());
             //Assert
             Assert.AreEqual(expectedResult, actualResult);
         }

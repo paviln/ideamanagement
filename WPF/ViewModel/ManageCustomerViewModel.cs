@@ -108,7 +108,6 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       }
     }
     #endregion
-
     #region UpdateCommand and Execute
     public ICommand ShowUpdateCustomerWindowCmd { get; private set; }
     public ICommand ShowUrlWindowCmd { get; private set; }
@@ -117,7 +116,6 @@ namespace EskobInnovation.IdeaManagement.WPF.ViewModel
       Window window = new CreateUrlWindow();
       window.Show();
     }
-
     private void ExecuteUpdateWindow()
     {
       Window window = new UpdateCustomerWindow();

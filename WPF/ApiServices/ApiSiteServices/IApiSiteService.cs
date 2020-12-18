@@ -9,6 +9,6 @@ namespace EskobInnovation.IdeaManagement.WPF.Service.SiteServices
   {
     Task<Uri> CreateLinkAsync(Site site);
     Task<IEnumerable<Site>> GetSitesAsync();
-    Task<Site> GetLinkByName(string linkname);
+    Task<Site> GetSiteByID(int id);
   }
 }

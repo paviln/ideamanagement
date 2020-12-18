@@ -37,15 +37,15 @@
             </StackPanel>
 
             <Label Content="Insert Customer ID:" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="1" Grid.Column="1"  Text="{Binding Id}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" PreviewTextInput="TextboxNumber_PreviewTextInput"  Text="{Binding Id}"/>
             <Label Content="Insert Url Name:" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding Link}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" PreviewTextInput="Textbox_PreviewTextInput" Text="{Binding Link}"/>
             <Label Content="Insert StreetAddress:" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="3" Grid.Column="1"  Text="{Binding StreetAddress}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" PreviewTextInput="Textbox_PreviewTextInput" Text="{Binding StreetAddress}"/>
             <Label Content="Insert ZipCode:" Grid.Row="4" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="4" Grid.Column="1"  Text="{Binding ZipCode}"/>
+            <TextBox Grid.Row="4" Grid.Column="1" PreviewTextInput="Textbox_PreviewTextInput"  Text="{Binding ZipCode}"/>
             <Label Content="Insert City:" Grid.Row="5" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="5" Grid.Column="1"  Text="{Binding City}"/>
+            <TextBox Grid.Row="5" Grid.Column="1" PreviewTextInput="Textbox_PreviewTextInput" Text="{Binding City}"/>
            
             <Button Grid.Row="7" HorizontalAlignment="Left" Width="300" Grid.ColumnSpan="2"
                     Content="Create URL" Command="{Binding CreateURLCommand}"/>

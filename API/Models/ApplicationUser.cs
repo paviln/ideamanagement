@@ -28,5 +28,5 @@ namespace EskobInnovation.IdeaManagement.API.Models
       get => LazyLoader.Load(this, ref _employee);
       set => _employee = value;
     }
-  }
+    }
 }

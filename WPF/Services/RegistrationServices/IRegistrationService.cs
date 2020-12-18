@@ -14,6 +14,6 @@ namespace EskobInnovation.IdeaManagement.WPF.Services.RegistrationServices
   }
   public interface IRegistrationService
   {
-    Task<RegistrationResult> Register(string email, string password);
+    Task<RegistrationResult> Register(string email, string password, string name, string position, int siteid);
   }
 }
