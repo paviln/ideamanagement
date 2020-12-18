@@ -48,7 +48,7 @@ function Implement() {
             <Form.Control as="select" value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="0">Not started</option>
               <option value="1">In Progress</option>
-              <option value="2">Implemented</option>
+              <option value="2">Done</option>
             </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
